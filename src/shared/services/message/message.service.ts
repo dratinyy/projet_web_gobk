@@ -7,6 +7,7 @@ import "rxjs/add/operator/catch";
 import { MessageModel } from "../../models/MessageModel";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 import { URLSERVER } from "shared/constants/urls";
+import {extractMessages} from "@angular/compiler/src/i18n/extractor_merger";
 
 @Injectable()
 export class MessageService {
@@ -64,7 +65,7 @@ export class MessageService {
     const finalUrl = this.url + route;
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(finalUrl, message, options).subscribe((e) => this.extractMessageAndGetMessages(e, finalUrl));
+    this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
   }
 
   /**
@@ -94,6 +95,7 @@ export class MessageService {
    * @returns {any|{}}
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    this.getMessages(route);
+    return response.json();
   }
 }
