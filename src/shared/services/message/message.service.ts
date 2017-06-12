@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, RequestOptions, Response } from "@angular/http";
+import { Http, Headers, RequestOptions, Response } from "@angular/http";
 import { Observable } from "rxjs/Observable";
 
 import "rxjs/add/operator/map";
@@ -61,8 +61,10 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
-    // Je suis vide :(
-    // Tu peux trouver des infos sur moi dans le README !
+    const finalUrl = this.url + route;
+    const headers = new Headers({"Content-Type": "application/json"});
+    const options = new RequestOptions({headers: headers});
+    this.http.post(finalUrl, message, options).subscribe((e) => this.extractMessageAndGetMessages(e, finalUrl));
   }
 
   /**
@@ -92,7 +94,6 @@ export class MessageService {
    * @returns {any|{}}
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    // Je suis vide aussi ...
     return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
   }
 }
