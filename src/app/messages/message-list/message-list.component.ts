@@ -1,9 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
-import { MessageService } from "../../../shared/services";
-import { MessageModel } from "../../../shared/models/MessageModel";
-import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/interval';
+import {MessageService} from "../../../shared/services";
+import {MessageModel} from "../../../shared/models/MessageModel";
+import "rxjs/add/observable/interval";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: "app-message-list",
