@@ -29,13 +29,12 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => {
-      const messagesBot = [new MessageModel()];
+      let finalMessages = [new MessageModel()];
       for (let i = 0; i < messages.length; i++) {
         const messageBot = Object.assign({}, messages[i]);
         messageBot.content = "beep boop, I am a bot";
-        messagesBot.push(messageBot);
+        finalMessages = finalMessages.concat([messageBot, messages[i]]);
       }
-      const finalMessages = messages.concat(messagesBot);
       this.messageList = finalMessages;
     });
   }
