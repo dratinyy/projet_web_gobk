@@ -11,7 +11,7 @@ export class AppComponent {
   public title: string;
 
   constructor() {
-    this.title = "Chat";
+    this.title = "Bisou les michtos";
     Observable.create();
   }
 }
