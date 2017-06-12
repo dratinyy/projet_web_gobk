@@ -1,15 +1,47 @@
 .message{
-  margin-top:10px;
-  margin-bottom: 10px;
+  margin: 10px 25px;
 }
 
 .content{
+  min-height:44px;
+  min-width: 30px;
   background-color: dodgerblue;
+  text-align: justify;
   padding: 10px;
   border-radius:10px;
+  display: inline-block;
+  position: relative;
+  box-shadow: 1px 2px 3px 0px #c0c0c0;
+}
+
+.tri-right.border.left-top:before {
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -20px;
+  right: auto;
+  top: -4px;
+  bottom: auto;
+  border: 16px solid;
+  border-color: dodgerblue transparent transparent transparent;
+}
+.tri-right.left-top:after{
+  content: ' ';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -10px;
+  right: auto;
+  top: 0px;
+  bottom: auto;
+  border: 11px solid;
+  border-color: dodgerblue transparent transparent transparent;
 }
 
 .from{
   font-weight: bold;
   margin-bottom: 3px;
+  margin-left: -10px;
 }
+
