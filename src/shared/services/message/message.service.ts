@@ -65,7 +65,7 @@ export class MessageService {
     const finalUrl = this.url + route;
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, finalUrl));
+    this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
   }
 
   /**
@@ -95,6 +95,7 @@ export class MessageService {
    * @returns {any|{}}
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
+    this.getMessages(route);
     return response.json();
   }
 }
