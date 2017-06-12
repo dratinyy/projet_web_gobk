@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {MessageService} from "../../shared/services";
 import {MessageModel} from "../../shared/models/MessageModel";
-import {NameService} from "../../shared/services";
+import {NameService} from "../../shared/services/name/name.service";
 
 @Component({
     selector: "app-message-form",
