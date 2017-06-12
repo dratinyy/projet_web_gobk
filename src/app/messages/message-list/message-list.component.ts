@@ -36,10 +36,12 @@ export class MessageListComponent implements OnInit {
       let messageBot = new MessageModel();
       for (let i = 0; i < messages.length; i++) {
         finalMessages.push(messages[i]);
-        messageBot = Object.assign({}, messages[i]);
-        messageBot.from = "Bot";
-        messageBot.content = "beep boop, I am a bot";
-        finalMessages.push(messageBot);
+        if (messages[i].content === "!Bot") {
+          messageBot = Object.assign({}, messages[i]);
+          messageBot.from = "Bot";
+          messageBot.content = "beep boop, I am a bot";
+          finalMessages.push(messageBot);
+        }
       }
       // this.messageList = finalMessages;
       this.messageList = finalMessages;
