@@ -4,6 +4,7 @@ import { FormsModule } from "@angular/forms";
 
 import { MessageFormComponent } from "./message-form.component";
 import { MessageService } from "../../shared/services/message/message.service";
+import {NameService} from "../../shared/services/name/name.service";
 
 @NgModule({
   declarations: [
@@ -14,6 +15,6 @@ import { MessageService } from "../../shared/services/message/message.service";
     FormsModule
   ],
   exports: [MessageFormComponent],
-  providers: [MessageService]
+  providers: [MessageService, NameService]
 })
 export class MessageFormModule { }
