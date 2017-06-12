@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { MessageService } from "../../shared/services";
 import { MessageModel } from "../../shared/models/MessageModel";
+import { NameService } from "../../shared/services";
 
 @Component({
   selector: "app-message-form",
@@ -13,8 +14,8 @@ export class MessageFormComponent implements OnInit {
   public message: MessageModel;
   private route: string;
 
-  constructor(private messageService: MessageService) {
-    this.message = new MessageModel(1, "t", "galan");
+  constructor(private messageService: MessageService, private nameService: NameService) {
+    this.message = new MessageModel(1, "t", this.nameService.retrieveName());
     this.route = "1/messages";
   }
 
@@ -28,6 +29,8 @@ export class MessageFormComponent implements OnInit {
    */
   sendMessage() {
     console.log("Click!");
+    console.log(this.nameService.retrieveName());
+    this.message = new MessageModel(1, "t", this.nameService.retrieveName());
     this.messageService.sendMessage(this.route, this.message);
   }
 }
