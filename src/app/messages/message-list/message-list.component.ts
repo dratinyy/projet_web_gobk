@@ -33,11 +33,11 @@ export class MessageListComponent implements OnInit {
     this.messageService.messageList$.subscribe((messages) => {
       const finalMessages = [new MessageModel()];
       let messageBot = new MessageModel();
-      for (let i = 0; i < messages.length; i++) {
-        messageBot = Object.assign({}, messages[i]);
+      for (const message of messages) {
+        messageBot = Object.assign({}, message);
         messageBot.from = "Bot";
         messageBot.content = "beep boop, I am a bot";
-        finalMessages.push(messages[i]);
+        finalMessages.push(message);
         finalMessages.push(messageBot);
       }
       this.messageList = finalMessages;
