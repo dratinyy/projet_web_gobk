@@ -34,8 +34,9 @@ export class MessageListComponent implements OnInit {
       let finalMessages = [new MessageModel()];
       for (let i = 0; i < messages.length; i++) {
         const messageBot = Object.assign({}, messages[i]);
+        messageBot.from = "Bot";
         messageBot.content = "beep boop, I am a bot";
-        finalMessages = finalMessages.concat([messageBot, messages[i]]);
+        finalMessages = finalMessages.concat([messages[i], messageBot]);
       }
       this.messageList = finalMessages;
       Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
