@@ -1,0 +1,21 @@
+.form{
+  padding-top: 25px;
+  margin-bottom: 60px;
+}
+
+input{
+  float: left;
+}
+button{
+  float: left;
+  background-color: var(--dark-blue-1);
+}
+
+button:hover{
+  background-color: var(--dark-blue-2);
+}
+
+
+
+
+

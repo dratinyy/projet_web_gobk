@@ -1,3 +1,13 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 /* You can add global styles to this file, and also import other style files */
 
+* {
+  --dark-blue-1: #2B405A;
+  --dark-blue-2: #1A2735;
+  --blue:#1A99F5;
+}
+
+
+body{
+  background-color: var(--dark-blue-1);
+}
