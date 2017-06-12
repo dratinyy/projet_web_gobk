@@ -13,7 +13,7 @@ export class MessageService {
 
   /**
    * Url pour accéder aux données. L'url est commun à toutes les fonctions du service.
-   * Il permet d'accéder aux channels. À partir de cet url, vous pourrez accéder aux messages.
+   * Il permet d'accéder aux channel. À partir de cet url, vous pourrez accéder aux messages.
    * La documentation des methodes du service permet d'avoir plus d'information concernant la façon d'accèder aux messages.
    */
   private url: string;
