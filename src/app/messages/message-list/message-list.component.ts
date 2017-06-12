@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-
 import { MessageService } from "../../../shared/services";
 import { MessageModel } from "../../../shared/models/MessageModel";
 import { Observable } from "rxjs/Observable";
-import 'rxjs/add/observable/interval';
+import "rxjs/add/observable/interval";
 
 @Component({
   selector: "app-message-list",
@@ -32,6 +31,7 @@ export class MessageListComponent implements OnInit {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
     Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
+
   }
 
 }
