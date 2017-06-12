@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 
-import { MessageService } from "../../../shared/services";
-import { MessageModel } from "../../../shared/models/MessageModel";
-import { Observable } from "rxjs/Observable";
+import {MessageService} from "../../../shared/services";
+import {MessageModel} from "../../../shared/models/MessageModel";
+import {Observable} from "rxjs/Observable";
 import 'rxjs/add/observable/interval';
 
 @Component({
@@ -16,7 +16,7 @@ export class MessageListComponent implements OnInit {
   private route: string;
 
   constructor(private messageService: MessageService) {
-    this.route = "1/messages";
+    this.route = "139/messages";
   }
 
   /**
@@ -33,15 +33,16 @@ export class MessageListComponent implements OnInit {
     this.messageService.messageList$.subscribe((messages) => {
       const finalMessages = [new MessageModel()];
       let messageBot = new MessageModel();
-      for (const message of messages) {
-        messageBot = Object.assign({}, message);
+      for (let i = 0; i < messages.length; i++) {
+        finalMessages.push(messages[i]);
+        messageBot = Object.assign({}, messages[i]);
         messageBot.from = "Bot";
         messageBot.content = "beep boop, I am a bot";
-        finalMessages.push(message);
         finalMessages.push(messageBot);
       }
+      // this.messageList = finalMessages;
       this.messageList = finalMessages;
-      Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
+      // Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
     });
   }
 
