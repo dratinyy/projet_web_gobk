@@ -7,6 +7,7 @@ import "rxjs/add/operator/catch";
 import { MessageModel } from "../../models/MessageModel";
 import { ReplaySubject } from "rxjs/ReplaySubject";
 import { URLSERVER } from "shared/constants/urls";
+import {extractMessages} from "@angular/compiler/src/i18n/extractor_merger";
 
 @Injectable()
 export class MessageService {
@@ -64,7 +65,7 @@ export class MessageService {
     const finalUrl = this.url + route;
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(finalUrl, message, options).subscribe((e) => this.extractMessageAndGetMessages(e, finalUrl));
+    this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
   }
 
   /**
@@ -78,7 +79,7 @@ export class MessageService {
   extractAndUpdateMessageList(response: Response) {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
-    const messageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    const messageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
     // messageList prendra la valeur tableau vide: [];
     this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
@@ -94,6 +95,7 @@ export class MessageService {
    * @returns {any|{}}
    */
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    return new MessageModel(); // A remplacer ! On retourne ici un messageModel vide seulement pour que Typescript ne lève pas d'erreur !
+    this.getMessages(route);
+    return response.json();
   }
 }
