@@ -2,10 +2,23 @@ h1 {
   text-align: center;
 }
 
+.card{
+  border-radius:0px;
+}
 
 
-app-message-list{
+app-message-list,app-channel-list{
   overflow-y: scroll;
   overflow-x:hidden;
   max-height: 70vh;
 }
+
+app-name-form{
+}
+/*
+app-channel-list{
+  overflow-y: scroll;
+  overflow-x:hidden;
+}*/
+
+
