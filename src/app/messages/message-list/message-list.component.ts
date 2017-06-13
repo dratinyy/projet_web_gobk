@@ -17,7 +17,7 @@ export class MessageListComponent implements OnInit {
 
 
   constructor(private messageService: MessageService) {
-    this.route = "372/messages";
+    this.route = "370/messages";
   }
 
   /**
@@ -43,8 +43,9 @@ export class MessageListComponent implements OnInit {
           messageBot.content = "beep boop, I am a bot";
           finalMessages.push(messageBot);
         }
-        let x = 0;
-        // x = messageC.search("youtube.com");
+        // Cette ligne fait disparaitre la liste des messages
+        // const x = messages[i].content.indexOf("youtube.com");
+        const x = -1;
         if (x !== -1) {
           messageBot = Object.assign({}, messages[i]);
           messageBot.from = "Bot";
