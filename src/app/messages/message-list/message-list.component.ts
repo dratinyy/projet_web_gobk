@@ -4,6 +4,7 @@ import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
 import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
+import {ChannelService} from "../../../shared/services/channel/channel.service";
 
 @Component({
   selector: "app-message-list",
@@ -13,11 +14,9 @@ import {Observable} from "rxjs/Observable";
 export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
-  private route: string;
 
 
-  constructor(private messageService: MessageService) {
-    this.route = "366/messages";
+  constructor(private messageService: MessageService, private channelService: ChannelService) {
   }
 
   /**
@@ -30,9 +29,9 @@ export class MessageListComponent implements OnInit {
    * l'initialisation simple des variables. Pour plus d'information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
-    this.messageService.getMessages(this.route);
+    this.messageService.getMessages(this.channelService.getCurrentChannel().id || 1);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
-    Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
+    Observable.interval(1000).subscribe(() => this.messageService.getMessages(this.channelService.getCurrentChannel().id || 1));
   }
 
 }

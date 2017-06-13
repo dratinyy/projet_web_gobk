@@ -8,9 +8,11 @@ import {URLSERVER} from "../../constants/urls";
 export class ChannelService {
     private url: string;
     public channelList$: ReplaySubject<ChanelModel[]>;
+    private currentChannel: ChanelModel;
 
     constructor(private http: Http) {
         this.url = URLSERVER;
+        this.currentChannel = new ChanelModel(1);
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
     }
@@ -26,11 +28,12 @@ export class ChannelService {
         this.http.post(this.url, ChanelModel, options);
     }
 
-    public deleteChannel(chanel: ChanelModel) {
-        const headers = new Headers({"Content-Type": "application/json"});
-        const options = new RequestOptions({headers: headers});
-        this.http.delete(this.url + chanel.id, options);
+    public joinChannel(chanel: ChanelModel) {
+        this.currentChannel = chanel;
+    }
 
+    public getCurrentChannel(): ChanelModel {
+        return this.currentChannel;
     }
 
     private parseChannels(response: Response) {
