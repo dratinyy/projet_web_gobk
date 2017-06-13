@@ -1,13 +1,12 @@
-import { Injectable } from "@angular/core";
-import { Http, Headers, RequestOptions, Response } from "@angular/http";
-import { Observable } from "rxjs/Observable";
+import {Injectable} from "@angular/core";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {Observable} from "rxjs/Observable";
 
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
-import { MessageModel } from "../../models/MessageModel";
-import { ReplaySubject } from "rxjs/ReplaySubject";
-import { URLSERVER } from "shared/constants/urls";
-import {extractMessages} from "@angular/compiler/src/i18n/extractor_merger";
+import {MessageModel} from "../../models/MessageModel";
+import {ReplaySubject} from "rxjs/ReplaySubject";
+import {URLSERVER} from "shared/constants/urls";
 
 @Injectable()
 export class MessageService {
@@ -27,9 +26,11 @@ export class MessageService {
    * dans lequel vous trouverez une première explication sur les observables ainsi qu'une vidéo tutoriel.
    */
   public messageList$: ReplaySubject<MessageModel[]>;
+  public messageList: MessageModel[];
 
   constructor(private http: Http) {
     this.url = URLSERVER;
+    this.messageList = new MessageModel()[1000];
     this.messageList$ = new ReplaySubject(1);
     this.messageList$.next([new MessageModel()]);
   }
@@ -47,7 +48,13 @@ export class MessageService {
   public getMessages(route: number) {
     const finalUrl = this.url + route.toString() + "/messages";
     this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndUpdateMessageList(response));
+      .subscribe((response) => this.extractAndResetMessageList(response));
+  }
+
+  public getOlderMessages(route: number, page: number) {
+    const finalUrl = this.url + route.toString() + "/messages?page=" + page.toString();
+    this.http.get(finalUrl)
+        .subscribe((response) => this.extractAndAddToMessageList(response));
   }
 
   /**
@@ -69,19 +76,36 @@ export class MessageService {
   }
 
   /**
-   * Fonction extractAndUpdateMessageList.
+   * Fonction extractAndResetMessageList.
    * Cette fonction permet d'extraire la liste des messages de la 'response' reçue et ensuite de mettre à jour la liste
    * des message dans l'observable messageList$.
    * Elle est appelée dans la fonction getMessages et permet de directement récuperer une liste de MessageModel. Pour récupérer
    * les données de la reponse, il suffit d'appeler la fonction .json() qui retourne le body de la réponse.
    * @param response
    */
-  extractAndUpdateMessageList(response: Response) {
+  extractAndResetMessageList(response: Response) {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
-    const messageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    const responseMessageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
     // messageList prendra la valeur tableau vide: [];
-    this.messageList$.next(messageList); // On pousse les nouvelles données dans l'attribut messageList$
+    this.messageList$.next(responseMessageList); // On pousse les nouvelles données dans l'attribut messageList$
+  }
+
+  extractAndAddToMessageList(response: Response) {
+    // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
+    // fait CTRL + Click pour voir la déclaration et la documentation
+    const responseMessageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
+    // messageList prendra la valeur tableau vide: [];
+    this.messageList.push(responseMessageList);
+    this.messageList.sort(function(x, y) {
+      if (x.id < y.id) {
+        return -1;
+      } else if (x.id > y.id) {
+        return 1;
+      }
+      return 0;
+    });
+    this.messageList$.next(responseMessageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
 
   /**

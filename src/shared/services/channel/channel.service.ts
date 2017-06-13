@@ -6,6 +6,7 @@ import {URLSERVER} from "../../constants/urls";
 
 @Injectable()
 export class ChannelService {
+
     private url: string;
     public channelList$: ReplaySubject<ChanelModel[]>;
     private currentChannel: ChanelModel;
@@ -13,7 +14,7 @@ export class ChannelService {
 
     constructor(private http: Http) {
         this.url = URLSERVER;
-        this.currentChannel = new ChanelModel(642);
+        this.currentChannel = new ChanelModel(540);
         this.currentChannelPage = 0;
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
@@ -23,6 +24,15 @@ export class ChannelService {
         this.http.get(this.url + "?page=" + this.currentChannelPage.toString())
             .subscribe((response) => this.parseChannels(response));
     }
+
+    private parseChannels(response: Response) {
+        const channelList = response.json() || [];
+        this.channelList$.next(channelList);
+    }
+
+    /**
+     * Current Channel Methods
+     */
 
     public addChannel(channel: ChanelModel) {
         const headers = new Headers({"Content-Type": "application/json"});
@@ -38,16 +48,15 @@ export class ChannelService {
         return this.currentChannel;
     }
 
-    private parseChannels(response: Response) {
-        const channelList = response.json() || [];
-        this.channelList$.next(channelList);
-    }
-
     renameCurrentChannel(channel: ChanelModel) {
         const headers = new Headers({"Content-Type": "application/json"});
         const options = new RequestOptions({headers: headers});
         this.http.put(this.url + this.currentChannel.id, channel, options).subscribe((response) => this.joinChannel(response.json()));
     }
+
+    /**
+     * Channel Page Methods
+     */
 
     previousChannelPage() {
         this.currentChannelPage = (this.currentChannelPage === 0 ? 0 : this.currentChannelPage - 1);
@@ -62,5 +71,9 @@ export class ChannelService {
     nextChannelPage() {
         this.currentChannelPage++;
         this.getChannels();
+    }
+
+    getCurrentChannelPage(): number {
+        return this.currentChannelPage;
     }
 }

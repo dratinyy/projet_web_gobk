@@ -29,9 +29,9 @@ export class MessageListComponent implements OnInit {
    * l'initialisation simple des variables. Pour plus d'information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
-    this.messageService.getMessages(this.channelService.getCurrentChannel().id || 642);
+    this.messageService.getMessages(this.channelService.getCurrentChannel().id || 540);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
-    Observable.interval(1000).subscribe(() => this.messageService.getMessages(this.channelService.getCurrentChannel().id || 642));
+    Observable.interval(1000).subscribe(() => this.messageService.getMessages(this.channelService.getCurrentChannel().id || 540));
   }
 
 }
