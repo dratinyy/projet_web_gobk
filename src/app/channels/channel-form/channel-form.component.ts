@@ -12,10 +12,12 @@ export class ChannelFormComponent implements OnInit {
 
   public name: string;
   public rename: string;
+  public page: number;
 
   constructor(private channelService: ChannelService) {
     this.name = "New Channel";
     this.rename = "New Name";
+    this.page = 0;
   }
 
   ngOnInit() { }
@@ -41,6 +43,10 @@ export class ChannelFormComponent implements OnInit {
 
   previousChannelPage() {
     this.channelService.previousChannelPage();
+  }
+
+  gotoChannelPage() {
+    this.channelService.gotoPage(this.page);
   }
 
   nextChannelPage() {

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {ChanelModel} from "../../models/ChannelModel";
-import { Http, Headers, RequestOptions, Response } from "@angular/http";
+import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {URLSERVER} from "../../constants/urls";
 
 @Injectable()
@@ -51,6 +51,11 @@ export class ChannelService {
 
     previousChannelPage() {
         this.currentChannelPage = (this.currentChannelPage === 0 ? 0 : this.currentChannelPage - 1);
+        this.getChannels();
+    }
+
+    gotoPage(page: number) {
+        this.currentChannelPage = Math.max(0, page);
         this.getChannels();
     }
 
