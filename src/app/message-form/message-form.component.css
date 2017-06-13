@@ -5,22 +5,22 @@
 
 input{
   float: left;
-  height:36px;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  height:40px;
 }
 
 input:focus{
   border: 1px solid rgba(0,0,0,.15);
 }
 button{
+  height:40px;
   color:#fff;
   outline: hidden;
   border: 1px solid transparent;
   float: left;
   border-radius: 0px 5px 5px 0px;
   background-color: var(--dark-blue-1);
-  height:36px;
 }
 
 button:active{
