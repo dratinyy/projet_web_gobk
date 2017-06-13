@@ -16,4 +16,4 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
   exports: [ChannelFormComponent],
   providers: [ChannelService]
 })
-export class NameFormModule { }
+export class ChannelFormModule { }
