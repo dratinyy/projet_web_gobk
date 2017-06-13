@@ -24,4 +24,10 @@ export class ChannelNameFormComponent implements OnInit {
     channel.name = this.rename;
     this.channelService.renameCurrentChannel(channel);
   }
+
+  renameCurrentChannelHandler(keyCode) {
+    if (keyCode === 13) {
+      this.renameCurrentChannel();
+    }
+  }
 }
