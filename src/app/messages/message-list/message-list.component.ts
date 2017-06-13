@@ -17,7 +17,7 @@ export class MessageListComponent implements OnInit {
 
 
   constructor(private messageService: MessageService) {
-    this.route = "139/messages";
+    this.route = "372/messages";
   }
 
   /**
@@ -35,15 +35,23 @@ export class MessageListComponent implements OnInit {
       const finalMessages = [new MessageModel()];
       let messageBot = new MessageModel();
       for (let i = 0; i < messages.length; i++) {
+        const messageC = messages[i].content;
         finalMessages.push(messages[i]);
-        if (messages[i].content === "!Bot") {
+        if (messageC === "!Bot") {
           messageBot = Object.assign({}, messages[i]);
           messageBot.from = "Bot";
           messageBot.content = "beep boop, I am a bot";
           finalMessages.push(messageBot);
         }
+        let x = 0;
+        // x = messageC.search("youtube.com");
+        if (x !== -1) {
+          messageBot = Object.assign({}, messages[i]);
+          messageBot.from = "Bot";
+          messageBot.content = "beep boop, I am a bot\nLink: youtube.com";
+          finalMessages.push(messageBot);
+        }
       }
-      // this.messageList = finalMessages;
       this.messageList = finalMessages;
       // Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
     });
