@@ -1,1 +1,1 @@
-export const DEFAULTNAME = "moi";
+export const DEFAULTNAME = "galan";

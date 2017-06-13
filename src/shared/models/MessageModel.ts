@@ -35,12 +35,19 @@ export class MessageModel {
    */
   public threadId: number;
 
-  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number) {
+  /**
+   * Boolean pour savoir si on est le sender du message
+   */
+  public me: boolean;
+
+  constructor(id?: number, content?: string, from?: string, createdAt?: string, updatedAt?: string, threadId?: number, me?: boolean) {
     this.id = id;
     this.content = content;
     this.from = from;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.threadId =  threadId;
+    this.me = me;
+
   }
 }
