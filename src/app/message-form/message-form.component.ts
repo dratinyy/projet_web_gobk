@@ -21,7 +21,13 @@ export class MessageFormComponent implements OnInit {
     ngOnInit() {
     }
 
-    /**
+  eventHandler(event) {
+    if (event.keyCode === 13) {
+      this.sendMessage();
+    }
+  }
+
+  /**
      * Fonction pour envoyer un message.
      * L'envoi du message se fait à travers la methode sendMessage du service MessageService.
      * Cette méthode prend en paramètre la route pour envoyer un message (:id/messages avec id un entier correspondant à l'id du channel)
