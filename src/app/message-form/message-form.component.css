@@ -1,0 +1,38 @@
+.form{
+  padding-top: 25px;
+  margin-bottom: 60px;
+}
+
+input{
+  float: left;
+  height:36px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+input:focus{
+  border: 1px solid rgba(0,0,0,.15);
+}
+button{
+  color:#fff;
+  outline: hidden;
+  border: 1px solid transparent;
+  float: left;
+  border-radius: 0px 5px 5px 0px;
+  background-color: var(--dark-blue-1);
+  height:36px;
+}
+
+button:active{
+  background-color: var(--dark-blue-2);
+}
+
+button:focus{
+  outline:none;
+  border: 1px solid transparent;
+}
+
+
+
+
+
