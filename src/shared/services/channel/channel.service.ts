@@ -9,16 +9,18 @@ export class ChannelService {
     private url: string;
     public channelList$: ReplaySubject<ChanelModel[]>;
     private currentChannel: ChanelModel;
+    private currentChannelPage: number;
 
     constructor(private http: Http) {
         this.url = URLSERVER;
         this.currentChannel = new ChanelModel(642);
+        this.currentChannelPage = 0;
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
     }
 
     public getChannels() {
-        this.http.get(this.url)
+        this.http.get(this.url + "?page=" + this.currentChannelPage.toString())
             .subscribe((response) => this.parseChannels(response));
     }
 
@@ -39,5 +41,15 @@ export class ChannelService {
     private parseChannels(response: Response) {
         const channelList = response.json() || [];
         this.channelList$.next(channelList);
+    }
+
+    previousChannelPage() {
+        this.currentChannelPage = (this.currentChannelPage === 0 ? 0 : this.currentChannelPage - 1);
+        this.getChannels();
+    }
+
+    nextChannelPage() {
+        this.currentChannelPage++;
+        this.getChannels();
     }
 }

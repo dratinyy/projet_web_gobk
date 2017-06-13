@@ -30,4 +30,12 @@ export class ChannelFormComponent implements OnInit {
     channel.name = this.name;
     this.channelService.addChannel(channel);
   }
+
+  previousChannelPage() {
+    this.channelService.previousChannelPage();
+  }
+
+  nextChannelPage() {
+    this.channelService.nextChannelPage();
+  }
 }
