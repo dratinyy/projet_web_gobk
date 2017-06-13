@@ -37,22 +37,32 @@ export class MessageComponent implements OnInit {
      */
     ngOnInit() {
 
-        let res = this.message.content.match("http[^\ ]*\.(jpg|png)");
+        const reg = /http[^\ ]*\.(jpg|png)/g
+
+        const res = this.message.content.match(reg);
 
         if (res != null && res.length > 0) {
 
             console.log("MATCH");
-            console.log(res.length);
+            console.log(res);
+
+            for (const entry of res) {
+
+                this.imgs.push(entry);
+
+            }
+
             this.img = true;
+
 
         }
 
-        this.imgs.push("lolilo");
-        console.log(this.imgs.length);
-        this.imgs.push("lolilo");
-        console.log(this.imgs.length);
-        this.imgs.push("lolilo");
-        console.log(this.imgs.length);
+        /*this.imgs.push("lolilo");
+         console.log(this.imgs.length);
+         this.imgs.push("lolilo");
+         console.log(this.imgs.length);
+         this.imgs.push("lolilo");
+         console.log(this.imgs.length);*/
         /*if (this.message.content.search("http.*\.(jpg|png)")) {
 
          this.img = true;
