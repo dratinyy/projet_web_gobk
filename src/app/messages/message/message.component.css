@@ -74,3 +74,9 @@
   border: 11px solid;
   border-color: #f1f0f0 transparent transparent transparent;
 }
+
+img {
+
+  max-width: 300px;
+
+}
