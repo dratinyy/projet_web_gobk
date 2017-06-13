@@ -62,6 +62,7 @@ export class MessageService {
    * @param message
    */
   public sendMessage(route: string, message: MessageModel) {
+    console.log("SEND" + message.me);
     const finalUrl = this.url + route;
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});

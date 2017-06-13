@@ -16,7 +16,7 @@ export class MessageFormComponent implements OnInit {
 
     constructor(private messageService: MessageService, private nameService: NameService) {
         this.message = new MessageModel(1, "y'a les hendeks qui arrivent", this.nameService.retrieveName());
-        this.route = "139/messages";
+        this.route = "366/messages";
     }
 
     ngOnInit() {
@@ -32,6 +32,7 @@ export class MessageFormComponent implements OnInit {
         console.log("Click!");
         console.log(this.nameService.retrieveName());
         this.message.from = this.nameService.retrieveName();
+        this.message.me = true;
         this.messageService.sendMessage(this.route, this.message);
     }
 }

@@ -35,9 +35,7 @@ export class NameService {
     }
 
     public retrieveName(): string {
-        console.log("Retrieve" + this.name);
         return this.name;
-
     }
 
 }

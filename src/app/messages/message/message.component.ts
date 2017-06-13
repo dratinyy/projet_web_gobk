@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 
 import { MessageModel } from "../../../shared/models/MessageModel";
+import {NameService} from "../../../shared/services";
 
 @Component({
   selector: "app-message",
@@ -11,8 +12,14 @@ export class MessageComponent implements OnInit {
 
   @Input() message: MessageModel;
 
-  constructor() {
+  private name: string;
+
+  private color: string;
+
+  constructor(private nameService: NameService) {
     this.message = new MessageModel(0, "Hello!");
+    this.name = this.nameService.retrieveName();
+    this.color = "#424f88";
   }
   /**
    * Fonction ngOnInit.
@@ -22,6 +29,7 @@ export class MessageComponent implements OnInit {
    * pas dans le constructeur. Si vous souhaitez manipuler votre message lors du chargement du composant, vous devez
    * le faire dans le ngOnInit.
    */
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
 }

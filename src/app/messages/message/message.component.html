@@ -1,4 +1,15 @@
 <div class="message">
-  <div class="from">{{message.from}}</div>
-  <div class="content tri-right left-top">{{message.content}}</div>
+
+    <div *ngIf="message.from === name; else elseBlock" color=color>
+
+        <div class="from">{{message.from}}</div>
+        <div class="content tri-right left-top">{{message.content}}</div>
+
+    </div>
+
+    <ng-template #elseBlock>
+        <div class="from">{{message.from}}</div>
+        <div class="content tri-right left-top">{{message.content}}</div>
+    </ng-template>
+
 </div>
