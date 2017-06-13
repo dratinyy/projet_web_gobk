@@ -44,8 +44,9 @@ export class MessageService {
    * @param route
    * @returns {Observable<R>}
    */
-  public getMessages(route: string) {
-    const finalUrl = this.url + route;
+  public getMessages(route: number) {
+    const finalUrl = this.url + route.toString() + "/messages";
+    console.log("GET MESSAGES FROM " + finalUrl);
     this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
@@ -61,8 +62,8 @@ export class MessageService {
    * @param route
    * @param message
    */
-  public sendMessage(route: string, message: MessageModel) {
-    const finalUrl = this.url + route;
+  public sendMessage(route: number, message: MessageModel) {
+    const finalUrl = this.url + route.toString() + "/messages";
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
@@ -94,7 +95,7 @@ export class MessageService {
    * @param route
    * @returns {any|{}}
    */
-  private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
+  private extractMessageAndGetMessages(response: Response, route: number): MessageModel {
     this.getMessages(route);
     return response.json();
   }
