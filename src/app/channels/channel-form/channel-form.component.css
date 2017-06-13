@@ -1,0 +1,65 @@
+.newc, .page{
+  margin: 0 auto 15px;
+  height: 40px;
+}
+
+.newc input{
+  border:solid 1px rgba(0,0,0,.15);
+  padding-left:10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+}
+
+.newc button{
+  background-color: var(--dark-blue-1);
+  color:#fff;
+  border: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page{
+  border-bottom:1px solid rgba(0,0,0,.15);
+  border-top:1px solid rgba(0,0,0,.15);
+}
+
+.page button{
+  background-color: var(--dark-blue-1);
+  color:#fff;
+  border: none;
+}
+
+.page button:first-child{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.page button:last-child{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.page input{
+  border:none;
+  width:40px;
+  text-align: center;
+  font-weight:bold;
+}
+
+.page input:hover{
+  border:1px solid rgba(0,0,0,.15);
+}
+
+.page p{
+  font-size: 110%;
+  margin-left:5px;
+  line-height: 40px;
+
+}
+
+.page .update{
+  background-color: transparent;
+  margin:0;
+  margin-right: 5px;
+  padding:0;
+}

@@ -1,8 +1,14 @@
-<p>
-  <input type="text" class="name-control" id="name" required  [(ngModel)]="name" name="name">
-  <button class="btn btn-primary" (click)="addChannel()">➕</button>
-  <button class="btn btn-primary" (click)="previousChannelPage()">⏪</button>
-  <input type="text" class="name-control" id="page" required  [(ngModel)]="page" name="page">
-  <button class="btn btn-primary" (click)="gotoChannelPage()">🖊</button>
-  <button class="btn btn-primary" (click)="nextChannelPage()">⏩</button>
-</p>
+<div class="ctn">
+  <div class="row newc">
+    <input type="text" class="name-control" id="name" required placeholder="Create new channel..." [(ngModel)]="name"
+           name="name">
+    <button class="btn" (click)="addChannel()">+</button>
+  </div>
+  <div class="btn-group page">
+    <button class="btn" (click)="previousChannelPage()"><</button>
+    <p>Page </p>
+    <input type="text" class="name-control" id="page" required [(ngModel)]="page" name="page">
+    <button class="btn update" (click)="gotoChannelPage()">🖊</button>
+    <button class="btn" (click)="nextChannelPage()">></button>
+  </div>
+</div>
