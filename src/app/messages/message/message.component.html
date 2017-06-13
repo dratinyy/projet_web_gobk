@@ -1,6 +1,6 @@
 <div class="message">
 
-    <div *ngIf="message.from === name; else elseBlock" color=color>
+    <div *ngIf="message.from === name; else elseBlock" class="me">
 
         <div class="from">{{message.from}}</div>
         <div class="content tri-right left-top">{{message.content}}</div>

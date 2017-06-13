@@ -19,7 +19,6 @@ export class MessageComponent implements OnInit {
   constructor(private nameService: NameService) {
     this.message = new MessageModel(0, "Hello!");
     this.name = this.nameService.retrieveName();
-    this.color = "#424f88";
   }
   /**
    * Fonction ngOnInit.
