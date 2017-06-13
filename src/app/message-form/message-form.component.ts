@@ -21,8 +21,8 @@ export class MessageFormComponent implements OnInit {
     ngOnInit() {
     }
 
-  eventHandler(event) {
-    if (event.keyCode === 13) {
+  eventHandler(keyCode) {
+    if (keyCode === 13) {
       this.sendMessage();
     }
   }
