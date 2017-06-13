@@ -18,4 +18,12 @@
 
     </div>
 
+    <div *ngIf="insta">
+
+        <iframe *ngFor="let insta of instas" [src]="insta | safe">
+            <p>Your browser does not support iframes.</p>
+        </iframe>
+
+    </div>
+
 </div>

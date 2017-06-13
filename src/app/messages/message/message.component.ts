@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: "app-message",
@@ -20,11 +21,17 @@ export class MessageComponent implements OnInit {
 
     private imgs: string[];
 
-    constructor(private nameService: NameService) {
+    private insta: boolean;
+
+    private instas: string[];
+
+    constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.retrieveName();
         this.color = "#424f88";
         this.imgs = [];
+        this.insta = false;
+        this.instas = [];
     }
 
     /**
@@ -37,14 +44,11 @@ export class MessageComponent implements OnInit {
      */
     ngOnInit() {
 
-        const reg = /http[^\ ]*\.(jpg|png)/g
+        let reg = /http[^\ ]*\.(jpg|png)/g;
 
-        const res = this.message.content.match(reg);
+        let res = this.message.content.match(reg);
 
         if (res != null && res.length > 0) {
-
-            console.log("MATCH");
-            console.log(res);
 
             for (const entry of res) {
 
@@ -53,6 +57,23 @@ export class MessageComponent implements OnInit {
             }
 
             this.img = true;
+
+
+        }
+
+
+        reg = /https:\/\/www.instagram.com\/p\/[^\ ]*/g;
+
+        res = this.message.content.match(reg);
+
+
+        if (res != null && res.length > 0) {
+
+            for (const entry of res) {
+                this.instas.push(entry.split("/?taken")[0] + "/embed");
+            }
+
+            this.insta = true;
 
 
         }
