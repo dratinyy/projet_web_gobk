@@ -12,4 +12,10 @@
         <div class="content tri-right left-top">{{message.content}}</div>
     </ng-template>
 
+    <div *ngIf="img">
+
+        <img *ngFor="let img of imgs" src={{img}}/>
+
+    </div>
+
 </div>

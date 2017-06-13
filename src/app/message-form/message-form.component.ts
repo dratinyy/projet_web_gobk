@@ -38,5 +38,6 @@ export class MessageFormComponent implements OnInit {
         console.log(this.nameService.retrieveName());
         this.message.from = this.nameService.retrieveName();
         this.messageService.sendMessage(this.channelService.getCurrentChannel().id, this.message);
+        this.message.content = "";
     }
 }
