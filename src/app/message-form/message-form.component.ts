@@ -15,7 +15,7 @@ export class MessageFormComponent implements OnInit {
     public message: MessageModel;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService) {
-        this.message = new MessageModel(1, "y'a les hendeks qui arrivent", this.nameService.retrieveName());
+        this.message = new MessageModel(1, "", this.nameService.retrieveName());
     }
 
     ngOnInit() {

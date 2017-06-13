@@ -59,7 +59,10 @@
 
 .page .update{
   background-color: transparent;
-  margin:0;
-  margin-right: 5px;
+  color:var(--dark-blue-1);
+  margin: 0 5px 0 0;
   padding:0;
+  display: none;
 }
+
+
