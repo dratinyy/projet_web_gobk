@@ -12,6 +12,7 @@ import {ChannelComponent} from "./channels/channel/channel.component";
 import {ChannelListComponent} from "./channels/channel-list/channel-list.component";
 import {ChannelService} from "../shared/services/channel/channel.service";
 import {NameFormComponent} from "./name-form/name-form.component";
+import {PanneauControlComponent} from "./panneau-control/panneau-control.component";
 import {NameService} from "../shared/services/name/name.service";
 
 @NgModule({
@@ -22,16 +23,19 @@ import {NameService} from "../shared/services/name/name.service";
     MessageListComponent,
     ChannelListComponent,
     MessageComponent,
-    ChannelComponent
+    ChannelComponent,
+    PanneauControlComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    PanneauControlComponent,
     HttpModule
   ],
   providers: [
     ChannelService,
     MessageService,
+    PanneauControlComponent,
     NameService
   ],
   bootstrap: [AppComponent]
