@@ -29,4 +29,10 @@ export class NameFormComponent implements OnInit {
     console.log("Click Name!");
     this.nameService.sendName(this.name);
   }
+
+  sendNameHandler(keyCode) {
+    if (keyCode === 13) {
+      this.sendName();
+    }
+  }
 }
