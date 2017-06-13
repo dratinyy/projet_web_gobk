@@ -24,4 +24,6 @@ export class ChannelComponent implements OnInit {
      */
     ngOnInit() { }
 
+    joinChannel() {
+    }
 }

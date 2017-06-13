@@ -16,7 +16,7 @@ export class MessageListComponent implements OnInit {
   private route: string;
 
   constructor(private messageService: MessageService) {
-    this.route = "1/messages";
+    this.route = "139/messages";
   }
 
   /**
@@ -31,7 +31,7 @@ export class MessageListComponent implements OnInit {
   ngOnInit() {
     this.messageService.getMessages(this.route);
     this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
-    Observable.interval(100).subscribe(() => this.messageService.getMessages(this.route));
+    Observable.interval(10000).subscribe(() => this.messageService.getMessages(this.route));
   }
 
 }
