@@ -1,6 +1,8 @@
 <p>
   <input type="text" class="name-control" id="name" required  [(ngModel)]="name" name="name">
   <button class="btn btn-primary" (click)="addChannel()">➕</button>
+  <input type="text" class="name-control" id="rename" required  [(ngModel)]="rename" name="rename">
+  <button class="btn btn-primary" (click)="renameCurrentChannel()">🖊</button>
   <button class="btn btn-primary" (click)="previousChannelPage()">⏪</button>
   <button class="btn btn-primary" (click)="nextChannelPage()">⏩</button>
 </p>

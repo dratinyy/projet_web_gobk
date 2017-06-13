@@ -11,9 +11,11 @@ import {ChanelModel} from "../../../shared/models/ChannelModel";
 export class ChannelFormComponent implements OnInit {
 
   public name: string;
+  public rename: string;
 
   constructor(private channelService: ChannelService) {
     this.name = "New Channel";
+    this.rename = "New Name";
   }
 
   ngOnInit() { }
@@ -29,6 +31,12 @@ export class ChannelFormComponent implements OnInit {
     const channel = new ChanelModel();
     channel.name = this.name;
     this.channelService.addChannel(channel);
+  }
+
+  renameCurrentChannel() {
+    const channel = new ChanelModel();
+    channel.name = this.rename;
+    this.channelService.renameCurrentChannel(channel);
   }
 
   previousChannelPage() {

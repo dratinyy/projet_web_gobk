@@ -43,6 +43,12 @@ export class ChannelService {
         this.channelList$.next(channelList);
     }
 
+    renameCurrentChannel(channel: ChanelModel) {
+        const headers = new Headers({"Content-Type": "application/json"});
+        const options = new RequestOptions({headers: headers});
+        this.http.put(this.url + this.currentChannel.id, channel, options).subscribe((response) => this.joinChannel(response.json()));
+    }
+
     previousChannelPage() {
         this.currentChannelPage = (this.currentChannelPage === 0 ? 0 : this.currentChannelPage - 1);
         this.getChannels();
