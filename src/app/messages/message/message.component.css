@@ -1,6 +1,13 @@
 .message{
   margin: 10px 25px;
+  display: list-item;
+  list-style:none;
 }
+
+.me{
+  text-align: right;
+}
+
 
 .content{
   min-height:44px;
@@ -21,16 +28,26 @@
   margin-top: 5px;
 }
 
+.from{
+  font-weight: bold;
+  margin-bottom: 3px;
+  margin-left: -10px;
+}
+
 .me .from{
   display: none;
 }
 
 .me .tri-right.border.left-top:before{
-  border-color: var(--blue);
+  border-color: var(--blue) transparent transparent transparent;
+  right: -20px;
+  left: auto;
 }
 
 .me .tri-right.left-top:after{
-  border-color: var(--blue);
+  border-color: var(--blue) transparent transparent transparent;
+  right: -10px;
+  left: auto;
 }
 
 .tri-right.border.left-top:before {
@@ -56,10 +73,4 @@
   bottom: auto;
   border: 11px solid;
   border-color: #f1f0f0 transparent transparent transparent;
-}
-
-.from{
-  font-weight: bold;
-  margin-bottom: 3px;
-  margin-left: -10px;
 }
