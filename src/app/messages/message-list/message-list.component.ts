@@ -14,7 +14,7 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 export class MessageListComponent implements OnInit {
 
   public messageList: MessageModel[];
-
+  private channelIndex: number;
 
   constructor(private messageService: MessageService, private channelService: ChannelService) {
   }
@@ -29,9 +29,28 @@ export class MessageListComponent implements OnInit {
    * l'initialisation simple des variables. Pour plus d'information sur le ngOnInit, il y a un lien dans le README.
    */
   ngOnInit() {
+    this.channelIndex = this.channelService.getCurrentChannel().id;
     this.messageService.getMessages(this.channelService.getCurrentChannel().id || 540);
-    this.messageService.messageList$.subscribe((messages) => this.messageList = messages);
     Observable.interval(1000).subscribe(() => this.messageService.getMessages(this.channelService.getCurrentChannel().id || 540));
+    this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
   }
 
+  private updateMessageList(messages: MessageModel[]) {
+    if (this.channelIndex === this.channelService.getCurrentChannel().id && this.messageList) {
+      messages.forEach(item => { if (this.messageList.indexOf(item) < 0) { this.messageList.push(item); }} );
+      this.messageList.sort((a, b) => {
+        if (a.id < b.id) {
+          return -1;
+        } else if (a.id > b.id) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+    } else {
+      console.log("CHANGEMENT CHANNEL");
+      this.messageList = messages;
+      this.channelIndex = this.channelService.getCurrentChannel().id;
+    }
+  }
 }
