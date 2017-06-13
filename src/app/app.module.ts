@@ -33,13 +33,11 @@ import {ChannelNameFormComponent} from "./channels/channel-name-form/channel-nam
   imports: [
     BrowserModule,
     FormsModule,
-    PanneauControlComponent,
     HttpModule
   ],
   providers: [
     ChannelService,
     MessageService,
-    PanneauControlComponent,
     NameService
   ],
   bootstrap: [AppComponent]
