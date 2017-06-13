@@ -14,7 +14,7 @@ export class ChannelFormComponent implements OnInit {
   public page: number;
 
   constructor(private channelService: ChannelService) {
-    this.name = "New Channel";
+    this.name = "";
     this.page = this.channelService.getCurrentChannelPage();
   }
 
