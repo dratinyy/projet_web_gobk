@@ -105,8 +105,8 @@ export class MessageListComponent implements OnInit {
     onScroll() {
         const scrollHeight = this.scrollContainer.nativeElement.scrollHeight;
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop < 5) {
-            this.scrollContainer.nativeElement.scrollTop = 15;
+        if (scrollTop < 3) {
+            this.scrollContainer.nativeElement.scrollTop = 10;
             setTimeout(() => this.waitLoading = false, 800);
             if (this.waitLoading === true) {
                 return;

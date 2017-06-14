@@ -51,6 +51,7 @@ export class ChannelService {
     renameCurrentChannel(channel: ChanelModel) {
         const headers = new Headers({"Content-Type": "application/json"});
         const options = new RequestOptions({headers: headers});
+        this.currentChannel.name = channel.name;
         this.http.put(this.url + this.currentChannel.id, channel, options).subscribe((response) => this.joinChannel(response.json()));
     }
 
