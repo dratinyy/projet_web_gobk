@@ -45,7 +45,9 @@ export class ChannelService {
     }
 
     public getCurrentChannel(): ChanelModel {
+
         return this.currentChannel;
+
     }
 
     renameCurrentChannel(channel: ChanelModel) {

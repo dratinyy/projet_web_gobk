@@ -1,6 +1,6 @@
 <div class="header card">
     <div class="btn-group">
-        <h1 *ngIf="editName === false"> {{this.channelService.getCurrentChannel().name}} </h1>
+        <h1 *ngIf="editName === false" title="{{this.channelService.getCurrentChannel().name}}"> {{this.channelService.getCurrentChannel().shortname}} </h1>
         <div *ngIf="editName" class="edit">
       <input type="text" placeholder="{{this.channelService.getCurrentChannel().name}}"
                 class="name-control" id="rename" required [(ngModel)]="rename" name="rename"

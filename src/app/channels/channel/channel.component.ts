@@ -27,7 +27,11 @@ export class ChannelComponent implements OnInit {
      */
     ngOnInit() {
         if (this.channel.name && this.channel.name.length > 20) {
-            this.channel.name = this.channel.name.slice(0, 20 - this.channel.name.length).concat("…");
+            this.channel.shortname = this.channel.name.slice(0, 20 - this.channel.name.length).concat("…");
+        }else {
+
+            this.channel.shortname = this.channel.name;
+
         }
     }
 
