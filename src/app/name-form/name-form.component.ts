@@ -13,8 +13,7 @@ export class NameFormComponent implements OnInit {
   public name: string;
 
   constructor(private nameService: NameService) {
-    // this.name = this.nameService.retrieveName();
-    this.name = "";
+    this.name = this.nameService.retrieveName();
   }
 
   ngOnInit() { }
