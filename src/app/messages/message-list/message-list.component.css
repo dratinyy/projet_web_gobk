@@ -30,3 +30,9 @@
   background-color: var(--dark-blue-1);
 }
 
+.loading{
+  color:var(--dark-blue-1);
+  text-align: center;
+  margin-top:25px;
+}
+
