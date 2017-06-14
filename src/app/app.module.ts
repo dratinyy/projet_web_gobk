@@ -13,16 +13,18 @@ import {ChannelListComponent} from "./channels/channel-list/channel-list.compone
 import {ChannelService} from "../shared/services/channel/channel.service";
 import {NameFormComponent} from "./name-form/name-form.component";
 import {NameService} from "../shared/services/name/name.service";
-import {ChannelFormComponent} from "./channels/channel-form/channel-form.component";
+import {ChannelNewFormComponent} from "./channels/channel-new-form/channel-new-form.component";
 import {ChannelNameFormComponent} from "./channels/channel-name-form/channel-name-form.component";
 import {SafePipe} from "../shared/pipes/safe";
+import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel-page-controls.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         MessageFormComponent,
         NameFormComponent,
-        ChannelFormComponent,
+        ChannelNewFormComponent,
+        ChannelPageFormComponent,
         ChannelNameFormComponent,
         MessageListComponent,
         ChannelListComponent,

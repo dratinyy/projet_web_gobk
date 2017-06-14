@@ -1,3 +1,6 @@
+.card{
+  padding-top:25px;
+}
 .main{
   float: none;
   display: flex;
@@ -10,9 +13,30 @@
   min-height: 100vh;
 }
 
-.channels{
-
+.head{
+  margin:0 auto;
+  text-align: center;
 }
+.channels h1, .channels button{
+  float:left;
+}
+
+.channels button{
+  width:40px;
+  height:40px;
+  background-color: var(--dark-blue-1);
+  color:#fff;
+  border:none;
+  border-radius: 10px;
+  margin-left:20px;
+}
+
+button:active{
+  background-color: var(--dark-blue-2) !important;
+  border:none;
+}
+
+
 app-channel-list{
   overflow-y: scroll;
   overflow-x:hidden;

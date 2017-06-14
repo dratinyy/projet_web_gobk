@@ -1,0 +1,10 @@
+<div class="ctn">
+    <div class="btn-group page">
+        <button class="btn" (click)="previousChannelPage()"><i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <p>Page </p>
+        <input type="text" class="name-control" id="page" name="page" (keypress)="gotoChannelHandler($event.keyCode)"/>
+        <button class="btn update" (click)="gotoChannelPage()"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+        <button class="btn" (click)="nextChannelPage()"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+    </div>
+</div>

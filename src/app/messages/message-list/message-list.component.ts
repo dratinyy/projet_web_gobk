@@ -1,11 +1,10 @@
-import {Component, ElementRef, HostListener, Inject, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
 import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
-import {DOCUMENT} from "@angular/platform-browser";
 
 @Component({
     selector: "app-message-list",
@@ -20,12 +19,13 @@ export class MessageListComponent implements OnInit {
     private channelIndex: number;
     private channelMessagePage: number;
     private scrollChannel: boolean;
+    private waitLoading: boolean;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService,
-                @Inject(DOCUMENT) private document: Document) {
+    constructor(private messageService: MessageService, private channelService: ChannelService) {
         this.messageList = new MessageModel()[1000];
-        this.channelMessagePage = 0;
+        this.channelMessagePage = 1;
         this.scrollChannel = true;
+        this.waitLoading = false;
     }
 
     /**
@@ -39,11 +39,12 @@ export class MessageListComponent implements OnInit {
      */
     ngOnInit() {
         this.messageService.getMessages(
-            this.channelService.getCurrentChannel().id + "/messages")
+            this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         Observable.interval(1000).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
+        setTimeout(() => this.scrollToBottom(), 300);
     }
 
     /**
@@ -68,12 +69,16 @@ export class MessageListComponent implements OnInit {
     }
 
     putWithoutDuplicates(arr: MessageModel[]) {
+        console.log("arr.length " +arr.length);
         for (let i = 0; i < arr.length; i++) {
+            console.log(this.messageList[this.messageList.length - 1] +    " || " + arr[i]);
+            /*
+            if () {
+                this.scrollChannel = true;
+            }
+             */
             for (let k = 0; k < this.messageList.length; k++) {
                 if (this.messageList[k] && arr[i] && this.messageList[k].id === arr[i].id) {
-                    if (this.messageList[this.messageList.length - 1].id < arr[i].id) {
-                        this.scrollChannel = true;
-                    }
                     arr.splice(i, 1);
                 }
             }
@@ -100,10 +105,15 @@ export class MessageListComponent implements OnInit {
     onScroll() {
         const scrollHeight = this.scrollContainer.nativeElement.scrollHeight;
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop === 0) {
-            this.scrollContainer.nativeElement.scrollTop = 10;
-            this.channelMessagePage++;
+        if (scrollTop < 5) {
+            this.scrollContainer.nativeElement.scrollTop = 15;
+            setTimeout(() => this.waitLoading = false, 800);
+            if (this.waitLoading === true) {
+                return;
+            }
+            this.waitLoading = true;
             this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages?page=" + this.channelMessagePage);
+            this.channelMessagePage++;
         } else if (scrollTop - scrollHeight < 5) {
             // auto refresh
         } else {

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ChannelFormComponent } from "./channel-form.component";
+import { ChannelNewFormComponent } from "./channel-new-form.component";
 
-describe("ChannelFormComponent", () => {
-  let component: ChannelFormComponent;
-  let fixture: ComponentFixture<ChannelFormComponent>;
+describe("ChannelNewFormComponent", () => {
+  let component: ChannelNewFormComponent;
+  let fixture: ComponentFixture<ChannelNewFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChannelFormComponent ]
+      declarations: [ ChannelNewFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelFormComponent);
+    fixture = TestBed.createComponent(ChannelNewFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
