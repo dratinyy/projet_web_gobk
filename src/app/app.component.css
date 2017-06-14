@@ -11,7 +11,12 @@
   border-radius:0px;
   float: left;
   min-height: 100vh;
+  padding:0 !important;
+  border:none !important;
+  -webkit-border-radius:0px;
+  -moz-border-radius:0px;
 }
+
 
 .head{
   margin:0 auto;
