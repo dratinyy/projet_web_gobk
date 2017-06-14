@@ -1,7 +1,7 @@
 <div class="channel">
 
     <div *ngIf="channel.id === this.channelService.getCurrentChannel().id; else elseBlock" class="currentChan">
-        <div class="name">{{channel.name}}
+        <div class="name" title="{{channel.name}}">{{channel.shortname}}
             <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
             </button>
             <div class="number">[{{channel.id}}]</div>
@@ -10,7 +10,7 @@
 
     <ng-template #elseBlock>
 
-        <div class="name">{{channel.name}}
+        <div class="name" title="{{channel.name}}">{{channel.shortname}}
             <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
             </button>
             <div class="number">[{{channel.id}}]</div>
