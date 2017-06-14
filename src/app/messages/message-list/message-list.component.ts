@@ -69,14 +69,7 @@ export class MessageListComponent implements OnInit {
     }
 
     putWithoutDuplicates(arr: MessageModel[]) {
-        console.log("arr.length " +arr.length);
         for (let i = 0; i < arr.length; i++) {
-            console.log(this.messageList[this.messageList.length - 1] +    " || " + arr[i]);
-            /*
-            if () {
-                this.scrollChannel = true;
-            }
-             */
             for (let k = 0; k < this.messageList.length; k++) {
                 if (this.messageList[k] && arr[i] && this.messageList[k].id === arr[i].id) {
                     arr.splice(i, 1);
