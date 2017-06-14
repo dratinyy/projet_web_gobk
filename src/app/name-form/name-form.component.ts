@@ -26,12 +26,31 @@ export class NameFormComponent implements OnInit {
    */
   sendName() {
     console.log("Click Name!");
-    this.nameService.sendName(this.name);
+    if (this.pseudoVerif()) {
+      this.nameService.sendName(this.name);
+    } else {
+      this.nameService.sendName(this.name);
+      /*
+      Ici le code pour prevenir l'utilisateur que le pseudo n'est pas valide
+      const name = document.getElementById("name");
+      name.style.color = "red";
+      this.nameService.sendName("echec");\
+      */
+    }
   }
 
   sendNameHandler(keyCode) {
     if (keyCode === 13) {
       this.sendName();
+    }
+  }
+
+  pseudoVerif() {
+    const regex = "[a-z]";
+    if (this.name.match(regex)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
