@@ -1,4 +1,4 @@
 <div class="btn-group">
-  <input type="text" class="name-control" placeholder="Enter your username..." id="name" required  [(ngModel)]="name" name="name" (keypress)="sendNameHandler($event.keyCode)">
+  <input type="text" class="name-control" placeholder="Enter your username..." id="name" name="name" required  [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
   <button class="btn btn-primary" (click)="sendName()"> Send </button>
 </div>

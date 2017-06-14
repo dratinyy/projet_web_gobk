@@ -29,13 +29,7 @@ export class NameFormComponent implements OnInit {
     if (this.pseudoVerif()) {
       this.nameService.sendName(this.name);
     } else {
-      this.nameService.sendName(this.name);
-      /*
-      Ici le code pour prevenir l'utilisateur que le pseudo n'est pas valide
-      const name = document.getElementById("name");
-      name.style.color = "red";
-      this.nameService.sendName("echec");\
-      */
+      this.nameService.sendName("echec");
     }
   }
 
@@ -46,8 +40,8 @@ export class NameFormComponent implements OnInit {
   }
 
   pseudoVerif() {
-    const regex = "[a-z]";
-    if (this.name.match(regex)) {
+    const regex = "[a-z]*";
+    if (this.name.match(regex)[0] === this.name) {
       return true;
     } else {
       return false;
