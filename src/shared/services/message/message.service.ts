@@ -30,23 +30,22 @@ export class MessageService {
   constructor(private http: Http) {
     this.url = URLSERVER;
     this.messageList$ = new ReplaySubject(1);
-    this.messageList$.next([new MessageModel()]);
   }
 
-  public getMessages(route: number) {
-    const finalUrl = this.url + route.toString() + "/messages";
+  public getMessages(route: string) {
+    const finalUrl = this.url + route;
     this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndResetMessageList(response));
+      .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
 
-  public sendMessage(route: number, message: MessageModel) {
-    const finalUrl = this.url + route.toString() + "/messages";
+  public sendMessage(route: string, message: MessageModel) {
+    const finalUrl = this.url + route.toString();
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
   }
 
-  extractAndResetMessageList(response: Response) {
+  extractAndUpdateMessageList(response: Response) {
     // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
     // fait CTRL + Click pour voir la déclaration et la documentation
     const responseMessageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
@@ -54,7 +53,7 @@ export class MessageService {
     this.messageList$.next(responseMessageList); // On pousse les nouvelles données dans l'attribut messageList$
   }
 
-  private extractMessageAndGetMessages(response: Response, route: number): MessageModel {
+  private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
     this.getMessages(route);
     return response.json();
   }

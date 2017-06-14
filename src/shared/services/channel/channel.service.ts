@@ -9,12 +9,12 @@ export class ChannelService {
 
     private url: string;
     public channelList$: ReplaySubject<ChanelModel[]>;
-    private currentChannel: ChanelModel;
+    private currentChannelId: number;
     private currentChannelPage: number;
 
     constructor(private http: Http) {
         this.url = URLSERVER;
-        this.currentChannel = new ChanelModel(540);
+        this.currentChannelId = 540;
         this.currentChannelPage = 0;
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
@@ -41,17 +41,17 @@ export class ChannelService {
     }
 
     public joinChannel(channel: ChanelModel) {
-        this.currentChannel = channel;
+        this.currentChannelId = channel.id;
     }
 
-    public getCurrentChannel(): ChanelModel {
-        return this.currentChannel;
+    public getCurrentChannel(): number {
+        return this.currentChannelId;
     }
 
     renameCurrentChannel(channel: ChanelModel) {
         const headers = new Headers({"Content-Type": "application/json"});
         const options = new RequestOptions({headers: headers});
-        this.http.put(this.url + this.currentChannel.id, channel, options).subscribe((response) => this.joinChannel(response.json()));
+        this.http.put(this.url + this.currentChannelId, channel, options).subscribe((response) => this.joinChannel(response.json()));
     }
 
     /**

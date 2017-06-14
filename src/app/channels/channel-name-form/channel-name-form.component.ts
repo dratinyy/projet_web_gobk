@@ -11,19 +11,25 @@ import {ChanelModel} from "../../../shared/models/ChannelModel";
 export class ChannelNameFormComponent implements OnInit {
 
   public rename: string;
+  public isOpen: boolean;
 
   constructor(private channelService: ChannelService) {
     this.rename = "";
+    this.isOpen = false;
   }
 
   ngOnInit() {
   }
 
+  openInput() {
+    this.isOpen = !this.isOpen;
+  }
+
   renameCurrentChannel() {
-    const channel = new ChanelModel();
-    channel.name = this.rename;
-    this.channelService.renameCurrentChannel(channel);
-    this.rename = "";
+    // const channel = new ChanelModel();
+    // channel.name = this.rename;
+    // this.channelService.renameCurrentChannel(channel);
+    // this.rename = "";
   }
 
   renameCurrentChannelHandler(keyCode) {

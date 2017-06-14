@@ -1,4 +1,7 @@
 <div class="btn-group">
-  <input type="text" placeholder="Rename this channel..." class="name-control" id="rename" required  [(ngModel)]="rename" name="rename" (keypress)="renameCurrentChannelHandler($event.keyCode)">
-  <button (click)="renameCurrentChannel()">🖊</button>
+    <div *ngIf="isOpen">
+        <input type="text" placeholder="Rename this channel..." class="name-control" id="rename" required
+               [(ngModel)]="rename" name="rename" (keypress)="renameCurrentChannelHandler($event.keyCode)">
+    </div>
+    <button (click)="openInput()">🖊</button>
 </div>
