@@ -12,8 +12,11 @@ export class ChannelNameFormComponent implements OnInit {
 
   public rename: string;
 
+  public chanService: ChannelService;
+
   constructor(private channelService: ChannelService) {
     this.rename = "";
+    this.chanService = channelService;
   }
 
   ngOnInit() {
