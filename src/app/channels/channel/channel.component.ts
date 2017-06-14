@@ -24,11 +24,7 @@ export class ChannelComponent implements OnInit {
    * pas dans le constructeur. Si vous souhaitez manipuler votre message lors du chargement du composant, vous devez
    * le faire dans le ngOnInit.
    */
-  ngOnInit() {
-    if (this.channel.name && this.channel.name.length > 20) {
-      this.channel.name = this.channel.name.slice(0, 20 - this.channel.name.length).concat("…");
-    }
-  }
+  ngOnInit() { }
 
   joinChannel() {
     this.channelService.joinChannel(this.channel);
