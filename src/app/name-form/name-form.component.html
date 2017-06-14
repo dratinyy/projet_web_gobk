@@ -1,4 +1,6 @@
 <div class="btn-group">
+  <p>Pseudo :</p>
   <input type="text" class="name-control" placeholder="Enter your username..." id="name" name="name" required  [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
-  <button class="btn btn-primary" (click)="sendName()"> Send </button>
+  <button (click)="sendName()"><i class="fa fa-pencil" aria-hidden="true"></i>
+  </button>
 </div>

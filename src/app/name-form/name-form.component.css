@@ -1,21 +1,44 @@
-button, input{
-  -webkit-border-radius:5px;
-  -moz-border-radius:5px;
-  border-radius:5px;
-  height:40px;
+.btn-group{
+  margin-top:5px;
+}
+
+button, input,p{
+  height:30px;
+  line-height:30px;
+  color:#000;
 }
 
 button{
+  background-color: transparent;
+  color:grey;
+  font-size:18px;
   border:none;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  background-color: var(--dark-blue-1);
-  color:#fff;
+}
+
+button:hover{
+  color:var(--blue);
+}
+
+p{
+  margin-left:45px;
 }
 
 input{
-  border:solid 1px rgba(0,0,0,.15);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding-left:15px;
+  padding-left: 5px;
+  width:70px;
+  color:grey;
+  border:none;
+  background-color:transparent;
+}
+
+input:hover{
+  border: 1px solid black;
+}
+
+input:focus{
+  border: 1px solid black;
+}
+
+input:before{
+  content:"@ "
 }
