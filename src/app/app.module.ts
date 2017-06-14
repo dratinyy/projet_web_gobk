@@ -42,6 +42,7 @@ import {PreviousMessageService} from "../shared/services/message/previousMsg.ser
         ChannelService,
         MessageService,
         NameService,
+        PreviousMessageService
     ],
     bootstrap: [AppComponent]
 })

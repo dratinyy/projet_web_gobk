@@ -3,6 +3,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core"
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
 import {DomSanitizer} from "@angular/platform-browser";
+import {PreviousMessageService} from "../../../shared/services/message/previousMsg.service";
 
 @Component({
     selector: "app-message",
@@ -25,7 +26,7 @@ export class MessageComponent implements OnInit {
 
     private instas: string[];
 
-    constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
+    constructor(private nameService: NameService, public sanitizer: DomSanitizer, public prevMsgService: PreviousMessageService) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.retrieveName();
         this.color = "#424f88";
