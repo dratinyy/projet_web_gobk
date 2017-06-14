@@ -29,7 +29,7 @@ export class NameFormComponent implements OnInit {
     if (this.pseudoVerif()) {
       this.nameService.sendName(this.name);
     } else {
-      this.nameService.sendName("echec");
+      // traitement du pseudo non valide ici
     }
   }
 
