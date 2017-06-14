@@ -25,6 +25,7 @@ export class ChannelFormComponent implements OnInit {
     const channel = new ChanelModel();
     channel.name = this.name;
     this.channelService.addChannel(channel);
+    this.name = "";
   }
 
   previousChannelPage() {
