@@ -29,9 +29,7 @@ export class ChannelComponent implements OnInit {
         if (this.channel.name && this.channel.name.length > 20) {
             this.channel.shortname = this.channel.name.slice(0, 20 - this.channel.name.length).concat("…");
         }else {
-
             this.channel.shortname = this.channel.name;
-
         }
     }
 

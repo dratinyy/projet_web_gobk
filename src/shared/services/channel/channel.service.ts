@@ -14,7 +14,7 @@ export class ChannelService {
 
     constructor(private http?: Http) {
         this.url = URLSERVER;
-        this.currentChannel = new ChanelModel(540, "General");
+        this.currentChannel = new ChanelModel(540, "Général");
         this.currentChannelPage = 0;
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
