@@ -1,3 +1,7 @@
+.container{
+
+}
+
 .card{
   padding-top:25px;
 }
@@ -76,5 +80,20 @@ app-message-form{
 }
 
 
+
+.card:first-child{
+  -moz-box-shadow: -5px 0px 10px 2px #c0c0c0;
+  -webkit-box-shadow: -5px 0px 10px 2px #c0c0c0;
+  -o-box-shadow: -5px 0px 10px 2px #c0c0c0;
+  box-shadow: -5px 0px 10px 2px #c0c0c0;
+  padding-left:15px;
+}
+
+.card:last-child{
+  -moz-box-shadow: 5px 0px 10px 2px #c0c0c0;
+  -webkit-box-shadow: 5px 0px 10px 2px #c0c0c0;
+  -o-box-shadow: 5px 0px 10px 2px #c0c0c0;
+  box-shadow: 5px 0px 10px 2px #c0c0c0;
+}
 
 
