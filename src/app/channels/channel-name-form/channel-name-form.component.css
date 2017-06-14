@@ -68,3 +68,13 @@ h1 {
 }
 
 
+button:focus{
+  outline:none;
+  box-shadow:none;
+}
+
+
+input:focus{
+  outline:none;
+  box-shadow:none;
+}

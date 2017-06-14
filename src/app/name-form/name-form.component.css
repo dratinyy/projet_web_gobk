@@ -17,7 +17,7 @@ button{
 }
 
 button:hover{
-  color:var(--blue);
+  color:var(--dark-blue-1);
 }
 
 p{
@@ -30,6 +30,7 @@ input{
   color:grey;
   border:none;
   background-color:transparent;
+  margin-left: 5px;
 }
 
 input:hover{
@@ -40,6 +41,20 @@ input:focus{
   border: 1px solid black;
 }
 
-input:before{
-  content:"@ "
+button:focus{
+  outline:none;
+  border: none;
+  box-shadow:none;
+
+}
+
+
+input:focus{
+  outline:none;
+  border: none;
+  box-shadow:none;
+}
+
+button:active{
+  color:var(--dark-blue-2);
 }

@@ -45,7 +45,6 @@
 }
 
 button:active {
-  background-color: var(--dark-blue-2);
   outline: none;
   border: 1px solid transparent;
 }
@@ -61,4 +60,9 @@ input:focus{
   outline:none;
   border: none;
   box-shadow:none;
+}
+
+
+button:active{
+  color:var(--dark-blue-2);
 }
