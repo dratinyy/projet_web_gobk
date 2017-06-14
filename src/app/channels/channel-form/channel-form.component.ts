@@ -48,4 +48,10 @@ export class ChannelFormComponent implements OnInit {
       this.addChannel();
     }
   }
+
+  gotoChannelHandler(keyCode) {
+    if (keyCode === 13) {
+      this.gotoChannelPage();
+    }
+  }
 }
