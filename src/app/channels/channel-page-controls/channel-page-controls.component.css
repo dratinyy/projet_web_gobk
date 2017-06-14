@@ -1,4 +1,4 @@
-.newc, .page{
+.page{
   margin: 0 auto 15px;
   height: 40px;
 }
@@ -6,22 +6,6 @@
 .bouton{
   border-radius: 5px;
   width:40px;
-}
-
-.newc input{
-  border:solid 1px rgba(0,0,0,.15);
-  padding-left:10px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-
-}
-
-.newc button{
-  background-color: var(--dark-blue-1);
-  color:#fff;
-  border: none;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 .page{

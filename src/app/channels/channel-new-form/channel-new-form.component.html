@@ -1,0 +1,8 @@
+<div class="ctn">
+  <div class="row newc">
+    <input type="text" class="name-control" id="name" required placeholder="Create new channel..." [(ngModel)]="name"
+           name="name" (keypress)="addChannelHandler($event.keyCode)">
+    <button class="btn" (click)="addChannel()"><i class="fa fa-plus" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
