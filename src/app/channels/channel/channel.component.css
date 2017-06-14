@@ -1,53 +1,60 @@
 .channel:hover {
-    background-color: #f1f0f0;
+  background-color: #f1f0f0;
 }
 
 .name {
-    border-bottom: 1px solid #f1f0f0;
-    border-left: 1px solid #f1f0f0;
-    border-right: 1px solid #f1f0f0;
-    min-height: 50px;
-    font-size: 18px;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+  border-bottom: 1px solid #f1f0f0;
+  border-left: 1px solid #f1f0f0;
+  border-right: 1px solid #f1f0f0;
+  min-height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .number {
-    font-size: 12px;
-    color: dimgrey;
-    font-weight: normal;
+  font-size: 12px;
+  color: dimgrey;
+  font-weight: normal;
 }
 
 .number:before {
-    content: "id ";
+  content: "id ";
 }
 
 .name:first-child {
-    border-top: 1px solid #f1f0f0;
+  border-top: 1px solid #f1f0f0;
 }
 
 .name:last-child {
-    border-bottom: 1px solid #f1f0f0;
+  border-bottom: 1px solid #f1f0f0;
 }
 
 .bouton {
-    float: right;
-    height: 100%;
-    background-color: transparent;
-    border: none;
-    color: var(--dark-blue-1);
-    font-size: 28px;
-    width: 40px;;
+  float: right;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  color: var(--dark-blue-1);
+  font-size: 28px;
+  width: 40px;;
 }
 
 .bouton:active {
-    color: var(--dark-blue-2);
+  color: var(--dark-blue-2);
 }
 
-.currentChan {
+.current {
+  background-color: var(--dark-blue-1);
+  color: #fff;
+}
 
-    color: #4d51a1;
+.current .bouton{
+  color: #fff;
+}
 
+.current .number{
+  color: #f1f0f0;
 }
