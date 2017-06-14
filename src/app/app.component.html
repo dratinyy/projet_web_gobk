@@ -1,11 +1,7 @@
 <div class="container">
     <div class="">
         <div class="col-md-4 card channels">
-            <div class="head">
-                <h1>{{channel_title}}</h1>
-                <button (click)="showChannelForm()"><i class="fa fa-plus" aria-hidden="true"></i></button>
-            </div>
-            <app-channel-new-form *ngIf="showCreateChannel === true"></app-channel-new-form>
+            <app-channel-new-form></app-channel-new-form>
             <app-channel-list></app-channel-list>
             <app-channel-page-form></app-channel-page-form>
         </div>

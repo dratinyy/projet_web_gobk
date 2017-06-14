@@ -11,12 +11,21 @@ import {ChanelModel} from "../../../shared/models/ChannelModel";
 export class ChannelNewFormComponent implements OnInit {
 
   public name: string;
+  public channel_title: string;
+  public showCreateChannel: boolean;
 
   constructor(private channelService: ChannelService) {
     this.name = "";
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.showCreateChannel = false;
+    this.channel_title = "Channels";
+  }
+
+  showChannelForm() {
+    this.showCreateChannel = !this.showCreateChannel;
+  }
 
   addChannel() {
     console.log("Click add Channel " + this.name + " !");
@@ -24,6 +33,7 @@ export class ChannelNewFormComponent implements OnInit {
     channel.name = this.name;
     this.channelService.addChannel(channel);
     this.name = "";
+    this.showChannelForm();
   }
 
   addChannelHandler(keyCode) {
