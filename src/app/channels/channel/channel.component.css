@@ -1,5 +1,5 @@
-.channel{
-
+.channel:hover{
+  background-color: #f1f0f0;
 }
 
 .name{
@@ -37,4 +37,13 @@
   height:100%;
   background-color: transparent;
   border: none;
+  color:var(--dark-blue-1);
+  font-size:28px;
+  width:40px;
+;
 }
+
+.bouton:active{
+  color:var(--dark-blue-2);
+}
+
