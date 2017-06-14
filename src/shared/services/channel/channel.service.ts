@@ -12,7 +12,7 @@ export class ChannelService {
     private currentChannel: ChanelModel;
     private currentChannelPage: number;
 
-    constructor(private http: Http) {
+    constructor(private http?: Http) {
         this.url = URLSERVER;
         this.currentChannel = new ChanelModel(540);
         this.currentChannelPage = 0;

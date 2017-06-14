@@ -19,3 +19,7 @@ input{
   border-bottom-right-radius: 0;
   padding-left:15px;
 }
+
+h1 {
+  text-align: center;
+}
