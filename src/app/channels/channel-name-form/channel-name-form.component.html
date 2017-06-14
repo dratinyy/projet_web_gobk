@@ -2,9 +2,9 @@
     <div class="btn-group">
         <h1 *ngIf="editName === false"> {{this.channelService.getCurrentChannel().name}} </h1>
         <div *ngIf="editName" class="edit">
-      <textarea type="text" placeholder="{{this.channelService.getCurrentChannel().name}}"
+      <input type="text" placeholder="{{this.channelService.getCurrentChannel().name}}"
                 class="name-control" id="rename" required [(ngModel)]="rename" name="rename"
-                (keypress)="renameCurrentChannelHandler($event.keyCode)"></textarea>
+                (keypress)="renameCurrentChannelHandler($event.keyCode)">
         </div>
         <button (click)="toggleEditName()"><i class="fa fa-pencil fa-check" aria-hidden="true"></i></button>
     </div>
