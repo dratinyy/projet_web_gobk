@@ -37,6 +37,7 @@ export class MessageListComponent implements OnInit {
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         Observable.interval(600).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
+        setTimeout(() => this.scrollToBottom(), 500);
     }
 
     private updateMessageList(messages: MessageModel[]) {
@@ -53,7 +54,7 @@ export class MessageListComponent implements OnInit {
                 }
             } else {
                 this.scrollChannel = true;
-                this.channelMessagePage = 0;
+                this.channelMessagePage = 1;
                 this.messageList = messages;
                 this.channelIndex = this.channelService.getCurrentChannel().id;
                 this.scrollToBottom();
