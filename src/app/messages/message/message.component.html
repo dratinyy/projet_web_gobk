@@ -13,7 +13,7 @@
 
         <div *ngIf="insta">
 
-            <iframe #iframe id="ifrmMe" *ngFor="let insta of instas" [src]="insta | safe" height="450px">
+            <iframe #iframe id="ifrmMe" *ngFor="let insta of instas" [src]="insta | safe" height="375" scrolling="no" frameborder="0">
                 <p>Your browser does not support iframes.</p>
             </iframe>
 
@@ -22,7 +22,7 @@
     </div>
 
     <ng-template #elseBlock>
-        <div class="from">{{message.from}}</div>
+        <div *ngIf="this.prevMsgService.retrieveName() !== message.from" class="from">{{message.from}}</div>
         <div class="content tri-right left-top">{{message.content}}</div>
 
         <div *ngIf="img">
@@ -33,14 +33,13 @@
 
         <div *ngIf="insta">
 
-            <iframe id="ifrm" *ngFor="let insta of instas" [src]="insta | safe" height="450px">
+            <iframe id="ifrm" *ngFor="let insta of instas" [src]="insta | safe" height="375" scrolling="no" frameborder="0" >
                 <p>Your browser does not support iframes.</p>
             </iframe>
 
         </div>
 
     </ng-template>
-
 
 
 </div>

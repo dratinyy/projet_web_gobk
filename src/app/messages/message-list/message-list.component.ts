@@ -5,6 +5,7 @@ import {MessageModel} from "../../../shared/models/MessageModel";
 import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {PreviousMessageService} from "../../../shared/services/message/previousMsg.service";
 
 @Component({
     selector: "app-message-list",
@@ -21,7 +22,7 @@ export class MessageListComponent implements OnInit {
     private scrollChannel: boolean;
     private waitLoading: boolean;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService, private prevName: PreviousMessageService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
         this.scrollChannel = true;
@@ -56,7 +57,7 @@ export class MessageListComponent implements OnInit {
         if (messages) {
             if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
                 this.putWithoutDuplicates(messages);
-                
+
             } else {
                 this.scrollChannel = true;
                 this.channelMessagePage = 0;
@@ -64,6 +65,11 @@ export class MessageListComponent implements OnInit {
                 this.channelIndex = this.channelService.getCurrentChannel().id;
             }
         }
+
+        console.log("NAME");
+        console.log(this.messageList[this.messageList.length - 1].from);
+        this.prevName.saveName(this.messageList[this.messageList.length - 1].from);
+
     }
 
     putWithoutDuplicates(arr: MessageModel[]) {
