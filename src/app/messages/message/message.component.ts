@@ -55,14 +55,14 @@ export class MessageComponent implements OnInit{
                 this.img = true;
             }
 
-            reg = /https:\/\/www.instagram.com\/p\/[^\ ]*\/?/g;
+            reg = /https:\/\/www.instagram.com\/p\/[^\ ^\/]*/g;
             res = this.message.content.match(reg);
 
             if (res != null && res.length > 0) {
                 for (const entry of res) {
                     console.log("INSTA")
                     console.log(entry)
-                    this.instas.push(entry + "embed");
+                    this.instas.push(entry + "/embed");
                 }
                 this.insta = true;
             }
