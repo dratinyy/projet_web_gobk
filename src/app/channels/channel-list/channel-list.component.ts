@@ -14,6 +14,7 @@ export class ChannelListComponent implements OnInit {
   public channelList: ChanelModel[];
 
   constructor(private channelService: ChannelService) {
+    this.channelList = new ChanelModel()[0];
   }
 
   ngOnInit() {
