@@ -7,7 +7,6 @@ import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {NameService} from "../../../shared/services/name/name.service";
 import {timeout} from "rxjs/operator/timeout";
-import {PreviousMessageService} from "../../../shared/services/message/previousMsg.service";
 
 @Component({
     selector: "app-message-list",
@@ -24,7 +23,7 @@ export class MessageListComponent implements OnInit {
     private scrollChannel: boolean;
     private waitLoading: boolean;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService, private prevName: PreviousMessageService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
         this.scrollChannel = true;
@@ -61,10 +60,6 @@ export class MessageListComponent implements OnInit {
                 this.scrollToBottom();
             }
         }
-
-        console.log("NAME");
-        console.log(this.messageList[this.messageList.length - 1].from);
-        this.prevName.saveName(this.messageList[this.messageList.length - 1].from);
 
     }
 
