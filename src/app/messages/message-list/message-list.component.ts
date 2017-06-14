@@ -41,24 +41,22 @@ export class MessageListComponent implements OnInit {
     }
 
     private updateMessageList(messages: MessageModel[]) {
-        if (messages) {
-            if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-                let sentMessage = false;
-                for (let i = 0; i < messages.length; i++) {
-                    sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName()
-                        && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]);
-                }
-                this.putWithoutDuplicates(messages);
-                if (sentMessage) {
-                    setTimeout(() => this.scrollToBottom(), 60);
-                }
-            } else {
-                this.scrollChannel = true;
-                this.channelMessagePage = 1;
-                this.messageList = messages;
-                this.channelIndex = this.channelService.getCurrentChannel().id;
-                this.scrollToBottom();
+        if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
+            let sentMessage = false;
+            for (let i = 0; i < messages.length; i++) {
+                sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName()
+                    && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]);
             }
+            this.putWithoutDuplicates(messages);
+            if (sentMessage) {
+                setTimeout(() => this.scrollToBottom(), 50);
+            }
+        } else {
+            this.scrollChannel = true;
+            this.channelMessagePage = 1;
+            this.messageList = messages;
+            this.channelIndex = this.channelService.getCurrentChannel().id;
+            this.scrollToBottom();
         }
 
     }
@@ -84,7 +82,7 @@ export class MessageListComponent implements OnInit {
     }
 
     private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
-        if (! (m2)) {
+        if (!(m2)) {
             return true;
         }
         const d1 = m1.createdAt.match(/[0-9]*/g);

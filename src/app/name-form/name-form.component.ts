@@ -11,12 +11,14 @@ import {DEFAULTNAME} from "../../shared/constants/defaultName";
 export class NameFormComponent implements OnInit {
 
   public name: string;
+  public isValid = true;
 
   constructor(private nameService: NameService) {
     this.name = this.nameService.retrieveName();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   /**
    * Fonction pour envoyer un message.
@@ -26,11 +28,8 @@ export class NameFormComponent implements OnInit {
    */
   sendName() {
     console.log("Click Name!");
-    if (this.pseudoVerif()) {
-      this.nameService.sendName(this.name);
-    } else {
-      // traitement du pseudo non valide ici
-    }
+    this.pseudoVerif();
+    this.nameService.sendName(this.name);
   }
 
   sendNameHandler(keyCode) {
@@ -42,9 +41,9 @@ export class NameFormComponent implements OnInit {
   pseudoVerif() {
     const regex = "[a-z]*";
     if (this.name.match(regex)[0] === this.name) {
-      return true;
+      this.isValid = true;
     } else {
-      return false;
+      this.isValid = false;
     }
   }
 }
