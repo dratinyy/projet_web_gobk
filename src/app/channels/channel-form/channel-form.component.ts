@@ -41,4 +41,10 @@ export class ChannelFormComponent implements OnInit {
     this.channelService.nextChannelPage();
     this.page = this.channelService.getCurrentChannelPage();
   }
+
+  addChannelHandler(keyCode) {
+    if (keyCode === 13) {
+      this.addChannel();
+    }
+  }
 }
