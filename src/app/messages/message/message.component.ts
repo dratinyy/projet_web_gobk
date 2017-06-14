@@ -44,38 +44,26 @@ export class MessageComponent implements OnInit {
      */
     ngOnInit() {
 
-        let reg = /http[^\ ]*\.(jpg|png)/g;
+        if (this.message.content) {
 
-        let res = this.message.content.match(reg);
-
-        if (res != null && res.length > 0) {
-
-            for (const entry of res) {
-
-                this.imgs.push(entry);
-
+            let reg = /http[^\ ]*\.(jpg|png)/g;
+            let res = this.message.content.match(reg);
+            if (res != null && res.length > 0) {
+                for (const entry of res) {
+                    this.imgs.push(entry);
+                }
+                this.img = true;
             }
 
-            this.img = true;
+            reg = /https:\/\/www.instagram.com\/p\/[^\ ]*/g;
+            res = this.message.content.match(reg);
 
-
-        }
-
-
-        reg = /https:\/\/www.instagram.com\/p\/[^\ ]*/g;
-
-        res = this.message.content.match(reg);
-
-
-        if (res != null && res.length > 0) {
-
-            for (const entry of res) {
-                this.instas.push(entry.split("/?taken")[0] + "/embed");
+            if (res != null && res.length > 0) {
+                for (const entry of res) {
+                    this.instas.push(entry.split("?taken")[0] + "embed");
+                }
+                this.insta = true;
             }
-
-            this.insta = true;
-
-
         }
 
         /*this.imgs.push("lolilo");

@@ -12,7 +12,7 @@ export class ChannelNameFormComponent implements OnInit {
 
   public rename: string;
 
-  constructor(private channelService: ChannelService) {
+  constructor(public channelService: ChannelService) {
     this.rename = "";
   }
 
