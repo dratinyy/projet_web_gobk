@@ -18,7 +18,6 @@ export class NameService {
     private name: string;
 
     constructor() {
-        console.log("construct");
         this.name = DEFAULTNAME;
     }
 
@@ -30,7 +29,6 @@ export class NameService {
      * @param name Le nom que l'utilisateur a choisi
      */
     public sendName(name: string) {
-        console.log("sendName");
         this.name = name;
     }
 
