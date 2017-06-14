@@ -6,6 +6,7 @@ import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {NameService} from "../../../shared/services/name/name.service";
+import {timeout} from "rxjs/operator/timeout";
 
 @Component({
     selector: "app-message-list",
@@ -41,14 +42,14 @@ export class MessageListComponent implements OnInit {
     private updateMessageList(messages: MessageModel[]) {
         if (messages) {
             if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-                const sentMessage = false;
+                let sentMessage = false;
                 for (let i = 0; i < messages.length; i++) {
-//                    sentMessage = sentMessage || (messages[i].from === this.nameService.retrieveName()
-//                        && messages[i].createdAt > this.messageList[0].createdAt);
+                    sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName()
+                        && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]);
                 }
                 this.putWithoutDuplicates(messages);
                 if (sentMessage) {
-                    this.scrollToBottom();
+                    setTimeout(() => this.scrollToBottom(), 60);
                 }
             } else {
                 this.scrollChannel = true;
@@ -78,6 +79,24 @@ export class MessageListComponent implements OnInit {
                 return 0;
             }
         });
+    }
+
+    private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
+        const d1 = m1.createdAt.match(/[0-9]*/g);
+        const d2 = m2.createdAt.match(/[0-9]*/g);
+        let s1 = "";
+        let s2 = "";
+        if (d1 != null && d1.length > 0) {
+            for (const entry of d1) {
+                s1 = s1.concat(entry);
+            }
+        }
+        if (d2 != null && d2.length > 0) {
+            for (const entry of d2) {
+                s2 = s2.concat(entry);
+            }
+        }
+        return s1 > s2;
     }
 
     onScroll() {
