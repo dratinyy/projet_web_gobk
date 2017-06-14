@@ -5,20 +5,20 @@ import {Observable} from "rxjs/Observable";
 import "rxjs/add/observable/interval";
 
 @Component({
-    selector: "app-channel-list",
-    templateUrl: "./channel-list.component.html",
-    styleUrls: ["./channel-list.component.css"]
+  selector: "app-channel-list",
+  templateUrl: "./channel-list.component.html",
+  styleUrls: ["./channel-list.component.css"]
 })
 export class ChannelListComponent implements OnInit {
 
-    public channelList: ChanelModel[];
+  public channelList: ChanelModel[];
 
-    constructor(private channelService: ChannelService) {
-    }
+  constructor(private channelService: ChannelService) {
+  }
 
-    ngOnInit() {
-        this.channelService.getChannels();
-        this.channelService.channelList$.subscribe((channels) => this.channelList = channels);
-        Observable.interval(10000).subscribe(() => this.channelService.getChannels());
-    }
+  ngOnInit() {
+    this.channelService.getChannels();
+    this.channelService.channelList$.subscribe((channels) => this.channelList = channels);
+    Observable.interval(10000).subscribe(() => this.channelService.getChannels());
+  }
 }
