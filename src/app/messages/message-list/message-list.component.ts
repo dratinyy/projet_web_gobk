@@ -20,12 +20,14 @@ export class MessageListComponent implements OnInit {
     private channelIndex: number;
     private channelMessagePage: number;
     private scrollChannel: boolean;
+    private waitLoading: boolean;
 
     constructor(private messageService: MessageService, private channelService: ChannelService,
                 @Inject(DOCUMENT) private document: Document) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 0;
         this.scrollChannel = true;
+        this.waitLoading = false;
     }
 
     /**
@@ -39,11 +41,12 @@ export class MessageListComponent implements OnInit {
      */
     ngOnInit() {
         this.messageService.getMessages(
-            this.channelService.getCurrentChannel().id + "/messages")
+            this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         Observable.interval(1000).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
+        setTimeout(() => this.scrollToBottom(), 300);
     }
 
     /**
@@ -101,6 +104,13 @@ export class MessageListComponent implements OnInit {
         const scrollHeight = this.scrollContainer.nativeElement.scrollHeight;
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
         if (scrollTop === 0) {
+
+            if (this.waitLoading === true) {
+                return;
+            }
+            this.waitLoading = true;
+            setTimeout(() => this.waitLoading = false, 100);
+
             this.scrollContainer.nativeElement.scrollTop = 10;
             this.channelMessagePage++;
             this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages?page=" + this.channelMessagePage);
