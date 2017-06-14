@@ -22,7 +22,7 @@
     </div>
 
     <ng-template #elseBlock>
-        <div class="from">{{message.from}}</div>
+        <div *ngIf="this.prevMsgService.retrieveName() !== message.from" class="from">{{message.from}}</div>
         <div class="content tri-right left-top">{{message.content}}</div>
 
         <div *ngIf="img">

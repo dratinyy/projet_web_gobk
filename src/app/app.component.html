@@ -6,14 +6,14 @@
                 <button (click)="showChannelForm()"><i class="fa fa-plus" aria-hidden="true"></i></button>
             </div>
             <app-channel-new-form *ngIf="showCreateChannel === true"></app-channel-new-form>
-            <app-channel-page-form></app-channel-page-form>
             <app-channel-list></app-channel-list>
-            <app-name-form></app-name-form>
+            <app-channel-page-form></app-channel-page-form>
         </div>
         <div class="col-md-8 card">
             <app-channel-name-form></app-channel-name-form>
             <app-message-list></app-message-list>
             <app-message-form></app-message-form>
+            <app-name-form></app-name-form>
         </div>
     </div>
 </div>

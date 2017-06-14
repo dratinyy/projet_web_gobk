@@ -23,8 +23,7 @@ export class MessageListComponent implements OnInit {
     private scrollChannel: boolean;
     private waitLoading: boolean;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService,
-                private nameService: NameService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
         this.scrollChannel = true;
