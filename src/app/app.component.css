@@ -108,3 +108,13 @@ app-channel-list{
 
 h1{
 }
+
+
+button:active{
+  background-color: var(--dark-blue-2);
+}
+
+button:focus{
+  outline:none;
+  border: 1px solid transparent;
+}
