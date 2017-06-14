@@ -26,6 +26,7 @@ export class ChannelNameFormComponent implements OnInit {
     const channel = new ChanelModel();
     channel.name = this.rename;
     this.channelService.renameCurrentChannel(channel);
+    this.rename = "";
   }
 
   renameCurrentChannelHandler(keyCode) {
