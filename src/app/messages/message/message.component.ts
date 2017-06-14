@@ -60,8 +60,6 @@ export class MessageComponent implements OnInit{
 
             if (res != null && res.length > 0) {
                 for (const entry of res) {
-                    console.log("INSTA")
-                    console.log(entry)
                     this.instas.push(entry + "/embed");
                 }
                 this.insta = true;
