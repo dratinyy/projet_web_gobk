@@ -84,6 +84,9 @@ export class MessageListComponent implements OnInit {
     }
 
     private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
+        if (! (m2)) {
+            return true;
+        }
         const d1 = m1.createdAt.match(/[0-9]*/g);
         const d2 = m2.createdAt.match(/[0-9]*/g);
         let s1 = "";
