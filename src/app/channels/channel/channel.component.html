@@ -1,7 +1,21 @@
 <div class="channel">
-    <div class="name">{{channel.name}}
-      <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
-      </button>
-      <div class="number">[{{channel.id}}]</div>
+
+    <div *ngIf="channel.id === this.channelService.getCurrentChannel().id; else elseBlock" class="currentChan">
+        <div class="name">{{channel.name}}
+            <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
+            </button>
+            <div class="number">[{{channel.id}}]</div>
+        </div>
     </div>
+
+    <ng-template #elseBlock>
+
+        <div class="name">{{channel.name}}
+            <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
+            </button>
+            <div class="number">[{{channel.id}}]</div>
+        </div>
+
+    </ng-template>
+
 </div>
