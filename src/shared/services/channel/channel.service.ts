@@ -64,11 +64,6 @@ export class ChannelService {
         this.getChannels();
     }
 
-    gotoPage(page: number) {
-        this.currentChannelPage = Math.max(0, page);
-        this.getChannels();
-    }
-
     nextChannelPage() {
         this.currentChannelPage++;
         this.getChannels();
