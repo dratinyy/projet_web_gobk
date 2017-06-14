@@ -5,6 +5,7 @@ import {MessageModel} from "../../../shared/models/MessageModel";
 import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {NameService} from "../../../shared/services/name/name.service";
 
 @Component({
     selector: "app-message-list",
@@ -21,22 +22,13 @@ export class MessageListComponent implements OnInit {
     private scrollChannel: boolean;
     private waitLoading: boolean;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
         this.scrollChannel = true;
         this.waitLoading = false;
     }
 
-    /**
-     * Fonction ngOnInit.
-     * Cette fonction est appelée après l'execution de tous les constructeurs de toutes les classes typescript.
-     * Cette dernière s'avère très utile lorsque l'on souhaite attendre des valeurs venant de d'autres composants.
-     * Le composant MessageComponent prend en @Input un message. Les @Input ne sont accessibles uniquement à partir du ngOnInit,
-     * pas dans le constructeur.
-     * En general, l'utilisation des services dans le NgOnInit est une bonne practice. Le constructeur ne doit servir qu'à
-     * l'initialisation simple des variables. Pour plus d'information sur le ngOnInit, il y a un lien dans le README.
-     */
     ngOnInit() {
         this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages");
@@ -46,22 +38,24 @@ export class MessageListComponent implements OnInit {
             this.channelService.getCurrentChannel().id + "/messages"));
     }
 
-    /**
-     *
-     * Message Refresh Handling
-     *
-     */
-
     private updateMessageList(messages: MessageModel[]) {
         if (messages) {
             if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
+                let sentMessage = false;
+                for (let i = 0; i < messages.length; i++) {
+                    console.log("from = " + messages[i].from + " | name = " + this.nameService.retrieveName());
+                    sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName();
+                }
                 this.putWithoutDuplicates(messages);
-                
+                if (sentMessage) {
+                    this.scrollToBottom();
+                }
             } else {
                 this.scrollChannel = true;
                 this.channelMessagePage = 0;
                 this.messageList = messages;
                 this.channelIndex = this.channelService.getCurrentChannel().id;
+                this.scrollToBottom();
             }
         }
     }
@@ -84,17 +78,7 @@ export class MessageListComponent implements OnInit {
                 return 0;
             }
         });
-        if (arr && arr.length > 0) {
-            this.scrollToBottom();
-        }
     }
-
-    /**
-     *
-     * Scroll Handling
-     *
-     */
-
 
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;

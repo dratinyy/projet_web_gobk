@@ -85,7 +85,7 @@ export class MessageComponent implements OnInit{
     }
 
 
-    //(load)="setIframeHeight(this.id)
+    // (load)="setIframeHeight(this.id)
     /*setIframeHeight(id) {
         const ifrm = document.getElementById(id) as HTMLIFrameElement;
         const doc = ifrm.contentDocument ? ifrm.contentDocument :

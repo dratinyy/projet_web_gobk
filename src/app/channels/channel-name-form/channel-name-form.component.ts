@@ -30,6 +30,7 @@ export class ChannelNameFormComponent implements OnInit {
       const channel = new ChanelModel();
       channel.name = this.rename;
       this.channelService.renameCurrentChannel(channel);
+      setTimeout(() => this.channelService.getChannels(), 300);
       this.rename = "";
       this.editName =   false;
     }
