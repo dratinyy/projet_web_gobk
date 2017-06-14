@@ -42,9 +42,8 @@ export class MessageListComponent implements OnInit {
             this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
-        Observable.interval(1000).subscribe(() => this.messageService.getMessages(
+        Observable.interval(600).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
-        setTimeout(() => this.scrollToBottom(), 300);
     }
 
     /**
@@ -54,17 +53,16 @@ export class MessageListComponent implements OnInit {
      */
 
     private updateMessageList(messages: MessageModel[]) {
-        if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-            this.putWithoutDuplicates(messages);
-        } else {
-            this.scrollChannel = true;
-            this.channelMessagePage = 0;
-            this.messageList = messages;
-            this.channelIndex = this.channelService.getCurrentChannel().id;
-        }
-        if (this.scrollChannel) {
-            this.scrollChannel = false;
-            this.scrollToBottom();
+        if (messages) {
+            if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
+                this.putWithoutDuplicates(messages);
+                
+            } else {
+                this.scrollChannel = true;
+                this.channelMessagePage = 0;
+                this.messageList = messages;
+                this.channelIndex = this.channelService.getCurrentChannel().id;
+            }
         }
     }
 
@@ -86,6 +84,9 @@ export class MessageListComponent implements OnInit {
                 return 0;
             }
         });
+        if (arr && arr.length > 0) {
+            this.scrollToBottom();
+        }
     }
 
     /**
@@ -96,21 +97,16 @@ export class MessageListComponent implements OnInit {
 
 
     onScroll() {
-        const scrollHeight = this.scrollContainer.nativeElement.scrollHeight;
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop < 3) {
+        if (scrollTop === 0) {
             this.scrollContainer.nativeElement.scrollTop = 10;
-            setTimeout(() => this.waitLoading = false, 800);
+            setTimeout(() => this.waitLoading = false, 1000);
             if (this.waitLoading === true) {
                 return;
             }
             this.waitLoading = true;
-            this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages?page=" + this.channelMessagePage);
+            this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
             this.channelMessagePage++;
-        } else if (scrollTop - scrollHeight < 5) {
-            // auto refresh
-        } else {
-            // desactiver auto refresh
         }
     }
 
