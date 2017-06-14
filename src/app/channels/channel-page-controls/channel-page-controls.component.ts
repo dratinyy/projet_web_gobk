@@ -23,19 +23,8 @@ export class ChannelPageFormComponent implements OnInit {
         this.page = this.channelService.getCurrentChannelPage();
     }
 
-    gotoChannelPage() {
-        this.channelService.gotoPage(this.page);
-        this.page = this.channelService.getCurrentChannelPage();
-    }
-
     nextChannelPage() {
         this.channelService.nextChannelPage();
         this.page = this.channelService.getCurrentChannelPage();
-    }
-
-    gotoChannelHandler(keyCode) {
-        if (keyCode === 13) {
-            this.gotoChannelPage();
-        }
     }
 }

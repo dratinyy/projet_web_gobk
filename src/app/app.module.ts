@@ -17,6 +17,7 @@ import {ChannelNewFormComponent} from "./channels/channel-new-form/channel-new-f
 import {ChannelNameFormComponent} from "./channels/channel-name-form/channel-name-form.component";
 import {SafePipe} from "../shared/pipes/safe";
 import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel-page-controls.component";
+import {PreviousMessageService} from "../shared/services/message/previousMsg.service";
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel
     providers: [
         ChannelService,
         MessageService,
-        NameService
+        NameService,
+        PreviousMessageService
     ],
     bootstrap: [AppComponent]
 })

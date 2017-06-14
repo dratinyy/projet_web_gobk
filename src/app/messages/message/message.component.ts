@@ -3,13 +3,14 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core"
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
 import {DomSanitizer} from "@angular/platform-browser";
+import {PreviousMessageService} from "../../../shared/services/message/previousMsg.service";
 
 @Component({
     selector: "app-message",
     templateUrl: "./message.component.html",
     styleUrls: ["./message.component.css"]
 })
-export class MessageComponent implements OnInit{
+export class MessageComponent implements OnInit {
 
     @Input() message: MessageModel;
 
@@ -25,7 +26,7 @@ export class MessageComponent implements OnInit{
 
     private instas: string[];
 
-    constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
+    constructor(private nameService: NameService, public sanitizer: DomSanitizer, public prevMsgService: PreviousMessageService) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.retrieveName();
         this.color = "#424f88";
@@ -87,22 +88,23 @@ export class MessageComponent implements OnInit{
 
     // (load)="setIframeHeight(this.id)
     /*setIframeHeight(id) {
-        const ifrm = document.getElementById(id) as HTMLIFrameElement;
-        const doc = ifrm.contentDocument ? ifrm.contentDocument :
-            ifrm.contentWindow.document;
-        ifrm.style.visibility = "hidden";
-        ifrm.style.height = "10px"; // reset to minimal height ...
-        // IE opt. for bing/msn needs a bit added or scrollbar appears
-        ifrm.style.height = this.getDocHeight(doc) + 4 + "px";
-        ifrm.style.visibility = "visible";
-    }
+     const ifrm = document.getElementById(id) as HTMLIFrameElement;
+     const doc = ifrm.contentDocument ? ifrm.contentDocument :
+     ifrm.contentWindow.document;
+     ifrm.style.visibility = "hidden";
+     ifrm.style.height = "10px"; // reset to minimal height ...
+     // IE opt. for bing/msn needs a bit added or scrollbar appears
+     ifrm.style.height = this.getDocHeight(doc) + 4 + "px";
+     ifrm.style.visibility = "visible";
+     }
 
-    getDocHeight(doc) {
-        doc = doc || document;
-        // stackoverflow.com/questions/1145850/
-        const body = doc.body, html = doc.documentElement;
-        const height = Math.max(body.scrollHeight, body.offsetHeight,
-            html.clientHeight, html.scrollHeight, html.offsetHeight);
-        return height;
-    }*/
+     getDocHeight(doc) {
+     doc = doc || document;
+     // stackoverflow.com/questions/1145850/
+     const body = doc.body, html = doc.documentElement;
+     const height = Math.max(body.scrollHeight, body.offsetHeight,
+     html.clientHeight, html.scrollHeight, html.offsetHeight);
+     return height;
+     }*/
+
 }

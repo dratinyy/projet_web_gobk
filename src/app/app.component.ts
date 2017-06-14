@@ -16,10 +16,10 @@ export class AppComponent {
   public showCreateChannel: boolean;
 
   constructor(private channelService: ChannelService) {
+    this.showCreateChannel = false;
     this.title = "Chat";
     this.channel_title = "Channels";
     Observable.create();
-    this.showCreateChannel = true;
   }
 
   showChannelForm() {

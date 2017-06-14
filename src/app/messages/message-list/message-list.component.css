@@ -1,6 +1,8 @@
 .chatte {
   min-height: 70vh;
   overflow-y: scroll;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   max-height: 70vh;
   -moz-box-shadow: inset 0px 5px 5px -2px #c0c0c0;
   -webkit-box-shadow: inset 0px 5px 5px -2px #c0c0c0;

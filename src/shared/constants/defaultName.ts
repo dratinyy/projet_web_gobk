@@ -1,1 +1,1 @@
-export const DEFAULTNAME = "galan";
+export const DEFAULTNAME = "pole";
