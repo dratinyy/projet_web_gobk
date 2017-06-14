@@ -1,16 +1,16 @@
 <div class="btn-group">
-
+  <button class="btn btn-primary" (click)="sendName()"> Send</button>
+  <p>Pseudo :</p>
   <div *ngIf="this.isValid; else elseBlock">
     <input type="text" class="name-control" placeholder="Enter your username..." id="name" name="name" required
            [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
   </div>
-
   <ng-template #elseBlock>
     <input type="text" class="name-control" placeholder="Enter your username..." id="name2" name="name" required
            [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)" style="color:red;">
   </ng-template>
-
-  <button class="btn btn-primary" (click)="sendName()"> Send</button>
+  <button (click)="sendName()"><i class="fa fa-pencil" aria-hidden="true"></i>
+  </button>
 </div>
 
 
