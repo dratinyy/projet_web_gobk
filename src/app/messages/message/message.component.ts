@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
@@ -65,6 +65,13 @@ export class MessageComponent implements OnInit {
                 }
                 this.insta = true;
             }
+
+            const textArr = [" :)", " ;)", " :(" , " :'(", " :')", " :D", " :p", " <3", " :o", "100"];
+            const emoteArr = [" 🙂", " 😉", " 🙁", " 😢", " 😂", " 😃", " 😋", " ❤️", " 😮", "💯"];
+            for (let i = 0; i < textArr.length; i++) {
+                this.message.content.replace(textArr[i], emoteArr[i]);
+            }
+            // ;
         }
 ///.split("/?")[0]
         /*this.imgs.push("lolilo");
