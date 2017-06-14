@@ -64,11 +64,11 @@ export class MessageComponent implements OnInit {
                 }
                 this.insta = true;
             }
-
             const textArr = [" :)", " ;)", " :(" , " :'(", " :')", " :D", " :p", " <3", " :o", "100"];
             const emoteArr = [" 🙂", " 😉", " 🙁", " 😢", " 😂", " 😃", " 😋", " ❤️", " 😮", "💯"];
             for (let i = 0; i < textArr.length; i++) {
-                this.message.content.replace(textArr[i], emoteArr[i]);
+                console.log(this.message.content.replace(textArr[i], emoteArr[i]));
+                this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
             // ;
         }
