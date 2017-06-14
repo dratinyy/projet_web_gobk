@@ -13,10 +13,16 @@ export class AppComponent {
   public title: string;
   public channel_title: string;
   public name: string;
+  public isShow: boolean;
 
   constructor(private channelService: ChannelService) {
     this.title = "Chat";
     this.channel_title = "Channels";
     Observable.create();
+    this.isShow = true;
+  }
+
+  showChannelForm() {
+    this.isShow = false;
   }
 }
