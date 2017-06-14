@@ -46,6 +46,14 @@ export class ChannelService {
 
     public getCurrentChannel(): ChanelModel {
 
+        if (this.currentChannel.name && this.currentChannel.name.length > 20) {
+            this.currentChannel.shortname = this.currentChannel.name.slice(0, 20 - this.currentChannel.name.length).concat("…");
+        }else {
+
+            this.currentChannel.shortname = this.currentChannel.name;
+
+        }
+
         return this.currentChannel;
 
     }

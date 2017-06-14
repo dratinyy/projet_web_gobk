@@ -46,7 +46,7 @@ export class MessageComponent implements OnInit {
 
         if (this.message.content) {
 
-            let reg = /http[^\ ]*\.(jpg|png)/g;
+            let reg = /http[^\ ]*\.(jpg|png|gif)/g;
             let res = this.message.content.match(reg);
             if (res != null && res.length > 0) {
                 for (const entry of res) {
