@@ -27,6 +27,5 @@ export class ChannelComponent implements OnInit {
 
     joinChannel() {
         this.channelService.joinChannel(this.channel);
-        this.channel.name = this.channelService.getCurrentChannel().name;
     }
 }
