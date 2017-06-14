@@ -18,8 +18,21 @@ export class ChannelListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.channelService.channelList$.subscribe((channels) => {
+      /*
+      const channelsTronc = [new ChanelModel()];
+      let channelTronc = new ChanelModel();
+      for (let i = 0; i < channels.length; i++) {
+        channelTronc = Object.assign({}, channels[i]);
+        if (channelTronc.name.length > 20) {
+          channelTronc.name = channelTronc.name.slice(0, 20 - channelTronc.name.length).concat("...");
+        }
+        channelsTronc.push(channelTronc);
+      }
+      */
+      this.channelList = channels;
+    });
     this.channelService.getChannels();
-    this.channelService.channelList$.subscribe((channels) => this.channelList = channels);
     Observable.interval(10000).subscribe(() => this.channelService.getChannels());
   }
 }
