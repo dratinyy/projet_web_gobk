@@ -12,7 +12,7 @@ import {MessageService} from "../../../shared/services/message/message.service";
 export class ChannelComponent implements OnInit {
 
   @Input() channel: ChanelModel;
-
+  
   constructor(private channelService: ChannelService) {
     this.channel = new ChanelModel();
   }

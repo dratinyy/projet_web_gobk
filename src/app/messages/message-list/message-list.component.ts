@@ -69,8 +69,8 @@ export class MessageListComponent implements OnInit {
     for (let i = 0; i < arr.length; i++ ) {
       for (let k = 0; k < this.messageList.length; k++) {
         if (this.messageList[k] && arr[i] && this.messageList[k].id === arr[i].id) {
-          if (this.messageList[0].id < arr[i].id) {
-            this.scrollToBottom();
+          if (this.messageList[this.messageList.length - 1].id < arr[i].id) {
+            this.scrollChannel = true;
           }
           arr.splice(i, 1);
         }
@@ -94,7 +94,7 @@ export class MessageListComponent implements OnInit {
   onScroll() {
     const scrollHeight = this.scrollContainer.nativeElement.scrollHeight;
     const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-    if (scrollTop < 10) {
+    if (scrollTop === 0) {
       this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages?page=" + this.channelMessagePage);
       this.channelMessagePage++;
       this.scrollContainer.nativeElement.scrollTop = 10;
