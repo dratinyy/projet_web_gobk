@@ -64,10 +64,9 @@ export class MessageComponent implements OnInit {
                 }
                 this.insta = true;
             }
-            const textArr = [" :)", " ;)", " :(" , " :'(", " :')", " :D", " :p", " <3", " :o", "100"];
+            const textArr = [/ :\)/g, / ;\)/g, / :\(/g, / :\'\(/g, / :\'\)/g, / :D/g, / :p/g, / <3/g, / :o/g, /100/g];
             const emoteArr = [" 🙂", " 😉", " 🙁", " 😢", " 😂", " 😃", " 😋", " ❤️", " 😮", "💯"];
             for (let i = 0; i < textArr.length; i++) {
-                console.log(this.message.content.replace(textArr[i], emoteArr[i]));
                 this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
             // ;
