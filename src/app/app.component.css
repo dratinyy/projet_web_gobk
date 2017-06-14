@@ -71,6 +71,10 @@ app-channel-list::-webkit-scrollbar-thumb
   background-color: var(--dark-blue-1);
 }
 
+app-message-form{
+  margin:15px 45px 0px 45px;
+}
+
 
 
 
