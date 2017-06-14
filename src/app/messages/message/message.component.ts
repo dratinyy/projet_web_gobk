@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core";
 
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
@@ -9,7 +9,7 @@ import {DomSanitizer} from "@angular/platform-browser";
     templateUrl: "./message.component.html",
     styleUrls: ["./message.component.css"]
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit{
 
     @Input() message: MessageModel;
 
@@ -55,17 +55,17 @@ export class MessageComponent implements OnInit {
                 this.img = true;
             }
 
-            reg = /https:\/\/www.instagram.com\/p\/[^\ ]*/g;
+            reg = /https:\/\/www.instagram.com\/p\/[^\ ^\/]*/g;
             res = this.message.content.match(reg);
 
             if (res != null && res.length > 0) {
                 for (const entry of res) {
-                    this.instas.push(entry.split("?taken")[0] + "embed");
+                    this.instas.push(entry + "/embed");
                 }
                 this.insta = true;
             }
         }
-
+///.split("/?")[0]
         /*this.imgs.push("lolilo");
          console.log(this.imgs.length);
          this.imgs.push("lolilo");
@@ -84,7 +84,9 @@ export class MessageComponent implements OnInit {
 
     }
 
-    setIframeHeight(id) {
+
+    //(load)="setIframeHeight(this.id)
+    /*setIframeHeight(id) {
         const ifrm = document.getElementById(id) as HTMLIFrameElement;
         const doc = ifrm.contentDocument ? ifrm.contentDocument :
             ifrm.contentWindow.document;
@@ -102,5 +104,5 @@ export class MessageComponent implements OnInit {
         const height = Math.max(body.scrollHeight, body.offsetHeight,
             html.clientHeight, html.scrollHeight, html.offsetHeight);
         return height;
-    }
+    }*/
 }
