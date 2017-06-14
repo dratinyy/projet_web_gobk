@@ -19,6 +19,7 @@ export class AppComponent {
     this.showCreateChannel = false;
     this.title = "Chat";
     this.channel_title = "Channels";
+    this.showCreateChannel = false;
     Observable.create();
   }
 

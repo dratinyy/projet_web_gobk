@@ -1,70 +1,52 @@
-.page{
+.page {
   margin: 0 auto 15px;
   height: 40px;
 }
 
-.bouton{
+.bouton {
   border-radius: 5px;
-  width:40px;
+  width: 40px;
 }
 
-.page{
-  border-bottom:1px solid rgba(0,0,0,.15);
-  border-top:1px solid rgba(0,0,0,.15);
+.page {
+  border-bottom: 1px solid rgba(0, 0, 0, .15);
+  border-top: 1px solid rgba(0, 0, 0, .15);
 }
 
-.page button{
+.page button {
   background-color: var(--dark-blue-1);
-  color:#fff;
+  color: #fff;
   border: none;
 }
 
-.page button:first-child{
+.page button:first-child {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-.page button:last-child{
+
+.page button:last-child {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.page input{
-  border:none;
-  width:40px;
-  text-align: center;
-  font-weight:bold;
-  margin-left: 10px;
-}
-
-.page input:hover{
-  border:1px solid rgba(0,0,0,.15);
-}
-
-.page p{
-  font-size: 110%;
-  margin-left:20px;
+.page p {
+  display: inline;
   line-height: 40px;
 }
 
-.page .update{
-  background-color: transparent;
-  color:var(--dark-blue-1);
-  margin: 0 5px 0 0;
-  padding:0;
+#one{
+  padding-right: 5px;
+  padding-left:15px;
 }
 
-.bouton:active{
+#two{
+  padding-right: 15px;
+  padding-left:5px;
+}
+
+.bouton:active {
   background-color: var(--dark-blue-2) !important;
-  outline:none;
+  outline: none;
   border: 1px solid transparent;
-}
-
-.update:active{
-  color:var(--dark-blue-2) !important;
-  background-color: #fff !important;
-}
-
-input:focus{
-  border:1px solid rgba(0,0,0,.15);
 }
 
