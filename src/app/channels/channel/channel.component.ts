@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 
 import {ChanelModel} from "../../../shared/models/ChannelModel";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {MessageService} from "../../../shared/services/message/message.service";
 
 @Component({
     selector: "app-channel",
@@ -12,7 +13,7 @@ export class ChannelComponent implements OnInit {
 
     @Input() channel: ChanelModel;
 
-    constructor(private channelService: ChannelService) {
+    constructor(private channelService: ChannelService, private messageService: MessageService) {
         this.channel = new ChanelModel();
     }
     /**
