@@ -41,10 +41,10 @@ export class MessageListComponent implements OnInit {
     private updateMessageList(messages: MessageModel[]) {
         if (messages) {
             if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-                let sentMessage = false;
+                const sentMessage = false;
                 for (let i = 0; i < messages.length; i++) {
-                    console.log("from = " + messages[i].from + " | name = " + this.nameService.retrieveName());
-                    sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName();
+//                    sentMessage = sentMessage || (messages[i].from === this.nameService.retrieveName()
+//                        && messages[i].createdAt > this.messageList[0].createdAt);
                 }
                 this.putWithoutDuplicates(messages);
                 if (sentMessage) {
