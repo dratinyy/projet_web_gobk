@@ -69,9 +69,18 @@
   padding:0;
 }
 
-.bouton:focus{
+.bouton:active{
+  background-color: var(--dark-blue-2) !important;
   outline:none;
   border: 1px solid transparent;
 }
 
+.update:active{
+  color:var(--dark-blue-2) !important;
+  background-color: #fff !important;
+}
+
+input:focus{
+  border:1px solid rgba(0,0,0,.15);
+}
 

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { NameFormComponent } from "./name-form.component";
 
-describe("ChannelFormComponent", () => {
+describe("ChannelPageSelectorComponent", () => {
   let component: NameFormComponent;
   let fixture: ComponentFixture<NameFormComponent>;
 
