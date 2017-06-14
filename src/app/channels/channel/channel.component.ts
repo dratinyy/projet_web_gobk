@@ -28,6 +28,5 @@ export class ChannelComponent implements OnInit {
 
     joinChannel() {
         this.channelService.joinChannel(this.channel);
-        this.messageService.getMessages(this.channelService.getCurrentChannel() + "/messages");
     }
 }
