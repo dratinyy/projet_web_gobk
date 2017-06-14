@@ -1,7 +1,7 @@
 <div class="ctn">
   <div class="row newc">
     <input type="text" class="name-control" id="name" required placeholder="Create new channel..." [(ngModel)]="name"
-           name="name">
+           name="name" (keypress)="addChannelHandler($event.keyCode)">
     <button class="btn" (click)="addChannel()"><i class="fa fa-plus" aria-hidden="true"></i>
     </button>
   </div>
@@ -9,7 +9,7 @@
     <button class="btn" (click)="previousChannelPage()"><i class="fa fa-chevron-left" aria-hidden="true"></i>
     </button>
     <p>Page </p>
-    <input type="text" class="name-control" id="page" name="page">
+    <input type="text" class="name-control" id="page" name="page" (keypress)="gotoChannelHandler($event.keyCode)">
     <button class="btn update" (click)="gotoChannelPage()"><i class="fa fa-pencil" aria-hidden="true"></i>
     </button>
 

@@ -25,6 +25,7 @@ export class ChannelFormComponent implements OnInit {
     const channel = new ChanelModel();
     channel.name = this.name;
     this.channelService.addChannel(channel);
+    this.name = "";
   }
 
   previousChannelPage() {
@@ -40,5 +41,17 @@ export class ChannelFormComponent implements OnInit {
   nextChannelPage() {
     this.channelService.nextChannelPage();
     this.page = this.channelService.getCurrentChannelPage();
+  }
+
+  addChannelHandler(keyCode) {
+    if (keyCode === 13) {
+      this.addChannel();
+    }
+  }
+
+  gotoChannelHandler(keyCode) {
+    if (keyCode === 13) {
+      this.gotoChannelPage();
+    }
   }
 }
