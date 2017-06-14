@@ -1,3 +1,22 @@
+.header{
+  margin:0 auto;
+  text-align: center;
+  background-color: var(--dark-blue-2);
+  color:#fff;
+  height:100px;
+  line-height:100px;
+}
+
+.header div, .header button, .header p{
+  float: left;
+}
+
+h1{
+  font-size:50px;
+  padding-top: 20px;
+  margin: 0 0 0 auto;
+}
+
 button, input{
   -webkit-border-radius:5px;
   -moz-border-radius:5px;
@@ -6,23 +25,30 @@ button, input{
 }
 
 button{
+  margin-right:auto;
   width:40px;
   border:none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  background-color: var(--dark-blue-1);
-  color:#fff;
+  color:#c0c0c0;
+  background-color: transparent;
 }
 
 input{
   border:solid 1px rgba(0,0,0,.15);
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding-left:10px;
+  font-size: 36px;
+  padding:30px;
+  text-align: center;
+  background-color: #f1f0f0;
+}
+
+
+button:hover{
+  color:#fff;
 }
 
 button:active{
-  background-color: var(--dark-blue-2);
+  color: #ffffff;
 }
 
 button:focus{
@@ -32,4 +58,8 @@ button:focus{
 
 h1 {
     text-align: center;
+}
+
+.edit{
+  margin:0 0 0 auto;
 }
