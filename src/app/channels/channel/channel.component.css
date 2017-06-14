@@ -37,4 +37,11 @@
   height:100%;
   background-color: transparent;
   border: none;
+  color:var(--dark-blue-1);
+  font-size:28px;
 }
+
+.bouton:active{
+  color:var(--dark-blue-2);
+}
+

@@ -1,29 +1,29 @@
 <div class="message">
 
-    <div *ngIf="message.from === name; else elseBlock" class="me">
+  <div *ngIf="message.from === name; else elseBlock" class="me">
 
-        <div class="from">{{message.from}}</div>
-        <div class="content tri-right left-top">{{message.content}}</div>
+    <div class="from">{{message.from}}</div>
+    <div class="content tri-right left-top">{{message.content}}</div>
 
-    </div>
+  </div>
 
-    <ng-template #elseBlock>
-        <div class="from">{{message.from}}</div>
-        <div class="content tri-right left-top">{{message.content}}</div>
-    </ng-template>
+  <ng-template #elseBlock>
+    <div class="from">{{message.from}}</div>
+    <div class="content tri-right left-top">{{message.content}}</div>
+  </ng-template>
 
-    <div *ngIf="img">
+  <div *ngIf="img">
 
-        <img *ngFor="let img of imgs" src={{img}}/>
+    <img *ngFor="let img of imgs" src={{img}}/>
 
-    </div>
+  </div>
 
-    <div *ngIf="insta">
+  <div *ngIf="insta">
 
-        <iframe *ngFor="let insta of instas" [src]="insta | safe">
-            <p>Your browser does not support iframes.</p>
-        </iframe>
+    <iframe *ngFor="let insta of instas" [src]="insta | safe">
+      <p>Your browser does not support iframes.</p>
+    </iframe>
 
-    </div>
+  </div>
 
 </div>
