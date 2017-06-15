@@ -7,16 +7,16 @@ import "rxjs/add/operator/catch";
 import {NameModel} from "../../models/NameModel";
 import {DEFAULTNAME} from "shared/constants/defaultName";
 import {ReplaySubject} from "rxjs/ReplaySubject";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class NameService {
 
-    public name$: ReplaySubject<string>;
+    public name$: BehaviorSubject<string>;
     private name: string;
 
     constructor() {
-        this.name$ = new ReplaySubject(1);
-        this.name$.next("");
+        this.name$ = new BehaviorSubject(DEFAULTNAME);
     }
 
     /**
