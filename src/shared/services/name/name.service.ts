@@ -15,7 +15,8 @@ export class NameService {
     public name$: BehaviorSubject<string>;
 
     constructor() {
-        this.name$ = new BehaviorSubject(DEFAULTNAME);
+        this.name$ = new BehaviorSubject("");
+        //
     }
 
     public sendName(name: string) {

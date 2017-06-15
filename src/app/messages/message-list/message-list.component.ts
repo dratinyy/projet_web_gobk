@@ -6,6 +6,8 @@ import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {NameService} from "../../../shared/services/name/name.service";
+import {Subscription} from "rxjs/Subscription";
+import {ChanelModel} from "../../../shared/models/ChannelModel";
 
 @Component({
     selector: "app-message-list",
@@ -20,28 +22,39 @@ export class MessageListComponent implements OnInit {
     private channelIndex: number;
     private channelMessagePage: number;
     private waitLoading: boolean;
+    private acceptNewMessages: boolean;
     private name: string;
+    private intervalSubscription: Subscription;
 
     constructor(private messageService: MessageService, private channelService: ChannelService,
                 private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
+        this.acceptNewMessages = true;
         this.waitLoading = false;
     }
 
     ngOnInit() {
-        this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
-        this.channelService.currentChannel$.subscribe((value) => this.messageList = new Array<MessageModel>());
-        this.channelService.currentChannel$.subscribe(() =>
-            this.messageService.getMessages(this.channelIndex + "/messages"));
+        this.channelService.currentChannel$.subscribe((value) => this.changeChannel(value));
 
         this.nameService.name$.subscribe((value) => this.name = value);
 
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
-        this.messageService.getMessages(this.channelIndex + "/messages");
         setTimeout(() => this.scrollToBottom(), 500);
 
-        Observable.interval(1500).subscribe(() => this.messageService.getMessages(this.channelIndex + "/messages"));
+        this.intervalSubscription = Observable.interval(1500).subscribe(() =>
+            this.messageService.getMessages(this.channelIndex + "/messages"));
+    }
+
+    changeChannel(value: ChanelModel) {
+        this.acceptNewMessages = false; 
+        if (this.intervalSubscription) {
+            this.intervalSubscription.unsubscribe();
+        }
+        this.messageList = null;
+        this.channelIndex = value.id;
+        this.messageService.getMessages(this.channelIndex + "/messages")
+            .add(() => this.acceptNewMessages = true);
     }
 
     /**
@@ -75,8 +88,10 @@ export class MessageListComponent implements OnInit {
                 }
             } else {
                 this.messageList = messages;
-                this.channelMessagePage = 1;
-                setTimeout(() => this.scrollToBottom(), 40);
+                this.channelMessagePage = 0;
+                setTimeout(this.intervalSubscription = Observable.interval(1500).subscribe(() =>
+                    this.messageService.getMessages(this.channelIndex + "/messages"), () => {},
+                    () => this.scrollToBottom()), 20);
             }
         }
     }
@@ -115,7 +130,7 @@ export class MessageListComponent implements OnInit {
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
         if (scrollTop < 3) {
-            this.scrollContainer.nativeElement.scrollTop = 15;
+            this.scrollContainer.nativeElement.scrollTop = 30;
             setTimeout(() => this.waitLoading = false, 1000);
             if (this.waitLoading === false) {
                 this.waitLoading = true;

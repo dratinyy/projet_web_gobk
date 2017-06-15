@@ -7,6 +7,7 @@ import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
+import {Subscription} from "rxjs/Subscription";
 
 @Injectable()
 export class MessageService {
@@ -32,9 +33,9 @@ export class MessageService {
     this.messageList$ = new ReplaySubject(1);
   }
 
-  public getMessages(route: string) {
+  public getMessages(route: string): Subscription {
     const finalUrl = this.url + route;
-    this.http.get(finalUrl)
+    return this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));
   }
 
@@ -42,16 +43,11 @@ export class MessageService {
     const finalUrl = this.url + route.toString();
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
-    this.http.post(finalUrl, message, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
+    this.http.post(finalUrl, message, options).subscribe((response) => this.getMessages(route));
   }
 
   extractAndUpdateMessageList(response: Response) {
     const responseMessageList = response.json().reverse() || [];
     this.messageList$.next(responseMessageList);
-  }
-
-  private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-    this.getMessages(route);
-    return response.json();
   }
 }

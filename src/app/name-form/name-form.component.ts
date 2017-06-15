@@ -33,6 +33,10 @@ export class NameFormComponent implements OnInit {
         }
     }
 
+    logout() {
+        this.nameService.sendName("");
+    }
+
     sendNameHandler(keyCode) {
         if (keyCode === 13) {
             this.sendName();
