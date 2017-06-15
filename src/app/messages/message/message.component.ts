@@ -27,7 +27,6 @@ export class MessageComponent implements OnInit {
     private yts: string[];
 
     private tweet: boolean;
-
     private tweets: string[];
 
     constructor(private nameService: NameService, public sanitizer: DomSanitizer,
