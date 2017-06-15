@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
@@ -22,7 +22,6 @@ export class MessageListComponent implements OnInit {
     private channelIndex: number;
     private channelMessagePage: number;
     private waitLoading: boolean;
-    private acceptNewMessages: boolean;
     private name: string;
     private intervalSubscription: Subscription;
 
@@ -30,7 +29,6 @@ export class MessageListComponent implements OnInit {
                 private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
-        this.acceptNewMessages = true;
         this.waitLoading = false;
     }
 
@@ -47,14 +45,12 @@ export class MessageListComponent implements OnInit {
     }
 
     changeChannel(value: ChanelModel) {
-        this.acceptNewMessages = false;
         if (this.intervalSubscription) {
             this.intervalSubscription.unsubscribe();
         }
         this.messageList = null;
         this.channelIndex = value.id;
-        this.messageService.getMessages(this.channelIndex + "/messages")
-            .add(() => this.acceptNewMessages = true);
+        this.messageService.getMessages(this.channelIndex + "/messages");
     }
 
     /**
@@ -65,7 +61,7 @@ export class MessageListComponent implements OnInit {
      */
     private updateMessageList(messages: MessageModel[]) {
         if (messages) {
-            if ((this.messageList) && this.messageList.length > 0) {
+            if (this.messageList) {
                 if ((this.messageList[this.messageList.length - 1]) &&
                     this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
                     const bottom = (this.scrollContainer.nativeElement.scrollHeight -
@@ -79,19 +75,23 @@ export class MessageListComponent implements OnInit {
                     if (bottom) {
                         setTimeout(() => this.scrollToBottom(), 40);
                     }
-                } else if ((this.messageList[0]) && (messages[0]) && this.compareMessageDates(this.messageList[0], messages[0])) {
+                } else if ((this.messageList[0]) && (messages[0] &&
+                    this.compareMessageDates(this.messageList[0], messages[0]))) {
                     let i;
                     for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
                     }
                     messages.splice(i, messages.length - i);
                     this.messageList = messages.concat(this.messageList);
+                    this.channelMessagePage++;
+                    this.waitLoading = false;
                 }
             } else {
                 this.messageList = messages;
-                this.channelMessagePage = 0;
-                setTimeout(this.intervalSubscription = Observable.interval(1500).subscribe(() =>
-                    this.messageService.getMessages(this.channelIndex + "/messages"), () => {},
-                    () => this.scrollToBottom()), 20);
+                this.channelMessagePage = 1;
+                this.intervalSubscription.unsubscribe();
+                this.intervalSubscription = Observable.interval(1500).subscribe(() =>
+                    this.messageService.getMessages(this.channelIndex + "/messages"));
+                this.scrollToBottom();
             }
         }
     }
@@ -129,14 +129,11 @@ export class MessageListComponent implements OnInit {
      */
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop < 3) {
-            this.scrollContainer.nativeElement.scrollTop = 30;
-            setTimeout(() => this.waitLoading = false, 1000);
-            if (this.waitLoading === false) {
-                this.waitLoading = true;
-                this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
-                this.channelMessagePage++;
-            }
+        if (scrollTop === 0) {
+            this.waitLoading = true;
+            setTimeout(this.waitLoading = false, 2000);
+            this.scrollContainer.nativeElement.scrollTop = 8;
+            this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
         }
     }
 
@@ -146,5 +143,4 @@ export class MessageListComponent implements OnInit {
     scrollToBottom() {
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
     }
-
 }
