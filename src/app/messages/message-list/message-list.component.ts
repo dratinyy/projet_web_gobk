@@ -20,14 +20,12 @@ export class MessageListComponent implements OnInit {
     public messageList: MessageModel[];
     private channelIndex: number;
     private channelMessagePage: number;
-    private scrollChannel: boolean;
     private waitLoading: boolean;
     private name: string;
 
     constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
-        this.scrollChannel = true;
         this.waitLoading = false;
     }
 
@@ -108,9 +106,9 @@ export class MessageListComponent implements OnInit {
 
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop === 0) {
+        if (scrollTop < 4) {
+            this.scrollContainer.nativeElement.scrollTop = 12;
             setTimeout(() => this.waitLoading = false, 2500);
-            this.scrollContainer.nativeElement.scrollTop = 10;
             if (this.waitLoading === false) {
                 this.waitLoading = true;
                 this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
