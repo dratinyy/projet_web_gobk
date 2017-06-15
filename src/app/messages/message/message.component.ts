@@ -3,6 +3,7 @@ import {Component, Input, OnInit} from "@angular/core";
 import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
 import {DomSanitizer} from "@angular/platform-browser";
+import {TwitterService} from "../../../shared/services/twitter/twitter.service";
 
 @Component({
     selector: "app-message",
@@ -25,9 +26,11 @@ export class MessageComponent implements OnInit {
     private yt: boolean;
     private yts: string[];
 
+    private tweet: boolean;
     private tweets: string[];
 
-    constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
+    constructor(private nameService: NameService, public sanitizer: DomSanitizer,
+                private tweetService: TwitterService) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.getName();
         this.color = "#424f88";
@@ -89,7 +92,7 @@ export class MessageComponent implements OnInit {
                     this.tweets.push("http://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F"
                         + entry.split("/")[3] + "%2Fstatus%2F" + entry.split("/")[5]);
                 }
-                // this.yt = true;
+                this.tweet = true;
             }
 
             const textArr = [/:\)/g, /;\)/g, /:\(/g, /:\'\(/g, /:\'\)/g, /:D/g, /:p/g, /<3/g, /:o/g, /100/g];
