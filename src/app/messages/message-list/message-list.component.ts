@@ -6,7 +6,6 @@ import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {NameService} from "../../../shared/services/name/name.service";
-import {timeout} from "rxjs/operator/timeout";
 
 @Component({
     selector: "app-message-list",
@@ -23,7 +22,8 @@ export class MessageListComponent implements OnInit {
     private waitLoading: boolean;
     private name: string;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService,
+                private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
         this.waitLoading = false;
@@ -41,8 +41,14 @@ export class MessageListComponent implements OnInit {
             this.channelService.getCurrentChannel().id + "/messages"));
     }
 
+    /**
+     * Cette méthode appelée lorsque de nouveau messages sont récupérés par le service de messages.
+     * Elle détermine si un nouveau channel a été entré, auquel cas il faut réinitialiser la liste, ou si de nouveaux
+     * ou d'anciens messages du channel on été récupérés, et donc les insérer dans la liste de messages.
+     *
+     * @param messages Les messages récupérés par le service
+     */
     private updateMessageList(messages: MessageModel[]) {
-
         if (messages) {
             if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
                 this.addMessages(messages);
@@ -66,7 +72,6 @@ export class MessageListComponent implements OnInit {
             let i;
             for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
                 this.messageList[this.messageList.length - 1]); i--) {
-                // bottom = bottom || (this.name === messages[i].from);
             }
             messages.splice(0, i + 1);
             this.messageList = this.messageList.concat(messages);
@@ -104,10 +109,14 @@ export class MessageListComponent implements OnInit {
         return s1 > s2;
     }
 
+    /**
+     * Cette méthode est appelée lorsque le composant liste de messages est scrollé. Si l'utilisateur à scroll jusqu'en
+     * haut de la liste, on demande au service de récupérer la page précédente de l'historique.
+     */
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop < 4) {
-            this.scrollContainer.nativeElement.scrollTop = 12;
+        if (scrollTop < 3) {
+            this.scrollContainer.nativeElement.scrollTop = 20;
             setTimeout(() => this.waitLoading = false, 2500);
             if (this.waitLoading === false) {
                 this.waitLoading = true;
@@ -117,6 +126,9 @@ export class MessageListComponent implements OnInit {
         }
     }
 
+    /**
+     * Cette méthode descends le scroll de la liste de messages au bas du dernier élément.
+     */
     scrollToBottom() {
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
     }
