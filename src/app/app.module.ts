@@ -19,6 +19,7 @@ import {SafePipe} from "../shared/pipes/safe";
 import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel-page-controls.component";
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {TwitterService} from "../shared/services/twitter/twitter.service";
+import {BotService} from "../shared/services/bot/bot.service";
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import {TwitterService} from "../shared/services/twitter/twitter.service";
         ChannelService,
         MessageService,
         NameService,
-        TwitterService
+        TwitterService,
+        BotService
     ],
     bootstrap: [AppComponent]
 })
