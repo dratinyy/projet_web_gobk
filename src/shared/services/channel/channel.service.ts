@@ -28,7 +28,6 @@ export class ChannelService {
 
     private parseChannels(response: Response) {
         const channelList = response.json() || [];
-        console.log(channelList.length)
         this.channelListSize = channelList.length;
         this.channelList$.next(channelList);
     }

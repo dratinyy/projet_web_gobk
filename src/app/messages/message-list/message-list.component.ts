@@ -42,13 +42,13 @@ export class MessageListComponent implements OnInit {
 
     private updateMessageList(messages: MessageModel[]) {
         if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-            let sentMessage = false;
+            let shouldScroll = false;
             for (let i = 0; i < messages.length; i++) {
-                sentMessage = sentMessage || messages[i].from === this.nameService.retrieveName()
-                    && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]);
+                shouldScroll = shouldScroll || (messages[i].from === this.nameService.retrieveName()
+                    && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]));
             }
             this.putWithoutDuplicates(messages);
-            if (sentMessage) {
+            if (shouldScroll) {
                 setTimeout(() => this.scrollToBottom(), 50);
             }
         } else {
