@@ -20,13 +20,9 @@ button:hover{
   color:var(--dark-blue-1);
 }
 
-p{
-  margin-left:45px;
-}
 
 input{
   padding-left: 5px;
-  width:70px;
   color:grey;
   border:none;
   background-color:transparent;
@@ -34,12 +30,15 @@ input{
 }
 
 input:hover{
-  border: 1px solid black;
+  border: 1px solid rgba(0,0,0,.3);
+  border-radius:4px;
 }
 
 input:focus{
-  border: 1px solid black;
+  border: 1px solid rgba(0,0,0,.3);
+  border-radius:4px;
 }
+
 
 button:focus{
   outline:none;
