@@ -33,59 +33,61 @@ export class MessageListComponent implements OnInit {
 
     ngOnInit() {
         this.nameService.name$.subscribe((value) => this.name = value);
-        this.messageService.getMessages(
-            this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
+
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
+        this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages");
+        setTimeout(() => this.scrollToBottom(), 500);
+
         Observable.interval(600).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
-        setTimeout(() => this.scrollToBottom(), 500);
     }
 
     private updateMessageList(messages: MessageModel[]) {
-        if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-            let shouldScroll = false;
-            for (let i = 0; i < messages.length; i++) {
-                shouldScroll = shouldScroll || (messages[i].from === this.name
-                    && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]));
-            }
-            this.putWithoutDuplicates(messages);
-            if (shouldScroll) {
-                setTimeout(() => this.scrollToBottom(), 50);
-            }
-        } else {
-            this.scrollChannel = true;
-            this.channelMessagePage = 1;
-            this.messageList = messages;
-            this.channelIndex = this.channelService.getCurrentChannel().id;
-            this.scrollToBottom();
-        }
 
-    }
-
-    putWithoutDuplicates(arr: MessageModel[]) {
-        for (let i = 0; i < arr.length; i++) {
-            for (let k = 0; k < this.messageList.length; k++) {
-                if (this.messageList[k] && arr[i] && this.messageList[k].id === arr[i].id) {
-                    arr.splice(i, 1);
-                }
-            }
-        }
-        arr.forEach(item => this.messageList.push(item));
-        this.messageList.sort((x, y) => {
-            if (x.id < y.id) {
-                return -1;
-            } else if (x.id > y.id) {
-                return 1;
+        if (messages) {
+            if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
+                this.addMessages(messages);
             } else {
-                return 0;
+                this.channelMessagePage = 1;
+                this.messageList = messages;
+                this.channelIndex = this.channelService.getCurrentChannel().id;
+                setTimeout(() => this.scrollToBottom(), 40);
             }
-        });
+        }
     }
+
+    private addMessages(messages: MessageModel[]) {
+
+        if ((this.messageList[this.messageList.length - 1]) &&
+            this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
+            console.log("top : " + this.scrollContainer.nativeElement.scrollTop +
+                " H : " + this.scrollContainer.nativeElement.scrollHeight);
+            const bottom = (this.scrollContainer.nativeElement.scrollHeight -
+            this.scrollContainer.nativeElement.scrollTop < 700);
+            let i;
+            for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
+                this.messageList[this.messageList.length - 1]); i--) {
+                // bottom = bottom || (this.name === messages[i].from);
+            }
+            messages.splice(0, i + 1);
+            this.messageList = this.messageList.concat(messages);
+            if (bottom) {
+                setTimeout(() => this.scrollToBottom(), 40);
+            }
+        } else if ((this.messageList[0]) && (messages[0]) && this.compareMessageDates(this.messageList[0], messages[0])) {
+            let i;
+            for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
+            }
+            messages.splice(i, messages.length - i);
+            this.messageList = messages.concat(this.messageList);
+        }
+    }
+
 
     private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
-        if (!(m2)) {
-            return true;
+        if (!(m1)) {
+            return false;
         }
         const d1 = m1.createdAt.match(/[0-9]*/g);
         const d2 = m2.createdAt.match(/[0-9]*/g);
@@ -107,14 +109,13 @@ export class MessageListComponent implements OnInit {
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
         if (scrollTop === 0) {
+            setTimeout(() => this.waitLoading = false, 2500);
             this.scrollContainer.nativeElement.scrollTop = 10;
-            setTimeout(() => this.waitLoading = false, 1000);
-            if (this.waitLoading === true) {
-                return;
+            if (this.waitLoading === false) {
+                this.waitLoading = true;
+                this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
+                this.channelMessagePage++;
             }
-            this.waitLoading = true;
-            this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
-            this.channelMessagePage++;
         }
     }
 
