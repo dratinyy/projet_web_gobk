@@ -17,6 +17,7 @@ import {ChannelNewFormComponent} from "./channels/channel-new-form/channel-new-f
 import {ChannelNameFormComponent} from "./channels/channel-name-form/channel-name-form.component";
 import {SafePipe} from "../shared/pipes/safe";
 import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel-page-controls.component";
+import {LoginFormComponent} from "./login-form/login-form.component";
 import {TwitterService} from "../shared/services/twitter/twitter.service";
 
 @NgModule({
@@ -24,6 +25,7 @@ import {TwitterService} from "../shared/services/twitter/twitter.service";
         AppComponent,
         MessageFormComponent,
         NameFormComponent,
+        LoginFormComponent,
         ChannelNewFormComponent,
         ChannelPageFormComponent,
         ChannelNameFormComponent,

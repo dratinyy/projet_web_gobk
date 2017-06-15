@@ -1,0 +1,8 @@
+<div class="btn-group">
+  <div *ngIf="!this.isValid">
+    <input type="text" class="{{classe}}" placeholder="Enter your username..." id="name" name="name" required
+           [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
+  </div>
+</div>
+
+

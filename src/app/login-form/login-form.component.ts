@@ -4,20 +4,23 @@ import {NameService} from "../../shared/services";
 import {DEFAULTNAME} from "../../shared/constants/defaultName";
 
 @Component({
-    selector: "app-name-form",
-    templateUrl: "./name-form.component.html",
-    styleUrls: ["./name-form.component.css"]
+    selector: "app-login-form",
+    templateUrl: "./login-form.component.html",
+    styleUrls: ["./login-form.component.css"]
 })
-export class NameFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
+    public classe: string;
 
     constructor(private nameService: NameService) {
+        this.isValid = false;
+        this.classe = "name-control";
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((value) => this.name = value);
+        this.nameService.name$.subscribe((e) => this.name = e);
     }
 
     /**
@@ -27,9 +30,13 @@ export class NameFormComponent implements OnInit {
      * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
      */
     sendName() {
+        this.name = ((this.name) ? this.name : DEFAULTNAME);
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
+        } else {
+            this.classe = "name-control-red";
+            setTimeout(() => this.classe = "name-control", 150);
         }
     }
 
@@ -41,10 +48,6 @@ export class NameFormComponent implements OnInit {
 
     pseudoVerif() {
         const regex = "[a-z]*";
-        if (this.name.match(regex)[0] === this.name) {
-            this.isValid = true;
-        } else {
-            this.isValid = false;
-        }
+        this.isValid = (this.name) && (this.name.match(regex)[0] === this.name);
     }
 }

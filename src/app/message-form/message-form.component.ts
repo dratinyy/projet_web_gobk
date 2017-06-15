@@ -12,13 +12,15 @@ import {ChannelService} from "../../shared/services/channel/channel.service";
 })
 export class MessageFormComponent implements OnInit {
 
+    public name: string;
     public message: MessageModel;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService) {
-        this.message = new MessageModel(1, "", this.nameService.retrieveName());
+        this.message = new MessageModel(1, "", this.name);
     }
 
     ngOnInit() {
+        this.nameService.name$.subscribe((value) => this.name = value);
     }
 
   eventHandler(keyCode) {
@@ -34,8 +36,7 @@ export class MessageFormComponent implements OnInit {
      * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
      */
     sendMessage() {
-        console.log("Click!");
-        this.message.from = this.nameService.retrieveName();
+        this.message.from = this.name;
         this.messageService.sendMessage(
             this.channelService.getCurrentChannel().id + "/messages", this.message);
         this.message.content = "";

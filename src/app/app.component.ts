@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { Observable } from "rxjs/Observable";
+import {Component} from "@angular/core";
+import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../shared/services/channel/channel.service";
 import {ChanelModel} from "../shared/models/ChannelModel";
 
@@ -15,7 +15,6 @@ export class AppComponent {
   private dispChannels: boolean;
 
   constructor(private channelService: ChannelService) {
-    this.dispChannels = true;
     this.title = "Chat";
     Observable.create();
   }

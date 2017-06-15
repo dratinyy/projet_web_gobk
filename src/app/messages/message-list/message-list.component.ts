@@ -22,6 +22,7 @@ export class MessageListComponent implements OnInit {
     private channelMessagePage: number;
     private scrollChannel: boolean;
     private waitLoading: boolean;
+    private name: string;
 
     constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
@@ -31,6 +32,7 @@ export class MessageListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.nameService.name$.subscribe((value) => this.name = value);
         this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
@@ -44,7 +46,7 @@ export class MessageListComponent implements OnInit {
         if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
             let shouldScroll = false;
             for (let i = 0; i < messages.length; i++) {
-                shouldScroll = shouldScroll || (messages[i].from === this.nameService.retrieveName()
+                shouldScroll = shouldScroll || (messages[i].from === this.name
                     && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]));
             }
             this.putWithoutDuplicates(messages);
