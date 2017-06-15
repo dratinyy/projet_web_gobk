@@ -84,8 +84,8 @@ export class MessageComponent implements OnInit {
                 this.yt = true;
             }
 
-            const textArr = [/ :\)/g, / ;\)/g, / :\(/g, / :\'\(/g, / :\'\)/g, / :D/g, / :p/g, / <3/g, / :o/g, /100/g];
-            const emoteArr = [" 🙂", " 😉", " 🙁", " 😢", " 😂", " 😃", " 😋", " ❤️", " 😮", "💯"];
+            const textArr = [/:\)/g, /;\)/g, /:\(/g, /:\'\(/g, /:\'\)/g, /:D/g, /:p/g, /<3/g, /:o/g, /100/g];
+            const emoteArr = ["🙂", "😉", "🙁", "😢", "😂", "😃", "😋", "❤️", "😮", "💯"];
             for (let i = 0; i < textArr.length; i++) {
                 this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
