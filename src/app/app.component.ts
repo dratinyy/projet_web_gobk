@@ -16,6 +16,7 @@ export class AppComponent {
 
   constructor(private channelService: ChannelService) {
     this.title = "Chat";
+    this.dispChannels = true;
     Observable.create();
   }
 

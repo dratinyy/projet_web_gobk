@@ -99,7 +99,7 @@ app-channel-page-form{
 }
 
 app-channel-new-form{
-  margin:0 auto;
+  margin-left:30px;
 }
 
 app-channel-list{
@@ -152,11 +152,15 @@ button:focus{
   border-radius:4px;
   float: left;
   position: absolute;
-  right: 15px;
+  right: 0px;
+  top:-25px;
   z-index: 1;
   line-height: 100px;
 }
 
+#lebouton2:active{
+  background-color: transparent !important;
+}
 
 .hidden{
   background-color: red;
