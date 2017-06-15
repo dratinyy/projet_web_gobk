@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 
 import {NameService} from "../../shared/services";
+import {DEFAULTNAME} from "../../shared/constants/defaultName";
 
 @Component({
     selector: "app-login-form",
@@ -28,6 +29,7 @@ export class LoginFormComponent implements OnInit {
      * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
      */
     sendName() {
+        this.name = ((this.name) ? this.name : DEFAULTNAME);
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
