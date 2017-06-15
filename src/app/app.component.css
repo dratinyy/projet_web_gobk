@@ -118,3 +118,47 @@ button:focus{
   outline:none;
   border: 1px solid transparent;
 }
+
+
+.salut *{
+  display: inline;
+  position: relative;
+}
+
+.channels{
+  position: relative;
+}
+
+#lebouton{
+  background-color: transparent;
+  color:#fff;
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:4px;
+  float: left;
+  position: absolute;
+  left: 15px;
+  z-index: 1;
+  line-height: 100px;
+}
+
+#lebouton2{
+  background-color: transparent;
+  color:var(--dark-blue-2);
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:4px;
+  float: left;
+  position: absolute;
+  right: 15px;
+  z-index: 1;
+  line-height: 100px;
+}
+
+
+.hidden{
+  background-color: red;
+  display:none;
+}
