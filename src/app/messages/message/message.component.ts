@@ -29,6 +29,8 @@ export class MessageComponent implements OnInit {
 
     private yts: string[];
 
+    private tweets: string[];
+
     constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.retrieveName();
@@ -39,6 +41,7 @@ export class MessageComponent implements OnInit {
         this.instas = [];
         this.yt = false;
         this.yts = [];
+        this.tweets = [];
     }
 
     /**
@@ -77,11 +80,20 @@ export class MessageComponent implements OnInit {
 
             if (res != null && res.length > 0) {
                 for (const entry of res) {
-                    console.log("1 " + entry);
                     this.yts.push(entry.replace("watch?v=", "embed/"));
-                    console.log(entry);
                 }
                 this.yt = true;
+            }
+
+            reg = /https:\/\/twitter.com\/[\w]*\/status\/[0-9]*/g;
+            res = this.message.content.match(reg);
+
+            if (res != null && res.length > 0) {
+                for (const entry of res) {
+                    this.tweets.push("http://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F"
+                        + entry.split("/")[3] + "%2Fstatus%2F" + entry.split("/")[5]);
+                }
+                // this.yt = true;
             }
 
             const textArr = [/ :\)/g, / ;\)/g, / :\(/g, / :\'\(/g, / :\'\)/g, / :D/g, / :p/g, / <3/g, / :o/g, /100/g];
@@ -89,6 +101,8 @@ export class MessageComponent implements OnInit {
             for (let i = 0; i < textArr.length; i++) {
                 this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
+
+
             // ;
         }
 ///.split("/?")[0]
