@@ -9,6 +9,7 @@ export class ChannelService {
 
     private url: string;
     public channelList$: ReplaySubject<ChanelModel[]>;
+    private channelListSize: number;
     private currentChannel: ChanelModel;
     private currentChannelPage: number;
 
@@ -27,6 +28,7 @@ export class ChannelService {
 
     private parseChannels(response: Response) {
         const channelList = response.json() || [];
+        this.channelListSize = channelList.length;
         this.channelList$.next(channelList);
     }
 
@@ -75,7 +77,7 @@ export class ChannelService {
     }
 
     nextChannelPage() {
-        this.currentChannelPage++;
+        this.currentChannelPage = (this.channelListSize === 20 ? this.currentChannelPage + 1 : this.currentChannelPage);
         this.getChannels();
     }
 

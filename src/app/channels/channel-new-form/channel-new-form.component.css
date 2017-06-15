@@ -3,6 +3,10 @@
   height: 40px;
 }
 
+.ctn{
+  display: block;
+}
+
 .bouton{
   border-radius: 5px;
   width:40px;
@@ -35,7 +39,6 @@
 
 button:focus{
   outline:none;
-  border: none;
   box-shadow:none;
 }
 
@@ -44,4 +47,45 @@ input:focus{
   outline:none;
   border: none;
   box-shadow:none;
+}
+
+.head{
+  text-align: center;
+  margin: 25px auto 0;
+}
+.head h1, .head button{
+  float:left;
+}
+
+.head button{
+  width:40px;
+  height:40px;
+  background-color: var(--dark-blue-1);
+  color:#fff;
+  border:none;
+  border-radius: 10px;
+  margin-left:20px;
+}
+
+.ctn{
+  text-align: center;
+  margin: 15px auto 0;
+}
+.ctn input{
+  height:40px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border: 1px solid rgba(0,0,0,.15);
+  padding-left: 10px;
+}
+
+.ctn button{
+  border-radius: 0px 5px 5px 0px;
+  background-color: var(--dark-blue-1);
+  color:#fff;
+  height:40px;
+  width:40px;
+  margin-left:-10px;
+  border:none;
+
 }
