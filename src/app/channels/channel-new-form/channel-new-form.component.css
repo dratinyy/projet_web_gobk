@@ -1,40 +1,6 @@
-.newc {
-  margin: 0 auto 15px;
-  height: 40px;
-}
-
-.ctn{
-  display: block;
-}
-
 .bouton{
   border-radius: 5px;
   width:40px;
-}
-
-.newc input{
-  border:solid 1px rgba(0,0,0,.15);
-  padding-left:10px;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-
-}
-
-.newc button{
-  background-color: var(--dark-blue-1);
-  color:#fff;
-  border: none;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.page .update{
-  background-color: transparent;
-  color:var(--dark-blue-1);
-}
-
-.newc button:active{
-  background-color: var(--dark-blue-2);
 }
 
 button:focus{
@@ -42,34 +8,31 @@ button:focus{
   box-shadow:none;
 }
 
-
 input:focus{
   outline:none;
   border: none;
   box-shadow:none;
 }
 
-.head{
-  text-align: center;
-  margin: 25px auto 0;
+.head {
+  margin-top:30px;
 }
-.head h1, .head button{
+.head h2, .head button{
   float:left;
 }
 
 .head button{
-  width:40px;
-  height:40px;
+  width:35px;
+  height:35px;
   background-color: var(--dark-blue-1);
   color:#fff;
   border:none;
   border-radius: 10px;
-  margin-left:20px;
+  margin-right: 15px;
 }
 
 .ctn{
-  text-align: center;
-  margin: 15px auto 0;
+  padding-top:50px;
 }
 .ctn input{
   height:40px;

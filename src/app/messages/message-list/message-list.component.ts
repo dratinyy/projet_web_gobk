@@ -6,7 +6,6 @@ import "rxjs/add/observable/interval";
 import {Observable} from "rxjs/Observable";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {NameService} from "../../../shared/services/name/name.service";
-import {timeout} from "rxjs/operator/timeout";
 
 @Component({
     selector: "app-message-list",
@@ -20,72 +19,78 @@ export class MessageListComponent implements OnInit {
     public messageList: MessageModel[];
     private channelIndex: number;
     private channelMessagePage: number;
-    private scrollChannel: boolean;
     private waitLoading: boolean;
     private name: string;
 
-    constructor(private messageService: MessageService, private channelService: ChannelService, private nameService: NameService) {
+    constructor(private messageService: MessageService, private channelService: ChannelService,
+                private nameService: NameService) {
         this.messageList = new MessageModel()[1000];
         this.channelMessagePage = 1;
-        this.scrollChannel = true;
         this.waitLoading = false;
     }
 
     ngOnInit() {
         this.nameService.name$.subscribe((value) => this.name = value);
-        this.messageService.getMessages(
-            this.channelService.getCurrentChannel().id + "/messages");
         this.channelIndex = this.channelService.getCurrentChannel().id;
+
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
+        this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages");
+        setTimeout(() => this.scrollToBottom(), 500);
+
         Observable.interval(600).subscribe(() => this.messageService.getMessages(
             this.channelService.getCurrentChannel().id + "/messages"));
-        setTimeout(() => this.scrollToBottom(), 500);
     }
 
+    /**
+     * Cette méthode appelée lorsque de nouveau messages sont récupérés par le service de messages.
+     * Elle détermine si un nouveau channel a été entré, auquel cas il faut réinitialiser la liste, ou si de nouveaux
+     * ou d'anciens messages du channel on été récupérés, et donc les insérer dans la liste de messages.
+     *
+     * @param messages Les messages récupérés par le service
+     */
     private updateMessageList(messages: MessageModel[]) {
-        if (messages && this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-            let shouldScroll = false;
-            for (let i = 0; i < messages.length; i++) {
-                shouldScroll = shouldScroll || (messages[i].from === this.name
-                    && this.compareMessageDates(messages[i], this.messageList[this.messageList.length - 1]));
-            }
-            this.putWithoutDuplicates(messages);
-            if (shouldScroll) {
-                setTimeout(() => this.scrollToBottom(), 50);
-            }
-        } else {
-            this.scrollChannel = true;
-            this.channelMessagePage = 1;
-            this.messageList = messages;
-            this.channelIndex = this.channelService.getCurrentChannel().id;
-            this.scrollToBottom();
-        }
-
-    }
-
-    putWithoutDuplicates(arr: MessageModel[]) {
-        for (let i = 0; i < arr.length; i++) {
-            for (let k = 0; k < this.messageList.length; k++) {
-                if (this.messageList[k] && arr[i] && this.messageList[k].id === arr[i].id) {
-                    arr.splice(i, 1);
-                }
-            }
-        }
-        arr.forEach(item => this.messageList.push(item));
-        this.messageList.sort((x, y) => {
-            if (x.id < y.id) {
-                return -1;
-            } else if (x.id > y.id) {
-                return 1;
+        if (messages) {
+            if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
+                this.addMessages(messages);
             } else {
-                return 0;
+                this.channelMessagePage = 1;
+                this.messageList = messages;
+                this.channelIndex = this.channelService.getCurrentChannel().id;
+                setTimeout(() => this.scrollToBottom(), 40);
             }
-        });
+        }
     }
+
+    private addMessages(messages: MessageModel[]) {
+
+        if ((this.messageList[this.messageList.length - 1]) &&
+            this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
+            console.log("top : " + this.scrollContainer.nativeElement.scrollTop +
+                " H : " + this.scrollContainer.nativeElement.scrollHeight);
+            const bottom = (this.scrollContainer.nativeElement.scrollHeight -
+            this.scrollContainer.nativeElement.scrollTop < 700);
+            let i;
+            for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
+                this.messageList[this.messageList.length - 1]); i--) {
+            }
+            messages.splice(0, i + 1);
+            this.messageList = this.messageList.concat(messages);
+            if (bottom) {
+                setTimeout(() => this.scrollToBottom(), 40);
+            }
+        } else if ((this.messageList[0]) && (messages[0]) && this.compareMessageDates(this.messageList[0], messages[0])) {
+            let i;
+            for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
+            }
+            messages.splice(i, messages.length - i);
+            this.messageList = messages.concat(this.messageList);
+        }
+    }
+
 
     private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
-        if (!(m2)) {
-            return true;
+        if (!(m1)) {
+            return false;
         }
         const d1 = m1.createdAt.match(/[0-9]*/g);
         const d2 = m2.createdAt.match(/[0-9]*/g);
@@ -104,20 +109,26 @@ export class MessageListComponent implements OnInit {
         return s1 > s2;
     }
 
+    /**
+     * Cette méthode est appelée lorsque le composant liste de messages est scrollé. Si l'utilisateur à scroll jusqu'en
+     * haut de la liste, on demande au service de récupérer la page précédente de l'historique.
+     */
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop === 0) {
-            this.scrollContainer.nativeElement.scrollTop = 10;
-            setTimeout(() => this.waitLoading = false, 1000);
-            if (this.waitLoading === true) {
-                return;
+        if (scrollTop < 3) {
+            this.scrollContainer.nativeElement.scrollTop = 20;
+            setTimeout(() => this.waitLoading = false, 2500);
+            if (this.waitLoading === false) {
+                this.waitLoading = true;
+                this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
+                this.channelMessagePage++;
             }
-            this.waitLoading = true;
-            this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
-            this.channelMessagePage++;
         }
     }
 
+    /**
+     * Cette méthode descends le scroll de la liste de messages au bas du dernier élément.
+     */
     scrollToBottom() {
         this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
     }

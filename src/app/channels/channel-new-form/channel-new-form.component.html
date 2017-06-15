@@ -1,11 +1,12 @@
 <div class="head">
-  <h1>{{channel_title}}</h1>
+
   <button (click)="showChannelForm()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+  <h2>{{channel_title}}</h2>
 </div>
 
 <div class="ctn" *ngIf="showCreateChannel === true">
     <input type="text" class="name-control" id="name" required placeholder="Create new channel..." [(ngModel)]="name"
            name="name" (keypress)="addChannelHandler($event.keyCode)">
-    <button class="" (click)="addChannel()"><i class="fa fa-plus" aria-hidden="true"></i>
+    <button class="" (click)="addChannel()"><i class="fa fa-check" aria-hidden="true"></i>
     </button>
 </div>
