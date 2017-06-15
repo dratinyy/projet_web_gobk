@@ -46,11 +46,8 @@ export class MessageService {
   }
 
   extractAndUpdateMessageList(response: Response) {
-    // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
-    // fait CTRL + Click pour voir la déclaration et la documentation
-    const responseMessageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
-    // messageList prendra la valeur tableau vide: [];
-    this.messageList$.next(responseMessageList); // On pousse les nouvelles données dans l'attribut messageList$
+    const responseMessageList = response.json().reverse() || [];
+    this.messageList$.next(responseMessageList);
   }
 
   private extractMessageAndGetMessages(response: Response, route: string): MessageModel {

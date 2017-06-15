@@ -1,6 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 
 import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {Observable} from "rxjs/Observable";
 
 @Component({
     selector: "app-channel-page-form",
@@ -9,22 +10,27 @@ import {ChannelService} from "../../../shared/services/channel/channel.service";
 })
 export class ChannelPageFormComponent implements OnInit {
 
-    public page: number;
+    private channelListSize: number;
+    private currentChannelPage: number;
 
     constructor(private channelService: ChannelService) {
-        this.page = this.channelService.getCurrentChannelPage();
+        this.currentChannelPage = 0;
     }
 
     ngOnInit() {
+        this.channelService.channelList$.subscribe((e) => this.channelListSize = ((e.length) ? e.length : 0));
+
+        this.channelService.getChannels("?page=0");
+        Observable.interval(1500).subscribe(() => this.channelService.getChannels("?page=" + this.currentChannelPage.toString()));
     }
 
     previousChannelPage() {
-        this.channelService.previousChannelPage();
-        this.page = this.channelService.getCurrentChannelPage();
+        this.currentChannelPage = (this.currentChannelPage === 0 ? 0 : this.currentChannelPage - 1);
+        this.channelService.getChannels("?page=" + this.currentChannelPage.toString());
     }
 
     nextChannelPage() {
-        this.channelService.nextChannelPage();
-        this.page = this.channelService.getCurrentChannelPage();
+        this.currentChannelPage = (this.channelListSize === 20 ? this.currentChannelPage + 1 : this.currentChannelPage);
+        this.channelService.getChannels("?page=" + this.currentChannelPage.toString());
     }
 }

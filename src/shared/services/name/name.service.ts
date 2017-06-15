@@ -13,25 +13,17 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
 export class NameService {
 
     public name$: BehaviorSubject<string>;
-    private name: string;
 
     constructor() {
         this.name$ = new BehaviorSubject(DEFAULTNAME);
     }
 
-    /**
-     * Fonction sendName.
-     * Cette fonction permet de changer de nom.
-     *
-     * @param name Le nom que l'utilisateur a choisi
-     */
     public sendName(name: string) {
         this.name$.next(name);
-        this.name = name;
     }
 
     public getName(): string {
-        return this.name;
+        return this.name$.getValue();
     }
 
 }

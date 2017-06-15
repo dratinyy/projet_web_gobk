@@ -14,12 +14,14 @@ export class MessageFormComponent implements OnInit {
 
     public name: string;
     public message: MessageModel;
+    private channelIndex: number;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService) {
         this.message = new MessageModel(1, "", this.name);
     }
 
     ngOnInit() {
+        this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
         this.nameService.name$.subscribe((value) => this.name = value);
     }
 
@@ -37,8 +39,7 @@ export class MessageFormComponent implements OnInit {
      */
     sendMessage() {
         this.message.from = this.name;
-        this.messageService.sendMessage(
-            this.channelService.getCurrentChannel().id + "/messages", this.message);
+        this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
         this.message.content = "";
     }
 }

@@ -30,64 +30,63 @@ export class MessageListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
+        this.channelService.currentChannel$.subscribe((value) => this.messageList = new Array<MessageModel>());
+        this.channelService.currentChannel$.subscribe(() =>
+            this.messageService.getMessages(this.channelIndex + "/messages"));
+
         this.nameService.name$.subscribe((value) => this.name = value);
-        this.channelIndex = this.channelService.getCurrentChannel().id;
 
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
-        this.messageService.getMessages(this.channelService.getCurrentChannel().id + "/messages");
+        this.messageService.getMessages(this.channelIndex + "/messages");
         setTimeout(() => this.scrollToBottom(), 500);
 
-        Observable.interval(600).subscribe(() => this.messageService.getMessages(
-            this.channelService.getCurrentChannel().id + "/messages"));
+        Observable.interval(1500).subscribe(() => this.messageService.getMessages(this.channelIndex + "/messages"));
     }
 
     /**
-     * Cette méthode appelée lorsque de nouveau messages sont récupérés par le service de messages.
-     * Elle détermine si un nouveau channel a été entré, auquel cas il faut réinitialiser la liste, ou si de nouveaux
-     * ou d'anciens messages du channel on été récupérés, et donc les insérer dans la liste de messages.
-     *
+     * Cette méthode est appelée lorsque de nouveau messages sont récupérés par le service de messages.
+     * Elle détermine si la liste est vide et doit être remplie, ou si de nouveaux ou d'anciens messages du channel
+     * on été récupérés, et donc les insérer dans la liste de messages.
      * @param messages Les messages récupérés par le service
      */
     private updateMessageList(messages: MessageModel[]) {
         if (messages) {
-            if (this.messageList && this.channelIndex === this.channelService.getCurrentChannel().id) {
-                this.addMessages(messages);
+            if ((this.messageList) && this.messageList.length > 0) {
+                if ((this.messageList[this.messageList.length - 1]) &&
+                    this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
+                    const bottom = (this.scrollContainer.nativeElement.scrollHeight -
+                    this.scrollContainer.nativeElement.scrollTop < 700);
+                    let i;
+                    for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
+                        this.messageList[this.messageList.length - 1]); i--) {
+                    }
+                    messages.splice(0, i + 1);
+                    this.messageList = this.messageList.concat(messages);
+                    if (bottom) {
+                        setTimeout(() => this.scrollToBottom(), 40);
+                    }
+                } else if ((this.messageList[0]) && (messages[0]) && this.compareMessageDates(this.messageList[0], messages[0])) {
+                    let i;
+                    for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
+                    }
+                    messages.splice(i, messages.length - i);
+                    this.messageList = messages.concat(this.messageList);
+                }
             } else {
-                this.channelMessagePage = 1;
                 this.messageList = messages;
-                this.channelIndex = this.channelService.getCurrentChannel().id;
+                this.channelMessagePage = 1;
                 setTimeout(() => this.scrollToBottom(), 40);
             }
         }
     }
 
-    private addMessages(messages: MessageModel[]) {
-
-        if ((this.messageList[this.messageList.length - 1]) &&
-            this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
-            console.log("top : " + this.scrollContainer.nativeElement.scrollTop +
-                " H : " + this.scrollContainer.nativeElement.scrollHeight);
-            const bottom = (this.scrollContainer.nativeElement.scrollHeight -
-            this.scrollContainer.nativeElement.scrollTop < 700);
-            let i;
-            for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
-                this.messageList[this.messageList.length - 1]); i--) {
-            }
-            messages.splice(0, i + 1);
-            this.messageList = this.messageList.concat(messages);
-            if (bottom) {
-                setTimeout(() => this.scrollToBottom(), 40);
-            }
-        } else if ((this.messageList[0]) && (messages[0]) && this.compareMessageDates(this.messageList[0], messages[0])) {
-            let i;
-            for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
-            }
-            messages.splice(i, messages.length - i);
-            this.messageList = messages.concat(this.messageList);
-        }
-    }
-
-
+    /**
+     * Cette méthode compare l'attribut CreatedAt de deux messages, pour déterminer le plus récent.
+     * @param m1 Le premier message
+     * @param m2 Le second message
+     * @returns {boolean} Vrai si le premier message est strictement plus récent que le second.
+     */
     private compareMessageDates(m1: MessageModel, m2: MessageModel): boolean {
         if (!(m1)) {
             return false;
@@ -116,8 +115,8 @@ export class MessageListComponent implements OnInit {
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
         if (scrollTop < 3) {
-            this.scrollContainer.nativeElement.scrollTop = 20;
-            setTimeout(() => this.waitLoading = false, 2500);
+            this.scrollContainer.nativeElement.scrollTop = 15;
+            setTimeout(() => this.waitLoading = false, 1000);
             if (this.waitLoading === false) {
                 this.waitLoading = true;
                 this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
