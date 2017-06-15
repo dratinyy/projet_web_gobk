@@ -47,7 +47,7 @@ export class MessageListComponent implements OnInit {
     }
 
     changeChannel(value: ChanelModel) {
-        this.acceptNewMessages = false; 
+        this.acceptNewMessages = false;
         if (this.intervalSubscription) {
             this.intervalSubscription.unsubscribe();
         }

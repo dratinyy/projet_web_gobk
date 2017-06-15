@@ -4,6 +4,7 @@ import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
 import {DomSanitizer} from "@angular/platform-browser";
 import {TwitterService} from "../../../shared/services/twitter/twitter.service";
+import {BotService} from "../../../shared/services/bot/bot.service";
 
 @Component({
     selector: "app-message",
@@ -30,7 +31,7 @@ export class MessageComponent implements OnInit {
     private tweets: string[];
 
     constructor(private nameService: NameService, public sanitizer: DomSanitizer,
-                private tweetService: TwitterService) {
+                private tweetService: TwitterService, private bot: BotService) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.getName();
         this.color = "#424f88";
@@ -40,6 +41,7 @@ export class MessageComponent implements OnInit {
         this.instas = [];
         this.yt = false;
         this.yts = [];
+        this.tweet = false;
         this.tweets = [];
     }
 
@@ -100,6 +102,9 @@ export class MessageComponent implements OnInit {
             for (let i = 0; i < textArr.length; i++) {
                 this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
+
+
+            // this.bot.sendMessage("llel  ");
 
             // ;
         }

@@ -8,6 +8,8 @@ import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
 import {Body} from "@angular/http/src/body";
+import {MessageService} from "../message/message.service";
+import {ChannelService} from "../channel/channel.service";
 
 @Injectable()
 export class BotService {
@@ -19,6 +21,8 @@ export class BotService {
      */
     private url: string;
 
+    private message: MessageModel;
+
     /**
      * MessageList$ est un type d'Observable particulier appelé ReplaySubject.
      * MessageList$ est un flux d'évenements qui stock la liste des messages. A chaque fois que l'on fait une requète
@@ -28,35 +32,33 @@ export class BotService {
      */
     public messageList$: ReplaySubject<MessageModel[]>;
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private messageService: MessageService, private channelService: ChannelService) {
         this.url = URLSERVER;
-        this.messageList$ = new ReplaySubject(1);
+        this.message = new MessageModel(1, "", "jeanclaude");
     }
 
-    public getMessages(route: string) {
-        const finalUrl = this.url + route;
-        this.http.get(finalUrl)
-            .subscribe((response) => this.extractAndUpdateMessageList(response));
-    }
-
-    public sendMessage(route: string, message: MessageModel) {
-        const finalUrl = this.url + route.toString();
+    public sendMessage(query: string) {
+        const finalUrl = "https://api.api.ai/v1/query?v=20150910";
         const headers = new Headers({"Content-Type": "application/json", "Authorization": "Bearer 4b8a1633fe1e4cadb3754b8fc05ae5a3 "});
-        const body = "";
+        const body = "{\"query\": [\"" + query + "\"],\"lang\" : \"fr\",\"sessionId\": \"1234567890\"}";
         const options = new RequestOptions({headers: headers});
-        this.http.post(finalUrl, body, options).subscribe((response) => this.extractMessageAndGetMessages(response, route));
+        this.http.post(finalUrl, body, options).subscribe((response) => this.extractAndUpdateMessageList(response));
     }
 
     extractAndUpdateMessageList(response: Response) {
         // Plus d'info sur Response ou sur la fonction .json()? si tu utilises Webstorm,
         // fait CTRL + Click pour voir la déclaration et la documentation
-        const responseMessageList = response.json().reverse() || []; // ExtractMessage: Si response.json() est undefined ou null,
+        const responseMessageList = response.json() || []; // ExtractMessage: Si response.json() est undefined ou null,
         // messageList prendra la valeur tableau vide: [];
-        this.messageList$.next(responseMessageList); // On pousse les nouvelles données dans l'attribut messageList$
+
+        const res = responseMessageList.result.fulfillment.speech;
+        console.log("RESPONSE ");
+        console.log(responseMessageList.result.fulfillment.speech);
+
+        this.message.content = res;
+        this.messageService.sendMessage(this.channelService.getCurrentChannel().id + "/messages", this.message);
+
+
     }
 
-    private extractMessageAndGetMessages(response: Response, route: string): MessageModel {
-        this.getMessages(route);
-        return response.json();
-    }
 }
