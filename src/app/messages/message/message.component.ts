@@ -14,24 +14,20 @@ export class MessageComponent implements OnInit {
     @Input() message: MessageModel;
 
     private name: string;
-
     private color: string;
 
     private img: boolean;
-
     private imgs: string[];
 
     private insta: boolean;
-
     private instas: string[];
 
     private yt: boolean;
-
     private yts: string[];
 
     constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
         this.message = new MessageModel(0, "Hello!");
-        this.name = this.nameService.retrieveName();
+        this.name = this.nameService.getName();
         this.color = "#424f88";
         this.img = false;
         this.imgs = [];

@@ -1,23 +1,24 @@
 import {Component, OnInit} from "@angular/core";
 
 import {NameService} from "../../shared/services";
-import {DEFAULTNAME} from "../../shared/constants/defaultName";
 
 @Component({
-    selector: "app-name-form",
-    templateUrl: "./name-form.component.html",
-    styleUrls: ["./name-form.component.css"]
+    selector: "app-login-form",
+    templateUrl: "./login-form.component.html",
+    styleUrls: ["./login-form.component.css"]
 })
-export class NameFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
+    public boxColor: string;
 
     constructor(private nameService: NameService) {
+        this.isValid = false;
+        this.boxColor = "black";
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((value) => this.name = value);
     }
 
     /**
@@ -30,6 +31,9 @@ export class NameFormComponent implements OnInit {
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
+        } else {
+            this.boxColor = "red";
+            setTimeout(() => this.boxColor = "black", 150);
         }
     }
 

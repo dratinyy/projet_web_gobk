@@ -6,21 +6,18 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {NameModel} from "../../models/NameModel";
 import {DEFAULTNAME} from "shared/constants/defaultName";
+import {ReplaySubject} from "rxjs/ReplaySubject";
 
 @Injectable()
 export class NameService {
 
-    /**
-     * Url pour accéder aux données. L'url est commun à toutes les fonctions du service.
-     * Il permet d'accéder aux channel. À partir de cet url, vous pourrez accéder aux messages.
-     * La documentation des methodes du service permet d'avoir plus d'information concernant la façon d'accèder aux messages.
-     */
+    public name$: ReplaySubject<string>;
     private name: string;
 
     constructor() {
-        this.name = DEFAULTNAME;
+        this.name$ = new ReplaySubject(1);
+        this.name$.next("");
     }
-
 
     /**
      * Fonction sendName.
@@ -29,10 +26,11 @@ export class NameService {
      * @param name Le nom que l'utilisateur a choisi
      */
     public sendName(name: string) {
+        this.name$.next(name);
         this.name = name;
     }
 
-    public retrieveName(): string {
+    public getName(): string {
         return this.name;
     }
 

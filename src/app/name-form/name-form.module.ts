@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 
 import { NameFormComponent } from "./name-form.component";
+import {NameService} from "../../shared/services/name/name.service";
 
 @NgModule({
   declarations: [
@@ -13,6 +14,6 @@ import { NameFormComponent } from "./name-form.component";
     FormsModule
   ],
   exports: [NameFormComponent],
-  providers: []
+  providers: [NameService]
 })
 export class NameFormModule { }
