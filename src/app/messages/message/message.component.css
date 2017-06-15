@@ -10,6 +10,7 @@
 
 
 .content{
+  word-break: break-all;
   min-height:44px;
   min-width: 30px;
   background-color: #f1f0f0;
