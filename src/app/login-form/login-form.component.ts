@@ -12,14 +12,15 @@ export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
-    public boxColor: string;
+    public classe: string;
 
     constructor(private nameService: NameService) {
         this.isValid = false;
-        this.boxColor = "black";
+        this.classe = "name-control";
     }
 
     ngOnInit() {
+        this.nameService.name$.subscribe((e) => this.name = e);
     }
 
     /**
@@ -34,8 +35,8 @@ export class LoginFormComponent implements OnInit {
         if (this.isValid) {
             this.nameService.sendName(this.name);
         } else {
-            this.boxColor = "red";
-            setTimeout(() => this.boxColor = "black", 150);
+            this.classe = "name-control-red";
+            setTimeout(() => this.classe = "name-control", 150);
         }
     }
 
@@ -47,10 +48,6 @@ export class LoginFormComponent implements OnInit {
 
     pseudoVerif() {
         const regex = "[a-z]*";
-        if (this.name.match(regex)[0] === this.name) {
-            this.isValid = true;
-        } else {
-            this.isValid = false;
-        }
+        this.isValid = (this.name) && (this.name.match(regex)[0] === this.name);
     }
 }
