@@ -12,17 +12,16 @@ export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
-    public classe: string;
 
     constructor(private nameService: NameService) {
         this.isValid = false;
-        this.classe = "name-control";
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((e) => this.name = e);
-        this.nameService.name$.subscribe((e) => this.pseudoVerif(),
-            () => {} , () => this.isValid = (name === "" ? false : this.isValid));
+        this.nameService.name$.subscribe((e) => {
+            this.name = e;
+            this.pseudoVerif();
+        });
     }
 
     /**
@@ -36,9 +35,6 @@ export class LoginFormComponent implements OnInit {
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
-        } else {
-            this.classe = "name-control-red";
-            setTimeout(() => this.classe = "name-control", 150);
         }
     }
 

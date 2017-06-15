@@ -1,35 +1,31 @@
 import {Component, OnInit} from "@angular/core";
 
-import {MessageService} from "../../shared/services";
-import {MessageModel} from "../../shared/models/MessageModel";
-import {NameService} from "../../shared/services/name/name.service";
-import {ChannelService} from "../../shared/services/channel/channel.service";
-import {BotService} from "../../shared/services/bot/bot.service";
+import {MessageService} from "../../../shared/services";
+import {MessageModel} from "../../../shared/models/MessageModel";
+import {NameService} from "../../../shared/services/name/name.service";
+import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {BotService} from "../../../shared/services/bot/bot.service";
+import {DEFAULTNAME} from "../../../shared/constants/defaultName";
 
 @Component({
     selector: "app-message-form",
     templateUrl: "./message-form.component.html",
-    styleUrls: ["./message-form.component.css"],
-    providers: [
-        MessageService,
-        NameService,
-        BotService
-    ]
+    styleUrls: ["./message-form.component.css"]
 })
 export class MessageFormComponent implements OnInit {
 
-    public name: string;
     public message: MessageModel;
+    private name: string;
     private channelIndex: number;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService,
-    private botService: BotService) {
-        this.message = new MessageModel(1, "", this.name);
+                private botService: BotService) {
+        this.message = new MessageModel(0, "", DEFAULTNAME);
     }
 
     ngOnInit() {
+        this.nameService.getName().subscribe((value) => this.name = value);
         this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
-        this.nameService.name$.subscribe((value) => this.name = value);
     }
 
     eventHandler(keyCode) {

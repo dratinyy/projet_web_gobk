@@ -33,7 +33,7 @@ export class MessageService {
     this.messageList$ = new ReplaySubject(1);
   }
 
-  public getMessages(route: string): Subscription {
+  public getMessages(route: string) {
     const finalUrl = this.url + route;
     return this.http.get(finalUrl)
       .subscribe((response) => this.extractAndUpdateMessageList(response));

@@ -33,7 +33,6 @@ export class MessageComponent implements OnInit {
     constructor(private nameService: NameService, public sanitizer: DomSanitizer,
                 private tweetService: TwitterService) {
         this.message = new MessageModel(0, "Hello!");
-        this.name = this.nameService.getName();
         this.color = "#424f88";
         this.img = false;
         this.imgs = [];
@@ -54,6 +53,7 @@ export class MessageComponent implements OnInit {
      * le faire dans le ngOnInit.
      */
     ngOnInit() {
+        this.nameService.getName().subscribe((e) => this.name = e);
 
         if (this.message.content) {
 
