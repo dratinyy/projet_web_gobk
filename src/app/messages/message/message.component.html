@@ -19,6 +19,14 @@
 
         </div>
 
+        <div *ngIf="yt">
+
+            <iframe #iframe id="ifrmYTMe" *ngFor="let yt of yts" [src]="yt | safe" height="300" width="400" frameborder="0" allowfullscreen>
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+        </div>
+
     </div>
 
     <ng-template #elseBlock>
@@ -34,6 +42,14 @@
         <div *ngIf="insta">
 
             <iframe id="ifrm" *ngFor="let insta of instas" [src]="insta | safe" height="375" scrolling="no" frameborder="0" >
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+        </div>
+
+        <div *ngIf="yt">
+
+            <iframe #iframe id="ifrmYT" *ngFor="let yt of yts" [src]="yt | safe" height="300" width="400" frameborder="0" allowfullscreen>
                 <p>Your browser does not support iframes.</p>
             </iframe>
 

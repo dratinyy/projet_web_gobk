@@ -25,13 +25,20 @@ export class MessageComponent implements OnInit {
 
     private instas: string[];
 
+    private yt: boolean;
+
+    private yts: string[];
+
     constructor(private nameService: NameService, public sanitizer: DomSanitizer) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.retrieveName();
         this.color = "#424f88";
+        this.img = false;
         this.imgs = [];
         this.insta = false;
         this.instas = [];
+        this.yt = false;
+        this.yts = [];
     }
 
     /**
@@ -64,6 +71,19 @@ export class MessageComponent implements OnInit {
                 }
                 this.insta = true;
             }
+
+            reg = /https:\/\/www.youtube.com\/watch\?[^\ ^\n]*/g;
+            res = this.message.content.match(reg);
+
+            if (res != null && res.length > 0) {
+                for (const entry of res) {
+                    console.log("1 " + entry);
+                    this.yts.push(entry.replace("watch?v=", "embed/"));
+                    console.log(entry);
+                }
+                this.yt = true;
+            }
+
             const textArr = [/ :\)/g, / ;\)/g, / :\(/g, / :\'\(/g, / :\'\)/g, / :D/g, / :p/g, / <3/g, / :o/g, /100/g];
             const emoteArr = [" 🙂", " 😉", " 🙁", " 😢", " 😂", " 😃", " 😋", " ❤️", " 😮", "💯"];
             for (let i = 0; i < textArr.length; i++) {
