@@ -39,18 +39,16 @@ export class MessageFormComponent implements OnInit {
     this.message.from = this.name;
     const content = this.message.content;
     const splitted = content.split(" ");
-    console.log("splitted[0] = ", splitted[0]);
-    console.log("splitted[1] = ", splitted[1]);
-    console.log("splitted[2] = ", splitted[2]);
-    console.log("splitted[3] = ", splitted[3]);
     if (splitted[0] === "/schedule") {
       if (splitted[1].charAt(0) === "#") {
         if (splitted[2].charAt(0) === "@") {
           this.message.scheduledAt = splitted[2].slice(1);
-          console.log("scheduledAt = ", splitted[2].slice(1));
-          // Il faut recupperer tous splitted[3->size-1]
           this.message.content = splitted[3];
-          console.log("content = ", splitted[3]);
+          for (let i = 4; i < splitted.length; i++) {
+            this.message.content = this.message.content.concat(" ");
+            this.message.content = this.message.content.concat(splitted[i]);
+          }
+          console.log("content = ", this.message.content);
           this.messageService.sendMessage(Number(splitted[1].slice(1)) + "/messages", this.message);
         }
       }
