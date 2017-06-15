@@ -1,13 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
-import {Observable} from "rxjs/Observable";
 
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import {MessageModel} from "../../models/MessageModel";
-import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
-import {Body} from "@angular/http/src/body";
 import {MessageService} from "../message/message.service";
 import {ChannelService} from "../channel/channel.service";
 
@@ -20,7 +17,7 @@ export class BotService {
         this.url = URLSERVER;
     }
 
-    public sendMessage(query: string) {
+    public requestResponse(query: string) {
         const finalUrl = "https://api.api.ai/v1/query?v=20150910";
         const headers = new Headers({
             "Content-Type": "application/json",

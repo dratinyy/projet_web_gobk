@@ -31,7 +31,7 @@ export class MessageComponent implements OnInit {
     private tweets: string[];
 
     constructor(private nameService: NameService, public sanitizer: DomSanitizer,
-                private tweetService: TwitterService, private bot: BotService) {
+                private tweetService: TwitterService) {
         this.message = new MessageModel(0, "Hello!");
         this.name = this.nameService.getName();
         this.color = "#424f88";

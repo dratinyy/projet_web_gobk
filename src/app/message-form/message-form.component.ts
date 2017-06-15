@@ -9,7 +9,12 @@ import {BotService} from "../../shared/services/bot/bot.service";
 @Component({
     selector: "app-message-form",
     templateUrl: "./message-form.component.html",
-    styleUrls: ["./message-form.component.css"]
+    styleUrls: ["./message-form.component.css"],
+    providers: [
+        MessageService,
+        NameService,
+        BotService
+    ]
 })
 export class MessageFormComponent implements OnInit {
 
@@ -35,7 +40,7 @@ export class MessageFormComponent implements OnInit {
 
     /**
      * Fonction pour envoyer un message.
-     * L'envoi du message se fait à travers la methode sendMessage du service MessageService.
+     * L'envoi du message se fait à travers la methode requestResponse du service MessageService.
      * Cette méthode prend en paramètre la route pour envoyer un message (:id/messages avec id un entier correspondant à l'id du channel)
      * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
      */
@@ -43,7 +48,7 @@ export class MessageFormComponent implements OnInit {
         this.message.from = this.name;
         this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
         if (this.message.content.split("/ai").length === 2) {
-            this.botService.sendMessage(this.message.content.split("/ai")[1]);
+            this.botService.requestResponse(this.message.content.split("/ai")[1]);
         }
         this.message.content = "";
     }
