@@ -64,10 +64,14 @@
 
         </div>
 
-        <iframe *ngFor="let tweet of tweets" [src]="tweet | safe" height="375" scrolling="no"
-                frameborder="0">
-            <p>Your browser does not support iframes.</p>
-        </iframe>
+        <div *ngIf="yt">
+
+            <iframe *ngFor="let tweet of tweets" [src]="tweet | safe" height="375" scrolling="no"
+                    frameborder="0">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+        </div>
 
     </ng-template>
 
