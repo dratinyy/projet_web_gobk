@@ -45,9 +45,6 @@ export class MessageListComponent implements OnInit {
     }
 
     changeChannel(value: ChanelModel) {
-        if (this.intervalSubscription) {
-            this.intervalSubscription.unsubscribe();
-        }
         this.messageList = null;
         this.channelIndex = value.id;
         this.messageService.getMessages(this.channelIndex + "/messages");
@@ -60,39 +57,40 @@ export class MessageListComponent implements OnInit {
      * @param messages Les messages récupérés par le service
      */
     private updateMessageList(messages: MessageModel[]) {
-        if (messages) {
-            if (this.messageList) {
-                if ((this.messageList[this.messageList.length - 1]) &&
-                    this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
-                    const bottom = (this.scrollContainer.nativeElement.scrollHeight -
-                    this.scrollContainer.nativeElement.scrollTop < 700);
-                    let i;
-                    for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
-                        this.messageList[this.messageList.length - 1]); i--) {
-                    }
-                    messages.splice(0, i + 1);
-                    this.messageList = this.messageList.concat(messages);
-                    if (bottom) {
-                        setTimeout(() => this.scrollToBottom(), 40);
-                    }
-                } else if ((this.messageList[0]) && (messages[0] &&
-                    this.compareMessageDates(this.messageList[0], messages[0]))) {
-                    let i;
-                    for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
-                    }
-                    messages.splice(i, messages.length - i);
-                    this.messageList = messages.concat(this.messageList);
-                    this.channelMessagePage++;
-                    this.waitLoading = false;
+        if (this.messageList && this.messageList.length > 0) {
+            if ((this.messageList[this.messageList.length - 1]) &&
+                this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
+                const bottom = (this.scrollContainer.nativeElement.scrollHeight -
+                this.scrollContainer.nativeElement.scrollTop < 700);
+                let i;
+                for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
+                    this.messageList[this.messageList.length - 1]); i--) {
                 }
-            } else {
-                this.messageList = messages;
-                this.channelMessagePage = 1;
-                this.intervalSubscription.unsubscribe();
-                this.intervalSubscription = Observable.interval(1500).subscribe(() =>
-                    this.messageService.getMessages(this.channelIndex + "/messages"));
-                this.scrollToBottom();
+                messages.splice(0, i + 1);
+                this.messageList = this.messageList.concat(messages);
+                if (bottom) {
+                    setTimeout(() => this.scrollToBottom(), 40);
+                }
+                console.log("BLUB1");
+            } else if ((this.messageList[0]) && (messages[0] &&
+                this.compareMessageDates(this.messageList[0], messages[0]))) {
+                let i;
+                for (i = 0; (messages[i]) && this.compareMessageDates(this.messageList[0], messages[i]); i++) {
+                }
+                messages.splice(i, messages.length - i);
+                this.messageList = messages.concat(this.messageList);
+                this.channelMessagePage++;
+                this.waitLoading = false;
+                console.log("BLUB2");
             }
+            console.log(this.messageList.length);
+        } else {
+            this.messageList = messages;
+            this.channelMessagePage = 1;
+            this.intervalSubscription.unsubscribe();
+            this.intervalSubscription = Observable.interval(1500).subscribe(() =>
+                this.messageService.getMessages(this.channelIndex + "/messages"));
+            this.scrollToBottom();
         }
     }
 
@@ -129,10 +127,10 @@ export class MessageListComponent implements OnInit {
      */
     onScroll() {
         const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop === 0) {
+        if (scrollTop < 5) {
+            this.scrollContainer.nativeElement.scrollTop = 8;
             this.waitLoading = true;
             setTimeout(this.waitLoading = false, 2000);
-            this.scrollContainer.nativeElement.scrollTop = 8;
             this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
         }
     }
