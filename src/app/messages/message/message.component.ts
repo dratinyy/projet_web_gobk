@@ -103,11 +103,6 @@ export class MessageComponent implements OnInit {
                 this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
             }
 
-            if (this.message.content.split("/ai").length === 2) {
-
-                this.bot.sendMessage(this.message.content.split("/ai")[1]);
-
-            }
 
             // this.bot.sendMessage("llel  ");
 
