@@ -1,11 +1,12 @@
 <div class="container">
     <div class="">
-        <div class="col-md-4 card channels">
+        <div *ngIf="dispChannels" class="col-md-4 card channels">
             <app-channel-new-form></app-channel-new-form>
             <app-channel-list></app-channel-list>
             <app-channel-page-form></app-channel-page-form>
         </div>
         <div class="col-md-8 card">
+            <button (click)="displayChannels()">dones les sous stp</button>
             <app-channel-name-form></app-channel-name-form>
             <app-message-list></app-message-list>
             <app-message-form></app-message-form>

@@ -12,9 +12,15 @@ export class AppComponent {
 
   public title: string;
   public name: string;
+  private dispChannels: boolean;
 
   constructor(private channelService: ChannelService) {
+    this.dispChannels = true;
     this.title = "Chat";
     Observable.create();
+  }
+
+  displayChannels() {
+    this.dispChannels = !this.dispChannels;
   }
 }
