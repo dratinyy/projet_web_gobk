@@ -14,7 +14,7 @@
 
         <div  class="card {{dispChannels ? 'col-md-8 col-lg-8 col-sm-7 col-xs-11': 'col-md-12 '}}">
           <div class="salut">
-            <button (click)="displayChannels()"  id="lebouton"><i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+            <button *ngIf="!dispChannels" (click)="displayChannels()"  id="lebouton"><i class="fa fa-bars fa-2x" aria-hidden="true"></i>
             </button>
             <app-channel-name-form></app-channel-name-form>
           </div>
