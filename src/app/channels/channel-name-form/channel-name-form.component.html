@@ -2,7 +2,7 @@
     <div class="btn-group">
         <h1 *ngIf="editName === false" title="{{currentChannel.name}}">{{this.rename}} </h1>
         <div *ngIf="editName" class="edit">
-            <input type="text" placeholder="{{currentChannel.name}}"
+            <input type="text" onClick="this.select();" placeholder="{{currentChannel.name}}"
                    class="name-control" id="rename" required [(ngModel)]="rename" name="rename"
                    (keypress)="renameCurrentChannelHandler($event.keyCode)">
         </div>
