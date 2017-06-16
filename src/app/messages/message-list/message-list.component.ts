@@ -35,7 +35,7 @@ export class MessageListComponent implements OnInit {
     ngOnInit() {
         this.channelService.currentChannel$.subscribe((value) => this.changeChannel(value));
 
-        this.nameService.getName().subscribe((value) => this.name = value);
+        this.nameService.name$.subscribe((value) => this.name = value);
 
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         setTimeout(() => this.scrollToBottom(), 500);
@@ -45,8 +45,9 @@ export class MessageListComponent implements OnInit {
     }
 
     changeChannel(value: ChanelModel) {
-        this.messageList = null;
         this.channelIndex = value.id;
+        this.messageList = null;
+        this.intervalSubscription.unsubscribe();
         this.messageService.getMessages(this.channelIndex + "/messages");
     }
 
@@ -61,7 +62,7 @@ export class MessageListComponent implements OnInit {
             if ((this.messageList[this.messageList.length - 1]) &&
                 this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
                 const bottom = (this.scrollContainer.nativeElement.scrollHeight -
-                this.scrollContainer.nativeElement.scrollTop < 700);
+                this.scrollContainer.nativeElement.scrollTop < 800);
                 let i;
                 for (i = messages.length - 1; (messages[i]) && this.compareMessageDates(messages[i],
                     this.messageList[this.messageList.length - 1]); i--) {
@@ -84,10 +85,10 @@ export class MessageListComponent implements OnInit {
         } else {
             this.messageList = messages;
             this.channelMessagePage = 1;
-            this.intervalSubscription.unsubscribe();
             this.intervalSubscription = Observable.interval(1500).subscribe(() =>
                 this.messageService.getMessages(this.channelIndex + "/messages"));
-            this.scrollToBottom();
+            setTimeout(() => this.scrollToBottom(), 500);
+
         }
     }
 
@@ -123,11 +124,10 @@ export class MessageListComponent implements OnInit {
      * haut de la liste, on demande au service de récupérer la page précédente de l'historique.
      */
     onScroll() {
-        const scrollTop = this.scrollContainer.nativeElement.scrollTop;
-        if (scrollTop < 5) {
+        if (this.scrollContainer.nativeElement.scrollTop < 5) {
             this.scrollContainer.nativeElement.scrollTop = 8;
             this.waitLoading = true;
-            setTimeout(this.waitLoading = false, 2000);
+            setTimeout(this.waitLoading = false, 2500);
             this.messageService.getMessages(this.channelIndex + "/messages?page=" + this.channelMessagePage);
         }
     }
