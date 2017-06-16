@@ -35,12 +35,6 @@ export class MessageFormComponent implements OnInit {
         }
     }
 
-    /**
-     * Fonction pour envoyer un message.
-     * L'envoi du message se fait à travers la methode requestResponse du service MessageService.
-     * Cette méthode prend en paramètre la route pour envoyer un message (:id/messages avec id un entier correspondant à l'id du channel)
-     * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
-     */
     sendMessage() {
 
         this.message.from = this.name;
@@ -51,6 +45,7 @@ export class MessageFormComponent implements OnInit {
             this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
             this.botService.requestResponse(content.split("/ai")[1]);
 
+            // parsing de l'option schedule
         } else if (content && content.slice(0, 9) === "/schedule"
             && splitted.length > 4
             && splitted[1].charAt(0) === "#"

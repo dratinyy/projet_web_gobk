@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {ChanelModel} from "../../../shared/models/ChannelModel";
-import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
     selector: "app-channel-name-form",

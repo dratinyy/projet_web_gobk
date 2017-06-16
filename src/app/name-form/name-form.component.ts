@@ -1,7 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 
 import {NameService} from "../../shared/services";
-import {DEFAULTNAME} from "../../shared/constants/defaultName";
 
 @Component({
     selector: "app-name-form",

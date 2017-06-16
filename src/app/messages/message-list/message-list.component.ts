@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 
 import {MessageService} from "../../../shared/services";
 import {MessageModel} from "../../../shared/models/MessageModel";
@@ -68,6 +68,9 @@ export class MessageListComponent implements OnInit {
      * @param messages Les messages récupérés par le service
      */
     private updateMessageList(messages: MessageModel[]) {
+
+        // Dans cette partie, des messages sont ajoutés au début, ou à la fin de la liste de messages, suivant
+        // qu'on récupère d'anciens messages, ou de nouveaux.
         if (this.messageList && this.messageList.length > 0) {
             if ((this.messageList[this.messageList.length - 1]) &&
                 this.compareMessageDates(messages[messages.length - 1], this.messageList[this.messageList.length - 1])) {
@@ -92,6 +95,8 @@ export class MessageListComponent implements OnInit {
                 this.channelMessagePage++;
                 this.waitLoading = false;
             }
+
+            // ici, la liste est réinitialisée (lorsqu'on change de channel)
         } else {
             this.messageList = messages;
             this.channelMessagePage = 1;
@@ -104,7 +109,7 @@ export class MessageListComponent implements OnInit {
     }
 
     /**
-     * Cette méthode compare l'attribut CreatedAt de deux messages, pour déterminer le plus récent.
+     * Cette méthode compare l'attribut UpdatedAt de deux messages, pour déterminer le plus récent.
      * @param m1 Le premier message
      * @param m2 Le second message
      * @returns {boolean} Vrai si le premier message est strictement plus récent que le second.
@@ -113,16 +118,16 @@ export class MessageListComponent implements OnInit {
         if (!(m1)) {
             return false;
         }
-        const d1 = m1.createdAt.match(/[0-9]*/g);
-        const d2 = m2.createdAt.match(/[0-9]*/g);
+        const d1 = m1.updatedAt.match(/[0-9]*/g);
+        const d2 = m2.updatedAt.match(/[0-9]*/g);
         let s1 = "";
         let s2 = "";
-        if (d1 != null && d1.length > 0) {
+        if ((d1) && d1.length > 0) {
             for (const entry of d1) {
                 s1 = s1.concat(entry);
             }
         }
-        if (d2 != null && d2.length > 0) {
+        if ((d2) && d2.length > 0) {
             for (const entry of d2) {
                 s2 = s2.concat(entry);
             }
