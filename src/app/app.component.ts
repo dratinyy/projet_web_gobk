@@ -4,7 +4,6 @@ import {ChannelService} from "../shared/services/channel/channel.service";
 import {BotService} from "../shared/services/bot/bot.service";
 import {NameService} from "../shared/services/name/name.service";
 import {MessageService} from "../shared/services/message/message.service";
-import {TwitterService} from "../shared/services/twitter/twitter.service";
 
 @Component({
   selector: "app-root",
@@ -14,7 +13,6 @@ import {TwitterService} from "../shared/services/twitter/twitter.service";
     ChannelService,
     MessageService,
     NameService,
-    TwitterService,
     BotService
   ]
 })
