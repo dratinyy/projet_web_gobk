@@ -2,6 +2,7 @@
 
     <div *ngIf="message.from === name; else elseBlock" class="me">
 
+        <div class="from">{{message.from}}</div>
 
         <div class="content tri-right left-top">
 
@@ -45,6 +46,8 @@
     </div>
 
     <ng-template #elseBlock>
+
+        <div class="from">{{message.from}}</div>
         <div class="content tri-right left-top">
 
             <div *ngFor="let entry of msg">
