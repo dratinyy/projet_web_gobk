@@ -1,7 +1,7 @@
 <div *ngIf="!this.isValid" class="main" >
   <div class="salut">
     <input type="text" autofocus="autofocus" placeholder="Enter your username..." id="name" name="name" required
-           [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
+           [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)" [style.color]="!this.firstTime ? 'red' : null">
 
     <button (click)="sendName()"><i class="fa fa-arrow-right" aria-hidden="true"></i>
     </button>
