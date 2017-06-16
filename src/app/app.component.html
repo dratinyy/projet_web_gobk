@@ -3,7 +3,6 @@
 <div class="container">
 
 
-
   <div class="row">
 
     <div class="card channels {{dispChannels ? 'hidden': 'col-md-4 col-sm-9 col-xs-8'}}">
@@ -20,7 +19,6 @@
         </button>
 
 
-
         <div>
           <app-channel-name-form></app-channel-name-form>
         </div>
@@ -29,12 +27,7 @@
       </div>
       <app-message-list></app-message-list>
 
-      <div *ngIf="!dispChannels" class="hideplease">
-        <app-message-form></app-message-form>
-        <app-name-form></app-name-form>
-      </div>
-
-      <div *ngIf="dispChannels">
+      <div class="hideplease">
         <app-message-form></app-message-form>
         <app-name-form></app-name-form>
       </div>
