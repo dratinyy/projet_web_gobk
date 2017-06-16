@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {ChanelModel} from "../../../shared/models/ChannelModel";
+import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
   selector: "app-channel-name-form",
@@ -14,11 +15,12 @@ export class ChannelNameFormComponent implements OnInit {
   private editName: boolean;
 
   constructor(public channelService: ChannelService) {
-    this.rename = "";
     this.editName = false;
   }
 
   ngOnInit() {
+    this.channelService.currentChannel$.subscribe((value) => this.rename = value.shortname);
+    this.rename = "Général";
   }
 
   toggleEditName() {
@@ -27,11 +29,7 @@ export class ChannelNameFormComponent implements OnInit {
 
   renameCurrentChannelHandler(keyCode) {
     if (keyCode === 13) {
-      const channel = new ChanelModel();
-      channel.name = this.rename;
-      this.channelService.renameCurrentChannel(channel);
-      setTimeout(() => this.channelService.getChannels(), 300);
-      this.rename = "";
+      this.channelService.renameCurrentChannel(this.rename);
       this.editName = false;
     }
   }

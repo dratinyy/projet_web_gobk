@@ -12,15 +12,16 @@ export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
-    public classe: string;
 
     constructor(private nameService: NameService) {
         this.isValid = false;
-        this.classe = "name-control";
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((e) => this.name = e);
+        this.nameService.name$.subscribe((e) => {
+            this.name = e;
+            this.pseudoVerif();
+        });
     }
 
     /**
@@ -30,13 +31,10 @@ export class LoginFormComponent implements OnInit {
      * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
      */
     sendName() {
-        this.name = ((this.name) ? this.name : DEFAULTNAME);
+        this.name = ((this.name) && (this.name !== "") ? this.name : DEFAULTNAME);
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
-        } else {
-            this.classe = "name-control-red";
-            setTimeout(() => this.classe = "name-control", 150);
         }
     }
 
@@ -48,6 +46,6 @@ export class LoginFormComponent implements OnInit {
 
     pseudoVerif() {
         const regex = "[a-z]*";
-        this.isValid = (this.name) && (this.name.match(regex)[0] === this.name);
+        this.isValid = (this.name) && (this.name.match(regex)[0] === this.name) && (this.name !== "");
     }
 }

@@ -1,9 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 
-import {MessageService} from "../../shared/services";
-import {MessageModel} from "../../shared/models/MessageModel";
-import {NameService} from "../../shared/services/name/name.service";
-import {ChannelService} from "../../shared/services/channel/channel.service";
+import {MessageService} from "../../../shared/services";
+import {MessageModel} from "../../../shared/models/MessageModel";
+import {NameService} from "../../../shared/services/name/name.service";
+import {ChannelService} from "../../../shared/services/channel/channel.service";
+import {BotService} from "../../../shared/services/bot/bot.service";
+import {DEFAULTNAME} from "../../../shared/constants/defaultName";
 
 @Component({
   selector: "app-message-form",
@@ -12,15 +14,18 @@ import {ChannelService} from "../../shared/services/channel/channel.service";
 })
 export class MessageFormComponent implements OnInit {
 
-  public name: string;
   public message: MessageModel;
+  private name: string;
+  private channelIndex: number;
 
-  constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService) {
-    this.message = new MessageModel(1, "", this.name);
+  constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService,
+              private botService: BotService) {
+    this.message = new MessageModel(0, "", DEFAULTNAME);
   }
 
   ngOnInit() {
-    this.nameService.name$.subscribe((value) => this.name = value);
+    this.nameService.getName().subscribe((value) => this.name = value);
+    this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
   }
 
   eventHandler(keyCode) {
@@ -31,14 +36,17 @@ export class MessageFormComponent implements OnInit {
 
   /**
    * Fonction pour envoyer un message.
-   * L'envoi du message se fait à travers la methode sendMessage du service MessageService.
+   * L'envoi du message se fait à travers la methode requestResponse du service MessageService.
    * Cette méthode prend en paramètre la route pour envoyer un message (:id/messages avec id un entier correspondant à l'id du channel)
    * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
    */
   sendMessage() {
     this.message.from = this.name;
     const content = this.message.content;
-    if (content.charAt(0) === "/") {
+    if (content.slice(0, 3) === "/ai") {
+      this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
+      this.botService.requestResponse(content.split("/ai")[1]);
+    } else if (content.charAt(0) === "/") {
       const splitted = content.split(" ");
       if (splitted[0] === "/schedule") {
         if (splitted[1].charAt(0) === "#") {
@@ -49,13 +57,12 @@ export class MessageFormComponent implements OnInit {
               this.message.content = this.message.content.concat(" ");
               this.message.content = this.message.content.concat(splitted[i]);
             }
-            console.log("content = ", this.message.content);
             this.messageService.sendMessage(Number(splitted[1].slice(1)) + "/messages", this.message);
           }
         }
       }
     } else {
-      this.messageService.sendMessage(this.channelService.getCurrentChannel().id + "/messages", this.message);
+      this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
     }
     this.message.content = "";
   }

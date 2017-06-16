@@ -18,8 +18,6 @@ export class ChannelListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.channelService.getChannels();
     this.channelService.channelList$.subscribe((channels) => this.channelList = channels);
-    Observable.interval(1000).subscribe(() => this.channelService.getChannels());
   }
 }

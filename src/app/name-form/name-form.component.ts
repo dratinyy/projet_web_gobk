@@ -17,20 +17,18 @@ export class NameFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((value) => this.name = value);
+        this.nameService.getName().subscribe((value) => this.name = value);
     }
 
-    /**
-     * Fonction pour envoyer un message.
-     * L'envoi du message se fait à travers la methode sendMessage du service MessageService.
-     * Cette méthode prend en paramètre la route pour envoyer un message (:id/messages avec id un entier correspondant à l'id du channel)
-     * ainsi que le message à envoyer. Ce dernier correspond à l'objet MessageModel que l'utilisateur rempli à travers l'input.
-     */
     sendName() {
         this.pseudoVerif();
         if (this.isValid) {
             this.nameService.sendName(this.name);
         }
+    }
+
+    logout() {
+        this.nameService.sendName("");
     }
 
     sendNameHandler(keyCode) {
