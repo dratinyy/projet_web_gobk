@@ -28,60 +28,36 @@ export class MessageComponent implements OnInit {
         this.url = [];
     }
 
-    /**
-     * Fonction ngOnInit.
-     * Cette fonction est appelée après l'execution de tous les constructeurs de toutes les classes typescript.
-     * Cette dernière s'avère très utile lorsque l'on souhaite attendre des valeurs venant de d'autres composants.
-     * Notre composant qui prend en @Input un message. Les @Input ne sont accessibles uniquement à partir du ngOnInit,
-     * pas dans le constructeur. Si vous souhaitez manipuler votre message lors du chargement du composant, vous devez
-     * le faire dans le ngOnInit.
-     */
     ngOnInit() {
         this.nameService.getName().subscribe((e) => this.name = e);
 
         if (this.message.content) {
 
-            const r = /https?[^\ ]*/g;
-
-            this.url = this.message.content.match(r);
-
-            const d = this.message.content.split(r);
-
+            const regUrl = /https?[^\ ]*/g;
+            this.url = this.message.content.match(regUrl);
+            const d = this.message.content.split(regUrl);
             let urls, msgs;
 
-            if (this.url != null && this.url.length > 0) {
-
+            if ((this.url) && this.url.length > 0) {
                 for (urls = 0, msgs = 0; urls < this.url.length - 1, msgs < d.length - 1; urls++, msgs++) {
-
-                    if (d[msgs] !== "" && d[msgs]) {
-
-
+                    if (d[msgs] && d[msgs] !== "") {
                         this.msg.push(this.transformEmoji(d[msgs]));
-
                     }
-
                     this.msg.push(this.url[urls]);
-
                 }
-
             } else {
-
                 this.msg.push(this.transformEmoji(d[0]));
-
             }
-
         }
-
     }
 
     transformEmoji(content): string {
 
         const textArr = [/:\)/g, /;\)/g, /:\(/g, /:\'\(/g, /:\'\)/g, /:D/g, /:p/g, /<3/g, /:o/g, /100/g];
         const emoteArr = ["🙂", "😉", "🙁", "😢", "😂", "😃", "😋", "❤️", "😮", "💯"];
-        for (let i = 0; i < textArr.length; i++) {
+        for (let i = 0; i < textArr.length && i < emoteArr.length; i++) {
             content = content.replace(textArr[i], emoteArr[i]);
         }
-
         return content;
 
     }
