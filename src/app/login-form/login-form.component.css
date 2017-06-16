@@ -17,16 +17,8 @@ h2, h3{
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
 }
 
-.salutInvalid {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: red;
-}
 
 button {
 

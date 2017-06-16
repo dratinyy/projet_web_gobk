@@ -1,5 +1,4 @@
 .card {
-  padding-top: 25px;
 }
 
 .main {
@@ -11,7 +10,7 @@
 .card {
   border-radius: 0px;
   float: left;
-  min-height: 100vh;
+  height: 102vh;
   padding: 0 !important;
   border: none !important;
   -webkit-border-radius: 0px;
