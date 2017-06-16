@@ -92,6 +92,12 @@ export class MessageComponent implements OnInit {
 
     }
 
+    retrieveYT(url){
+
+        return url.replace("watch?v=", "embed/");
+
+    }
+
     isTweet(url): boolean {
 
         const reg = /https:\/\/twitter.com\/[\w]*\/status\/[0-9]*/;

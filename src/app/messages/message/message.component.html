@@ -30,7 +30,7 @@
             </iframe>
 
 
-            <iframe *ngIf="isYt(entry)" [src]="entry | safe" height="300" width="400"
+            <iframe *ngIf="isYt(entry)" [src]="retrieveYT(entry) | safe" height="300" width="400"
                     frameborder="0" allowfullscreen>
                 <p>Your browser does not support iframes.</p>
             </iframe>
@@ -74,7 +74,7 @@
             </iframe>
 
 
-            <iframe *ngIf="isYt(entry)" [src]="entry | safe" height="300" width="400"
+            <iframe *ngIf="isYt(entry)" [src]="retrieveYT(entry) | safe" height="300" width="400"
                     frameborder="0" allowfullscreen>
                 <p>Your browser does not support iframes.</p>
             </iframe>
