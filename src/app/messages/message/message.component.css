@@ -88,3 +88,8 @@ iframe{
   border : none;
 
 }
+a{
+
+  color: var(--dark-blue-2);
+
+}
