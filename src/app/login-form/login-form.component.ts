@@ -12,9 +12,11 @@ export class LoginFormComponent implements OnInit {
 
     public name: string;
     public isValid = true;
+    public firstTime: boolean;
 
     constructor(private nameService: NameService) {
         this.isValid = false;
+        this.firstTime = true;
     }
 
     ngOnInit() {
@@ -46,6 +48,7 @@ export class LoginFormComponent implements OnInit {
 
     pseudoVerif() {
         const regex = "[a-z]*";
+        this.firstTime = this.name === "";
         this.isValid = (this.name) && (this.name.match(regex)[0] === this.name) && (this.name !== "");
     }
 }

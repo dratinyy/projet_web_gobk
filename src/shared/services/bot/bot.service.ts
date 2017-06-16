@@ -33,6 +33,6 @@ export class BotService {
         // console.log(res);
 
         this.messageService.sendMessage(this.channelService.currentChannel$.getValue().id
-            + "/messages", new MessageModel(1, res, "jeanclaude"));
+            + "/messages", new MessageModel(1, res, "chatbot"));
     }
 }

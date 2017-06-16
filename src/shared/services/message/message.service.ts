@@ -8,6 +8,7 @@ import {MessageModel} from "../../models/MessageModel";
 import {ReplaySubject} from "rxjs/ReplaySubject";
 import {URLSERVER} from "shared/constants/urls";
 import {Subscription} from "rxjs/Subscription";
+import {ChannelService} from "../channel/channel.service";
 
 @Injectable()
 export class MessageService {
@@ -33,10 +34,10 @@ export class MessageService {
     this.messageList$ = new ReplaySubject(1);
   }
 
-  public getMessages(route: string) {
+  public getMessages(route: string): Subscription {
     const finalUrl = this.url + route;
     return this.http.get(finalUrl)
-      .subscribe((response) => this.extractAndUpdateMessageList(response));
+      .subscribe((response) => this.messageList$.next(response.json().reverse() || []));
   }
 
   public sendMessage(route: string, message: MessageModel) {
@@ -44,10 +45,5 @@ export class MessageService {
     const headers = new Headers({"Content-Type": "application/json"});
     const options = new RequestOptions({headers: headers});
     this.http.post(finalUrl, message, options).subscribe((response) => this.getMessages(route));
-  }
-
-  extractAndUpdateMessageList(response: Response) {
-    const responseMessageList = response.json().reverse() || [];
-    this.messageList$.next(responseMessageList);
   }
 }
