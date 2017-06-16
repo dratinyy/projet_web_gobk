@@ -23,7 +23,9 @@ export class MessageListComponent implements OnInit {
     private channelMessagePage: number;
     private waitLoading: boolean;
     private name: string;
+
     private intervalSubscription: Subscription;
+    private currentSubscription: Subscription;
 
     constructor(private messageService: MessageService, private channelService: ChannelService,
                 private nameService: NameService) {
@@ -33,21 +35,29 @@ export class MessageListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.channelService.currentChannel$.subscribe((value) => this.changeChannel(value));
-
-        this.nameService.name$.subscribe((value) => this.name = value);
+        this.intervalSubscription = Observable.interval(2500).subscribe(() => {
+            if (this.currentSubscription) {
+                this.currentSubscription.unsubscribe();
+            }
+            this.currentSubscription =
+                this.messageService.getMessages(this.channelIndex + "/messages");
+        });
 
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         setTimeout(() => this.scrollToBottom(), 500);
 
-        this.intervalSubscription = Observable.interval(1500).subscribe(() =>
-            this.messageService.getMessages(this.channelIndex + "/messages"));
+        this.channelService.currentChannel$.subscribe((value) => this.changeChannel(value));
+
+        this.nameService.name$.subscribe((value) => this.name = value);
     }
 
     changeChannel(value: ChanelModel) {
+        if (this.currentSubscription) {
+            this.currentSubscription.unsubscribe();
+        }
+        this.intervalSubscription.unsubscribe();
         this.channelIndex = value.id;
         this.messageList = null;
-        this.intervalSubscription.unsubscribe();
         this.messageService.getMessages(this.channelIndex + "/messages");
     }
 
@@ -85,9 +95,10 @@ export class MessageListComponent implements OnInit {
         } else {
             this.messageList = messages;
             this.channelMessagePage = 1;
-            this.intervalSubscription = Observable.interval(1500).subscribe(() =>
-                this.messageService.getMessages(this.channelIndex + "/messages"));
-            setTimeout(() => this.scrollToBottom(), 500);
+            this.intervalSubscription.unsubscribe();
+            this.intervalSubscription = Observable.interval(2500).subscribe(() =>
+                this.currentSubscription = this.messageService.getMessages(this.channelIndex + "/messages"));
+            setTimeout(() => this.scrollToBottom(), 400);
 
         }
     }
