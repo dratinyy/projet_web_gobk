@@ -19,7 +19,7 @@ export class ChannelNameFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.channelService.currentChannel$.subscribe((value) => {
+        this.channelService.getCurrentChannel().subscribe((value) => {
             this.currentChannel = value;
             this.rename = value.shortname;
         });

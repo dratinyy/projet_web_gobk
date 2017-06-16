@@ -46,7 +46,7 @@ export class MessageListComponent implements OnInit {
         this.messageService.messageList$.subscribe((messages) => this.updateMessageList(messages));
         setTimeout(() => this.scrollToBottom(), 500);
 
-        this.channelService.currentChannel$.subscribe((value) => this.changeChannel(value));
+        this.channelService.getCurrentChannel().subscribe((value) => this.changeChannel(value));
 
         this.nameService.name$.subscribe((value) => this.name = value);
     }

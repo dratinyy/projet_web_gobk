@@ -11,10 +11,13 @@ import {ChannelService} from "../channel/channel.service";
 @Injectable()
 export class BotService {
 
+    private currentChannelId: number;
+
     private url: string;
 
     constructor(private http: Http, private messageService: MessageService, private channelService: ChannelService) {
         this.url = URLSERVER;
+        this.channelService.getCurrentChannel().subscribe((value) => this.currentChannelId = value.id);
     }
 
     public requestResponse(query: string) {
@@ -32,7 +35,6 @@ export class BotService {
         const res = (response.json() || []).result.fulfillment.speech;
         // console.log(res);
 
-        this.messageService.sendMessage(this.channelService.currentChannel$.getValue().id
-            + "/messages", new MessageModel(1, res, "chatbot"));
+        this.messageService.sendMessage(this.currentChannelId + "/messages", new MessageModel(1, res, "chatbot"));
     }
 }

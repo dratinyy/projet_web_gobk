@@ -26,7 +26,7 @@ export class MessageFormComponent implements OnInit {
 
     ngOnInit() {
         this.nameService.getName().subscribe((value) => this.name = value);
-        this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
+        this.channelService.getCurrentChannel().subscribe((value) => this.channelIndex = value.id);
     }
 
     eventHandler(keyCode) {
