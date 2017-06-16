@@ -1,23 +1,9 @@
 <div *ngIf="!this.isValid" class="main" >
-
   <div class="salut">
+    <input type="text" autofocus="autofocus" placeholder="Enter your username..." id="name" name="name" required
+           [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
 
-    <div *ngIf="this.firstTime; else elseBlock">
-      <input type="text" class="name-control" placeholder="Enter your username..." id="name" name="name" required
-             [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
-    </div>
-
-    <ng-template #elseBlock>
-      <input type="text" autofocus="autofocus" placeholder="Enter your username..." id="name2" name="name" required
-             [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)" class="salutInvalid">
-    </ng-template>
-
-
-    <button (click)="sendName()"><i class="fa fa-arrow-right hvr-pop" aria-hidden="true"></i>
-
+    <button (click)="sendName()"><i class="fa fa-arrow-right" aria-hidden="true"></i>
     </button>
-
   </div>
 </div>
-
-
