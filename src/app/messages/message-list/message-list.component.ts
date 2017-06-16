@@ -71,7 +71,6 @@ export class MessageListComponent implements OnInit {
                 if (bottom) {
                     setTimeout(() => this.scrollToBottom(), 40);
                 }
-                console.log("BLUB1");
             } else if ((this.messageList[0]) && (messages[0] &&
                 this.compareMessageDates(this.messageList[0], messages[0]))) {
                 let i;
@@ -81,9 +80,7 @@ export class MessageListComponent implements OnInit {
                 this.messageList = messages.concat(this.messageList);
                 this.channelMessagePage++;
                 this.waitLoading = false;
-                console.log("BLUB2");
             }
-            console.log(this.messageList.length);
         } else {
             this.messageList = messages;
             this.channelMessagePage = 1;
