@@ -88,6 +88,11 @@ iframe{
   border : none;
 
 }
+a{
+
+  color: var(--dark-blue-2);
+
+}
 
 .fadeIn {
   -webkit-animation-name: fadeIn;

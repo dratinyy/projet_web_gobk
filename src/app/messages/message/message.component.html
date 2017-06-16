@@ -1,67 +1,88 @@
 <div class="message fadeIn">
 
-  <div *ngIf="message.from === name; else elseBlock" class="me">
+    <div *ngIf="message.from === name; else elseBlock" class="me">
 
-    <div class="from">{{message.from}}</div>
-    <div class="content tri-right left-top">{{message.content}}</div>
 
-    <div *ngIf="img">
-      <img *ngFor="let img of imgs" src={{img}}/>
+        <div class="content tri-right left-top">
+
+            <div *ngFor="let entry of msg">
+
+                <a href={{entry}} target="_blank" *ngIf="isUrl(entry); else elseBlockMsgMe">{{entry}}</a>
+
+                <span *ngIf="!isUrl(entry)"> {{entry}}</span>
+
+
+            </div>
+
+
+        </div>
+
+        <div *ngFor="let entry of url">
+
+            <br *ngIf="isUrl(entry)">
+
+            <img *ngIf="isImg(entry)" [src]="entry"/>
+
+            <iframe *ngIf="isInsta(entry)" [src]="entry | safe" height="375" scrolling="no"
+                    frameborder="0">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+
+            <iframe *ngIf="isYt(entry)" [src]="entry | safe" height="300" width="400"
+                    frameborder="0" allowfullscreen>
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+
+            <iframe *ngIf="isTweet(entry)" [src]="retrieveTweet(entry) | safe" height="375" scrolling="no"
+                    frameborder="0">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+        </div>
+
     </div>
 
+    <ng-template #elseBlock>
+        <div class="content tri-right left-top">
 
-    <div *ngIf="insta">
-      <iframe #iframe id="ifrmMe" *ngFor="let insta of instas" [src]="insta | safe" height="375" scrolling="no"
-              frameborder="0">
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+            <div *ngFor="let entry of msg">
 
-    <div *ngIf="yt">
-      <iframe #iframe id="ifrmYTMe" *ngFor="let yt of yts" [src]="yt | safe" height="300" width="400"
-              frameborder="0" allowfullscreen>
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+                <a href={{entry}} target="_blank" *ngIf="isUrl(entry); else elseBlockMsgMe">{{entry}}</a>
 
-    <div *ngIf="tweet">
-      <iframe *ngFor="let tweet of tweets" [src]="tweet | safe" height="375" scrolling="no"
-              frameborder="0">
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+                <span *ngIf="!isUrl(entry)"> {{entry}}</span>
 
-  </div>
 
-  <ng-template #elseBlock>
-    <div class="from">{{message.from}}</div>
-    <div class="content tri-right left-top">{{message.content}}</div>
+            </div>
 
-    <div *ngIf="img">
-      <img *ngFor="let img of imgs" src={{img}}/>
-    </div>
 
-    <div *ngIf="insta">
-      <iframe id="ifrm" *ngFor="let insta of instas" [src]="insta | safe" height="375" scrolling="no"
-              frameborder="0">
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+        </div>
 
-    <div *ngIf="yt">
-      <iframe #iframe id="ifrmYT" *ngFor="let yt of yts" [src]="yt | safe" height="300" width="400"
-              frameborder="0" allowfullscreen>
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+        <div *ngFor="let entry of url">
 
-    <div *ngIf="tweet">
-      <iframe *ngFor="let tweet of tweets" [src]="tweet | safe" height="375" scrolling="no"
-              frameborder="0">
-        <p>Your browser does not support iframes.</p>
-      </iframe>
-    </div>
+            <br *ngIf="isUrl(entry)">
 
-  </ng-template>
+            <img *ngIf="isImg(entry)" [src]="entry"/>
+
+            <iframe *ngIf="isInsta(entry)" [src]="entry | safe" height="375" scrolling="no"
+                    frameborder="0">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+
+            <iframe *ngIf="isYt(entry)" [src]="entry | safe" height="300" width="400"
+                    frameborder="0" allowfullscreen>
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+
+            <iframe *ngIf="isTweet(entry)" [src]="retrieveTweet(entry) | safe" height="375" scrolling="no"
+                    frameborder="0">
+                <p>Your browser does not support iframes.</p>
+            </iframe>
+
+        </div>
+    </ng-template>
 
 </div>

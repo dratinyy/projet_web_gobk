@@ -4,7 +4,6 @@ import {MessageModel} from "../../../shared/models/MessageModel";
 import {NameService} from "../../../shared/services";
 import {DomSanitizer} from "@angular/platform-browser";
 import {TwitterService} from "../../../shared/services/twitter/twitter.service";
-import {BotService} from "../../../shared/services/bot/bot.service";
 
 @Component({
     selector: "app-message",
@@ -18,30 +17,15 @@ export class MessageComponent implements OnInit {
     private name: string;
     private color: string;
 
-    private img: boolean;
-    private imgs: string[];
-
-    private insta: boolean;
-    private instas: string[];
-
-    private yt: boolean;
-    private yts: string[];
-
-    private tweet: boolean;
-    private tweets: string[];
+    private msg: string[];
+    private url: string[];
 
     constructor(private nameService: NameService, public sanitizer: DomSanitizer,
                 private tweetService: TwitterService) {
         this.message = new MessageModel(0, "Hello!");
         this.color = "#424f88";
-        this.img = false;
-        this.imgs = [];
-        this.insta = false;
-        this.instas = [];
-        this.yt = false;
-        this.yts = [];
-        this.tweet = false;
-        this.tweets = [];
+        this.msg = [];
+        this.url = [];
     }
 
     /**
@@ -57,96 +41,96 @@ export class MessageComponent implements OnInit {
 
         if (this.message.content) {
 
-            let reg = /http[^\ ]*\.(jpg|png|gif)/g;
-            let res = this.message.content.match(reg);
-            if (res != null && res.length > 0) {
-                for (const entry of res) {
-                    this.imgs.push(entry);
+            const r = /https?[^\ ]*/g;
+
+            this.url = this.message.content.match(r);
+
+            const d = this.message.content.split(r);
+
+            let urls, msgs;
+
+            if (this.url != null && this.url.length > 0) {
+
+                for (urls = 0, msgs = 0; urls < this.url.length - 1, msgs < d.length - 1; urls++, msgs++) {
+
+                    if (d[msgs] !== "" && d[msgs]) {
+
+
+                        this.msg.push(this.transformEmoji(d[msgs]));
+
+                    }
+
+                    this.msg.push(this.url[urls]);
+
                 }
-                this.img = true;
+
+            } else {
+
+                this.msg.push(this.transformEmoji(d[0]));
+
             }
 
-            reg = /https:\/\/www.instagram.com\/p\/[^\ ^\/]*/g;
-            res = this.message.content.match(reg);
-
-            if (res != null && res.length > 0) {
-                for (const entry of res) {
-                    this.instas.push(entry + "/embed");
-                }
-                this.insta = true;
-            }
-
-            reg = /https:\/\/www.youtube.com\/watch\?[^\ ^\n]*/g;
-            res = this.message.content.match(reg);
-
-            if (res != null && res.length > 0) {
-                for (const entry of res) {
-                    this.yts.push(entry.replace("watch?v=", "embed/"));
-                }
-                this.yt = true;
-            }
-
-            reg = /https:\/\/twitter.com\/[\w]*\/status\/[0-9]*/g;
-            res = this.message.content.match(reg);
-
-            if (res != null && res.length > 0) {
-                for (const entry of res) {
-                    this.tweets.push("http://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F"
-                        + entry.split("/")[3] + "%2Fstatus%2F" + entry.split("/")[5]);
-                }
-                this.tweet = true;
-            }
-
-            const textArr = [/:\)/g, /;\)/g, /:\(/g, /:\'\(/g, /:\'\)/g, /:D/g, /:p/g, /<3/g, /:o/g, /100/g];
-            const emoteArr = ["🙂", "😉", "🙁", "😢", "😂", "😃", "😋", "❤️", "😮", "💯"];
-            for (let i = 0; i < textArr.length; i++) {
-                this.message.content = this.message.content.replace(textArr[i], emoteArr[i]);
-            }
-
-
-            // this.bot.sendMessage("llel  ");
-
-            // ;
         }
-///.split("/?")[0]
-        /*this.imgs.push("lolilo");
-         console.log(this.imgs.length);
-         this.imgs.push("lolilo");
-         console.log(this.imgs.length);
-         this.imgs.push("lolilo");
-         console.log(this.imgs.length);*/
-        /*if (this.message.content.search("http.*\.(jpg|png)")) {
-
-         this.img = true;
-
-         } else {
-
-         this.img = false;
-
-         }*/
 
     }
 
+    transformEmoji(content): string {
 
-    // (load)="setIframeHeight(this.id)
-    /*setIframeHeight(id) {
-     const ifrm = document.getElementById(id) as HTMLIFrameElement;
-     const doc = ifrm.contentDocument ? ifrm.contentDocument :
-     ifrm.contentWindow.document;
-     ifrm.style.visibility = "hidden";
-     ifrm.style.height = "10px"; // reset to minimal height ...
-     // IE opt. for bing/msn needs a bit added or scrollbar appears
-     ifrm.style.height = this.getDocHeight(doc) + 4 + "px";
-     ifrm.style.visibility = "visible";
-     }
+        const textArr = [/:\)/g, /;\)/g, /:\(/g, /:\'\(/g, /:\'\)/g, /:D/g, /:p/g, /<3/g, /:o/g, /100/g];
+        const emoteArr = ["🙂", "😉", "🙁", "😢", "😂", "😃", "😋", "❤️", "😮", "💯"];
+        for (let i = 0; i < textArr.length; i++) {
+            content = content.replace(textArr[i], emoteArr[i]);
+        }
 
-     getDocHeight(doc) {
-     doc = doc || document;
-     // stackoverflow.com/questions/1145850/
-     const body = doc.body, html = doc.documentElement;
-     const height = Math.max(body.scrollHeight, body.offsetHeight,
-     html.clientHeight, html.scrollHeight, html.offsetHeight);
-     return height;
-     }*/
+        return content;
+
+    }
+
+    isUrl(url): boolean {
+
+        const reg = /https?[^\ ]*/;
+        const res = url.match(reg);
+        return res != null && res.length > 0;
+
+    }
+
+    isImg(url): boolean {
+
+        const reg = /http[^\ ]*\.(jpg|png|gif)/;
+        const res = url.match(reg);
+        return res != null && res.length > 0;
+
+    }
+
+    isInsta(url): boolean {
+
+        const reg = /https:\/\/www.instagram.com\/p\/[^\ ^\/]*/;
+        const res = url.match(reg);
+        return res != null && res.length > 0;
+
+    }
+
+    isYt(url): boolean {
+
+        const reg = /https:\/\/www.youtube.com\/watch\?[^\ ^\n]*/;
+        const res = url.match(reg);
+        return res != null && res.length > 0;
+
+    }
+
+    isTweet(url): boolean {
+
+        const reg = /https:\/\/twitter.com\/[\w]*\/status\/[0-9]*/;
+        const res = url.match(reg);
+        return res != null && res.length > 0;
+
+    }
+
+    retrieveTweet(url) {
+
+        return "http://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F"
+            + url.split("/")[3] + "%2Fstatus%2F" + url.split("/")[5];
+
+    }
 
 }
