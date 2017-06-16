@@ -9,7 +9,7 @@ import {Observable} from "rxjs/Observable";
 export class NameService {
 
     private name: BehaviorSubject<string>;
-    public name$: Observable<string>;
+    public name$;
 
     constructor() {
         this.name = new BehaviorSubject("");
@@ -18,5 +18,9 @@ export class NameService {
 
     public sendName(name: string) {
         this.name.next(name);
+    }
+
+    getName(): Observable<string> {
+        return this.name$;
     }
 }

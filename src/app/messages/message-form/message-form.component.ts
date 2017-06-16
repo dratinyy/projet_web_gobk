@@ -16,7 +16,7 @@ export class MessageFormComponent implements OnInit {
 
     public message: MessageModel;
     private name: string;
-    private currentChannelId: number;
+    private channelIndex: number;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService,
                 private botService: BotService) {
@@ -24,8 +24,8 @@ export class MessageFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((value) => this.name = value);
-        this.channelService.currentChannel$.subscribe((value) => this.currentChannelId = value.id);
+        this.nameService.getName().subscribe((value) => this.name = value);
+        this.channelService.currentChannel$.subscribe((value) => this.channelIndex = value.id);
     }
 
     eventHandler(keyCode) {
@@ -42,7 +42,7 @@ export class MessageFormComponent implements OnInit {
      */
     sendMessage() {
         this.message.from = this.name;
-        this.messageService.sendMessage(this.currentChannelId + "/messages", this.message);
+        this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
         if (this.message.content.split("/ai").length === 2) {
             this.botService.requestResponse(this.message.content.split("/ai")[1]);
         }

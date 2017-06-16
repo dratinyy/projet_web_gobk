@@ -1,6 +1,6 @@
 <div class="channel">
 
-    <div *ngIf="channel.id === currentChannelId; else elseBlock" class="current">
+    <div *ngIf="channel.id === this.channelService.currentChannel$.getValue().id; else elseBlock" class="current">
         <div class="name" title="{{channel.name}}">{{channel.shortname}}
             <button class="bouton" (click)="joinChannel()"><i class="fa fa-angle-right" aria-hidden="true"></i>
             </button>

@@ -17,7 +17,7 @@ export class NameFormComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.nameService.name$.subscribe((value) => this.name = value);
+        this.nameService.getName().subscribe((value) => this.name = value);
     }
 
     sendName() {

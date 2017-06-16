@@ -53,7 +53,7 @@ export class MessageComponent implements OnInit {
      * le faire dans le ngOnInit.
      */
     ngOnInit() {
-        this.nameService.name$.subscribe((e) => this.name = e);
+        this.nameService.getName().subscribe((e) => this.name = e);
 
         if (this.message.content) {
 
