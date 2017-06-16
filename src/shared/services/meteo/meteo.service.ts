@@ -12,8 +12,10 @@ import {ChannelService} from "../channel/channel.service";
 export class MeteoService {
 
     private url: string;
+    private currentChannelId: number;
 
     constructor(private http: Http, private messageService: MessageService, private channelService: ChannelService) {
+        this.channelService.getCurrentChannel().subscribe((value) => this.currentChannelId = value.id);
         this.url = URLSERVER;
     }
 
@@ -26,19 +28,14 @@ export class MeteoService {
 
     sendResponse(response: Response) {
 
-        let res = "Les paramètres de la météo à " + (response.json() || []).name + " on été définis sur : ";
+        let res = "Météo de " + (response.json() || []).name + " :\n";
+        res += (response.json() || []).weather[0].description + "; ";
+        res += "Température minimale : " + (response.json() || []).main.temp_min + "; ";
+        res += "Température attendue : " + (response.json() || []).main.temp + "; ";
+        res += "Température maximale : " + (response.json() || []).main.temp_max + "; ";
+        res += "Vitesse du vent : " + (response.json() || []).wind.speed + "; ";
+        res += "Bonne journée avec la météo ! :D";
 
-        res += "ciel(" + (response.json() || []).weather[0].description + "); ";
-
-        res += "temp(" + (response.json() || []).main.temp + "); ";
-        res += "tempMax(" + (response.json() || []).main.temp_min + "); ";
-        res += "tempMin(" + (response.json() || []).main.temp_max + "); ";
-
-        res += "windSpeed(" + (response.json() || []).wind.speed + "). ";
-
-        res += "Bonne journée avec la météo :D";
-
-        this.messageService.sendMessage(this.channelService.currentChannel$.getValue().id
-            + "/messages", new MessageModel(1, res, "maisteshaut"));
+        this.messageService.sendMessage(this.currentChannelId + "/messages", new MessageModel(0, res, "meteo"));
     }
 }

@@ -50,8 +50,12 @@ export class ChannelService {
         const options = new RequestOptions({headers: headers});
         const channel = new ChanelModel();
         channel.name = name;
-        const currentChannel = this.currentChannel$.getValue();
+        const currentChannel = this.currentChannel$.value;
         this.http.put(this.url + currentChannel.id, channel, options).subscribe(
             (response) => currentChannel.name = response.json().name);
+    }
+
+    getCurrentChannel() {
+        return this.currentChannel$.asObservable();
     }
 }
