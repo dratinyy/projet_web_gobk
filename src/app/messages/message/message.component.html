@@ -1,6 +1,6 @@
-<div class="message">
+<div class="message fadeIn">
 
-  <div *ngIf="message.from === name; else elseBlock" class="me fadeIn">
+  <div *ngIf="message.from === name; else elseBlock" class="me">
 
     <div class="from">{{message.from}}</div>
     <div class="content tri-right left-top">{{message.content}}</div>
@@ -33,7 +33,7 @@
 
   </div>
 
-  <ng-template #elseBlock class="fadeIn">
+  <ng-template #elseBlock>
     <div class="from">{{message.from}}</div>
     <div class="content tri-right left-top">{{message.content}}</div>
 
