@@ -1,5 +1,5 @@
 <div class="btn-group">
-  <p>Pseudo :</p>
+  <div>Pseudo :</div>
   <div *ngIf="this.isValid; else elseBlock">
     <input type="text" class="name-control" placeholder="Enter your username..." id="name" name="name" required
            [(ngModel)]="name" (keypress)="sendNameHandler($event.keyCode)">
