@@ -1,8 +1,8 @@
 <div class="header card">
     <div class="btn-group">
-        <h1 *ngIf="editName === false" title="{{this.channelService.currentChannel$.getValue().name}}">{{this.rename}} </h1>
+        <h1 *ngIf="editName === false" title="{{currentChannel.name}}">{{this.rename}} </h1>
         <div *ngIf="editName" class="edit">
-            <input type="text" onClick="this.select();" placeholder="{{this.channelService.currentChannel$.getValue().name}}"
+            <input type="text" onClick="this.select();" placeholder="{{currentChannel.name}}"
                    class="name-control" id="rename" required [(ngModel)]="rename" name="rename"
                    (keypress)="renameCurrentChannelHandler($event.keyCode)">
         </div>
