@@ -7,14 +7,18 @@ import {MessageModel} from "../../models/MessageModel";
 import {URLSERVER} from "shared/constants/urls";
 import {MessageService} from "../message/message.service";
 import {ChannelService} from "../channel/channel.service";
+import {ChanelModel} from "../../models/ChannelModel";
 
 @Injectable()
 export class BotService {
 
     private url: string;
 
+    private currentChannelId: number;
+
     constructor(private http: Http, private messageService: MessageService, private channelService: ChannelService) {
         this.url = URLSERVER;
+        this.channelService.currentChannel$.subscribe((value) => this.currentChannelId = value.id);
     }
 
     public requestResponse(query: string) {
@@ -30,9 +34,6 @@ export class BotService {
 
     sendResponse(response: Response) {
         const res = (response.json() || []).result.fulfillment.speech;
-        // console.log(res);
-
-        this.messageService.sendMessage(this.channelService.currentChannel$.getValue().id
-            + "/messages", new MessageModel(1, res, "jeanclaude"));
+        this.messageService.sendMessage(this.currentChannelId + "/messages", new MessageModel(1, res, "jeanclaude"));
     }
 }

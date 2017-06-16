@@ -4,19 +4,24 @@ import {ChanelModel} from "../../models/ChannelModel";
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {URLSERVER} from "../../constants/urls";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class ChannelService {
 
     private url: string;
+
     public channelList$: ReplaySubject<ChanelModel[]>;
-    public currentChannel$: BehaviorSubject<ChanelModel>;
+
+    private currentChannel: BehaviorSubject<ChanelModel>;
+    public currentChannel$: Observable<ChanelModel>;
 
     constructor(private http?: Http) {
         this.url = URLSERVER;
         this.channelList$ = new ReplaySubject(1);
         this.channelList$.next([new ChanelModel()]);
-        this.currentChannel$ = new BehaviorSubject(new ChanelModel(540, "Général"));
+        this.currentChannel = new BehaviorSubject(new ChanelModel(540, "General"));
+        this.currentChannel$ = this.currentChannel.asObservable();
     }
 
     public getChannels(route: string) {
@@ -39,10 +44,11 @@ export class ChannelService {
             channel.shortname = (channel.name.length > 20 ?
                 channel.name.slice(0, 20 - channel.name.length).concat("…") : channel.name);
         } else {
-            channel.shortname = "Général";
-            channel.name = "Général";
+            channel.shortname = "General";
+            channel.name = "General";
         }
-        this.currentChannel$.next(channel);
+
+        this.currentChannel.next(channel);
     }
 
     renameCurrentChannel(name: string) {
@@ -50,7 +56,8 @@ export class ChannelService {
         const options = new RequestOptions({headers: headers});
         const channel = new ChanelModel();
         channel.name = name;
-        this.http.put(this.url + this.currentChannel$.getValue().id, channel, options).subscribe(
+        this.http.put(this.url + this.currentChannel.value.id, channel, options).subscribe(
             (response) => this.joinChannel(response.json()));
     }
+
 }

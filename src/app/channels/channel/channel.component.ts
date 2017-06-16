@@ -13,6 +13,8 @@ export class ChannelComponent implements OnInit {
 
     @Input() channel: ChanelModel;
 
+    private currentChannelId: number;
+
     constructor(public channelService: ChannelService) {
         this.channel = new ChanelModel();
     }
@@ -26,9 +28,10 @@ export class ChannelComponent implements OnInit {
      * le faire dans le ngOnInit.
      */
     ngOnInit() {
+        this.channelService.currentChannel$.subscribe((value) => this.currentChannelId = value.id);
         if (this.channel.name && this.channel.name.length > 20) {
             this.channel.shortname = this.channel.name.slice(0, 20 - this.channel.name.length).concat("…");
-        }else {
+        } else {
             this.channel.shortname = this.channel.name;
         }
     }
