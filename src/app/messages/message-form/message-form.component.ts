@@ -6,6 +6,7 @@ import {NameService} from "../../../shared/services/name/name.service";
 import {ChannelService} from "../../../shared/services/channel/channel.service";
 import {BotService} from "../../../shared/services/bot/bot.service";
 import {DEFAULTNAME} from "../../../shared/constants/defaultName";
+import {MeteoService} from "../../../shared/services/meteo/meteo.service";
 
 @Component({
     selector: "app-message-form",
@@ -19,7 +20,7 @@ export class MessageFormComponent implements OnInit {
     private channelIndex: number;
 
     constructor(private messageService: MessageService, private nameService: NameService, private channelService: ChannelService,
-                private botService: BotService) {
+                private botService: BotService, private meteoService: MeteoService) {
         this.message = new MessageModel(0, "", DEFAULTNAME);
     }
 
@@ -60,6 +61,11 @@ export class MessageFormComponent implements OnInit {
                 this.message.content = this.message.content.concat(" ").concat(splitted[i]);
             }
             this.messageService.sendMessage(Number(splitted[1].slice(1)) + "/messages", this.message);
+
+        }else if (content.slice(0, 6) === "/meteo") {
+
+            this.messageService.sendMessage(this.channelIndex + "/messages", this.message);
+            this.meteoService.requestResponse(content.split("/meteo")[1]);
 
         } else {
             this.messageService.sendMessage(this.channelIndex + "/messages", this.message);

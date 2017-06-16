@@ -20,6 +20,7 @@ import {ChannelPageFormComponent} from "./channels/channel-page-controls/channel
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {TwitterService} from "../shared/services/twitter/twitter.service";
 import {BotService} from "../shared/services/bot/bot.service";
+import {MeteoService} from "../shared/services/meteo/meteo.service";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,8 @@ import {BotService} from "../shared/services/bot/bot.service";
         MessageService,
         NameService,
         TwitterService,
-        BotService
+        BotService,
+        MeteoService
     ],
     bootstrap: [AppComponent]
 })
