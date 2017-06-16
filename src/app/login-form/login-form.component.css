@@ -2,7 +2,7 @@ div:first-child {
   margin: 0 0 0 0;
   position: absolute;
   z-index: 1000;
-  background: rgba(43, 64, 90, 0.7);
+  background: rgba(43, 64, 90, 0.85);
   height: 100vh;
   width: 100vw;
 }
@@ -17,6 +17,7 @@ h2, h3{
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .salutInvalid {
@@ -26,7 +27,6 @@ h2, h3{
   align-items: center;
   color: red;
 }
-
 
 button {
 
@@ -60,3 +60,35 @@ button:focus {
   box-shadow: none;
   color: #f1f0f0;
 }
+
+/* Pop */
+@-webkit-keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+@keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+.hvr-pop {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+}
+.hvr-pop:hover, .hvr-pop:focus, .hvr-pop:active {
+  -webkit-animation-name: hvr-pop;
+  animation-name: hvr-pop;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+
